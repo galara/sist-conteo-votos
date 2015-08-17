@@ -1,0 +1,1 @@
+GRANT all ON academia.* TO compuvision IDENTIFIED BY '6BB432910C67ED2CA2AD';
