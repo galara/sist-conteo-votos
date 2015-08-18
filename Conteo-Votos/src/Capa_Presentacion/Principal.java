@@ -77,7 +77,9 @@ public class Principal extends javax.swing.JFrame {
         jMenu9 = new javax.swing.JMenu();
         jMenuItem18 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
-        jMenuItem19 = new javax.swing.JMenuItem();
+        mpuesto_politico = new javax.swing.JMenuItem();
+        mpartido = new javax.swing.JMenuItem();
+        mcandidato = new javax.swing.JMenuItem();
         jMenu8 = new javax.swing.JMenu();
         jMenuItem10 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
@@ -310,13 +312,31 @@ public class Principal extends javax.swing.JFrame {
 
         jMenu3.add(jMenu9);
 
-        jMenuItem19.setText("jMenuItem19");
-        jMenuItem19.addActionListener(new java.awt.event.ActionListener() {
+        mpuesto_politico.setText("Cargo Político");
+        mpuesto_politico.setName("mpuesto_politico"); // NOI18N
+        mpuesto_politico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem19ActionPerformed(evt);
+                mpuesto_politicoActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem19);
+        jMenu3.add(mpuesto_politico);
+
+        mpartido.setText("Pardido Politico");
+        mpartido.setName("Pardido Politico"); // NOI18N
+        mpartido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mpartidoActionPerformed(evt);
+            }
+        });
+        jMenu3.add(mpartido);
+
+        mcandidato.setText("Candidato");
+        mcandidato.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mcandidatoActionPerformed(evt);
+            }
+        });
+        jMenu3.add(mcandidato);
 
         jMenuBar1.add(jMenu3);
 
@@ -529,9 +549,9 @@ public class Principal extends javax.swing.JFrame {
     private void mcursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mcursoActionPerformed
         // TODO add your handling code here:
         if (AccesoUsuario.AccesosUsuario(mcurso.getName()) == true) {
-            Curso frmCurso = new Curso();
+            Cargo_politico frmCurso = new Cargo_politico();
             if (frmCurso == null) {
-                frmCurso = new Curso();
+                frmCurso = new Cargo_politico();
             }
             AddForms.adminInternalFrame(dp, frmCurso);
         } else {
@@ -749,7 +769,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
         // TODO add your handling code here:
-                if (AccesoUsuario.AccesosUsuario(jMenuItem16.getName()) == true) {
+        if (AccesoUsuario.AccesosUsuario(jMenuItem16.getName()) == true) {
             RestaurarBackup frmRestaurarBackup = new RestaurarBackup();
             if (frmRestaurarBackup == null) {
                 frmRestaurarBackup = new RestaurarBackup();
@@ -773,14 +793,44 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem13ActionPerformed
 
-    private void jMenuItem19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem19ActionPerformed
+    private void mpuesto_politicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mpuesto_politicoActionPerformed
         // TODO add your handling code here:
-        Curso frmModificarProyeccionPagos = new Curso();
-            if (frmModificarProyeccionPagos == null) {
-                frmModificarProyeccionPagos = new Curso();
+        if (AccesoUsuario.AccesosUsuario(mpuesto_politico.getName()) == true) {
+            Cargo_politico form = new Cargo_politico();
+            if (form == null) {
+                form = new Cargo_politico();
             }
-            AddForms.adminInternalFrame(dp, frmModificarProyeccionPagos);
-    }//GEN-LAST:event_jMenuItem19ActionPerformed
+            AddForms.adminInternalFrame(dp, form);
+        } else {
+            JOptionPane.showMessageDialog(this, "No tiene Acceso para realizar esta operación ");
+        }
+    }//GEN-LAST:event_mpuesto_politicoActionPerformed
+
+    private void mpartidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mpartidoActionPerformed
+        // TODO add your handling code here:
+        if (AccesoUsuario.AccesosUsuario(mpuesto_politico.getName()) == true) {
+            Partido_politico form = new Partido_politico();
+            if (form == null) {
+                form = new Partido_politico();
+            }
+            AddForms.adminInternalFrame(dp, form);
+        } else {
+            JOptionPane.showMessageDialog(this, "No tiene Acceso para realizar esta operación ");
+        }
+    }//GEN-LAST:event_mpartidoActionPerformed
+
+    private void mcandidatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mcandidatoActionPerformed
+        // TODO add your handling code here:
+        if (AccesoUsuario.AccesosUsuario(mpuesto_politico.getName()) == true) {
+            Candidato form = new Candidato();
+            if (form == null) {
+                form = new Candidato();
+            }
+            AddForms.adminInternalFrame(dp, form);
+        } else {
+            JOptionPane.showMessageDialog(this, "No tiene Acceso para realizar esta operación ");
+        }
+    }//GEN-LAST:event_mcandidatoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -821,7 +871,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem17;
     private javax.swing.JMenuItem jMenuItem18;
-    private javax.swing.JMenuItem jMenuItem19;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
@@ -832,13 +881,16 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JMenuItem malumno;
+    private javax.swing.JMenuItem mcandidato;
     private javax.swing.JMenuItem mcarrera;
     private javax.swing.JMenuItem mciclo;
     private javax.swing.JMenuItem mcurso;
     private javax.swing.JMenuItem mgrupo;
     private javax.swing.JMenuItem mhorario;
     private javax.swing.JMenuItem motrospagos;
+    private javax.swing.JMenuItem mpartido;
     private javax.swing.JMenuItem mprofesor;
+    private javax.swing.JMenuItem mpuesto_politico;
     private javax.swing.JMenuItem msalir;
     private javax.swing.JMenuItem musuario;
     private javax.swing.JLabel sistema;

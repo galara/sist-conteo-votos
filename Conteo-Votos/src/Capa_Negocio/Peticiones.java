@@ -116,9 +116,9 @@ public class Peticiones extends AccesoDatos {
                         if (fila[i].equals(false)) {
                             fila[i] = "Inactivo";
                         }
-                        if (campos[i].equals("horario.horariode") || campos[i].equals("horario.horarioa") || campos[i].equals("horariode") || campos[i].equals("horarioa")) {
-                            fila[i] = FormatoFecha.getTimedoce(rs.getTime(i + 1));
-                        }
+//                        if (campos[i].equals("horario.horariode") || campos[i].equals("horario.horarioa") || campos[i].equals("horariode") || campos[i].equals("horarioa")) {
+//                            fila[i] = FormatoFecha.getTimedoce(rs.getTime(i + 1));
+//                        }
                     }
                     modelo.addRow(fila);
                 }

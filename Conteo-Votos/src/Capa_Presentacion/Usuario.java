@@ -39,7 +39,7 @@ public class Usuario extends javax.swing.JInternalFrame {
 
     /*El modelo se define en : Jtable-->propiedades-->model--> <User Code> */
     DefaultTableModel model, modelperfil;
-    String[] titulos = {"Código", "Nombre", "Usuario", "Estado", "Fecha Alta"};//Titulos para Jtabla
+    String[] titulos = {"Código", "Nombre", "Telefono","Usuario", "Estado", "Fecha Alta"};//Titulos para Jtabla
     String[] titulosperfil = {"id", "No.", "Menu", "Principal", "Permitir"};//Titulos para Jtabla
     /*Se hace una instancia de la clase que recibira las peticiones de esta capa de aplicación*/
     Peticiones peticiones = new Peticiones();
@@ -152,7 +152,7 @@ public class Usuario extends javax.swing.JInternalFrame {
      * @return 
      */
     private void MostrarDatos(String Dato) {
-        String[] campos = {"usuario.idusuario", "usuario.nombre", "usuario.usuario", "usuario.estado", "DATE_FORMAT(usuario.fechacreacion,'%d-%m-%Y')"};
+        String[] campos = {"usuario.idusuario", "usuario.nombre", "usuario.telefono","usuario.usuario", "usuario.estado", "DATE_FORMAT(usuario.fechacreacion,'%d-%m-%Y')"};
         String[] condiciones = {"usuario.idusuario"};
         String[] Id = {Dato};
 
@@ -194,8 +194,8 @@ public class Usuario extends javax.swing.JInternalFrame {
         String[] id = {"" + usuarios.getValueAt(fila, 0)};
         if (usuarios.getValueAt(fila, 0) != null) {
 
-            String[] campos = {"nombre", "usuario", "password", "estado", "fechacreacion"};
-            Component[] cmps = {nombres, usuario, password, estado, fecharegistro};
+            String[] campos = {"nombre", "telefono","usuario", "password", "estado", "fechacreacion"};
+            Component[] cmps = {nombres, telefono,usuario, password, estado, fecharegistro};
             Utilidades.setEditableTexto(this.JPanelCampos, true, null, true, "");
             peticiones.getRegistroSeleccionado(cmps, "usuario", campos, cond, id, "", null);
             MostrarProductos(2);
@@ -307,6 +307,8 @@ public class Usuario extends javax.swing.JInternalFrame {
         password = new elaprendiz.gui.passwordField.PasswordFieldRectIcon();
         Cvercontraseña = new javax.swing.JCheckBox();
         psword = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        telefono = new elaprendiz.gui.textField.TextField();
         JPanelPago1 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         perfilusuarios = new javax.swing.JTable();
@@ -332,10 +334,6 @@ public class Usuario extends javax.swing.JInternalFrame {
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setName("usuarios"); // NOI18N
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
-            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
-            }
-            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
-            }
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
             }
             public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
@@ -346,6 +344,10 @@ public class Usuario extends javax.swing.JInternalFrame {
             public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
             }
             public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
             }
         });
 
@@ -499,7 +501,7 @@ public class Usuario extends javax.swing.JInternalFrame {
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel12.setText("Estado:");
         JPanelCampos1.add(jLabel12);
-        jLabel12.setBounds(490, 40, 110, 20);
+        jLabel12.setBounds(490, 70, 110, 20);
 
         nombres.setEditable(false);
         nombres.setHorizontalAlignment(javax.swing.JTextField.LEFT);
@@ -538,7 +540,7 @@ public class Usuario extends javax.swing.JInternalFrame {
             }
         });
         JPanelCampos1.add(estado);
-        estado.setBounds(610, 40, 160, 21);
+        estado.setBounds(610, 70, 160, 21);
 
         password.setPreferredSize(new java.awt.Dimension(150, 24));
         JPanelCampos1.add(password);
@@ -560,6 +562,19 @@ public class Usuario extends javax.swing.JInternalFrame {
         psword.setForeground(new java.awt.Color(255, 255, 255));
         JPanelCampos1.add(psword);
         psword.setBounds(310, 122, 120, 20);
+
+        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel13.setText("Telefono:");
+        JPanelCampos1.add(jLabel13);
+        jLabel13.setBounds(530, 40, 70, 17);
+
+        telefono.setEditable(false);
+        telefono.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        telefono.setName("usuario"); // NOI18N
+        telefono.setNextFocusableComponent(password);
+        JPanelCampos1.add(telefono);
+        telefono.setBounds(610, 40, 160, 21);
 
         tbPane2.addTab("Datos Usuario", JPanelCampos1);
 
@@ -761,8 +776,8 @@ public class Usuario extends javax.swing.JInternalFrame {
                     estad = 1;
                 }
                 String fecha = FormatoFecha.getFormato(fecharegistro.getCalendar().getTime(), FormatoFecha.A_M_D);
-                String sqlusuario = "insert into usuario (nombre, usuario, password, estado, fechacreacion)"
-                        + " values ('" + nombres.getText() + "','" + usuario.getText() + "','" + password.getText() + "','" + estad + "','" + fecha + "')";
+                String sqlusuario = "insert into usuario (nombre, telefono, usuario, password, estado, fechacreacion)"
+                        + " values ('" + nombres.getText() + "','" + telefono.getText() + "','"+usuario.getText() + "','" + password.getText() + "','" + estad + "','" + fecha + "')";
                 //******************************************************************
 
                 try {
@@ -909,7 +924,7 @@ public class Usuario extends javax.swing.JInternalFrame {
                         estad = 1;
                     }
                     String fecha = FormatoFecha.getFormato(fecharegistro.getCalendar().getTime(), FormatoFecha.A_M_D);
-                    String sql = "update usuario set nombre='" + nombres.getText() + "', " + " usuario='" + usuario.getText() + "', " + " password='" + password.getText() + "', " + " estado='" + estad + "', " + " fechacreacion='" + fecha + "'  where idusuario=" + id;
+                    String sql = "update usuario set nombre='" + nombres.getText() + "', " + " telefono='" + telefono.getText()+ "', " + " usuario='" + usuario.getText() + "', " + " password='" + password.getText() + "', " + " estado='" + estad + "', " + " fechacreacion='" + fecha + "'  where idusuario=" + id;
                     //**************************************************************
 
                     ps = conn.prepareStatement(sql);
@@ -1082,6 +1097,7 @@ public class Usuario extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -1099,6 +1115,7 @@ public class Usuario extends javax.swing.JInternalFrame {
     private javax.swing.JRadioButton rbCodigo;
     private javax.swing.JRadioButton rbNombres;
     private elaprendiz.gui.panel.TabbedPaneHeader tbPane2;
+    private elaprendiz.gui.textField.TextField telefono;
     private elaprendiz.gui.textField.TextField usuario;
     private javax.swing.JTable usuarios;
     // End of variables declaration//GEN-END:variables

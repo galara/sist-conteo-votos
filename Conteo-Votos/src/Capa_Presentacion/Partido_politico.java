@@ -14,7 +14,6 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.Calendar;
-import java.util.Hashtable;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.DefaultComboBoxModel;
@@ -27,7 +26,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author GLARA
  */
-public class Curso extends javax.swing.JInternalFrame {
+public class Partido_politico extends javax.swing.JInternalFrame {
 
     /*El modelo se define en : Jtable-->propiedades-->model--> <User Code> */
     DefaultTableModel model;
@@ -35,12 +34,13 @@ public class Curso extends javax.swing.JInternalFrame {
     String[] titulos = {"Id", "Descripción", "Fecha Registro", "Estado"};//Titulos para Jtabla
     /*Se hace una instancia de la clase que recibira las peticiones de esta capa de aplicación*/
     Peticiones peticiones = new Peticiones();
-    String tabla = "puesto";
-    String idp= "puesto.idpuesto";
+    String tabla = "partido_politico";
+    String idp = "partido_politico.idpartido";
+
     /**
      * Creates new form Cliente
      */
-    public Curso() {
+    public Partido_politico() {
         initComponents();
         setFiltroTexto();
         addEscapeKey();
@@ -121,7 +121,7 @@ public class Curso extends javax.swing.JInternalFrame {
      * @return 
      */
     private void MostrarDatos(String Dato) {
-        String[] campos = {idp, "puesto.nombre", "DATE_FORMAT(puesto.fecharegistro,'%d-%m-%Y')", "puesto.estado"};
+        String[] campos = {idp, "partido_politico.nombre", "DATE_FORMAT(partido_politico.fecharegistro,'%d-%m-%Y')", "partido_politico.estado"};
 
         String[] condiciones = {idp};
         String[] Id = {Dato};
@@ -140,7 +140,7 @@ public class Curso extends javax.swing.JInternalFrame {
             removejtable();
             Utilidades.setEditableTexto(this.JPanelCampos, false, null, true, "");
             Utilidades.esObligatorio(this.JPanelCampos, false);
-            model = peticiones.getRegistroPorLike(model, tabla, campos, "puesto.nombre", Dato, "");
+            model = peticiones.getRegistroPorLike(model, tabla, campos, "partido_politico.nombre", Dato, "");
         }
         Utilidades.ajustarAnchoColumnas(curso);
     }
@@ -158,7 +158,7 @@ public class Curso extends javax.swing.JInternalFrame {
 
         if (curso.getValueAt(fila, 0) != null) {
 
-            String[] campos = {"puesto.nombre", "puesto.fecharegistro", "puesto.estado"};
+            String[] campos = {"partido_politico.nombre", "partido_politico.fecharegistro", "partido_politico.estado"};
             Component[] cmps = {descripcion, fechainicio, estado};
             Utilidades.setEditableTexto(this.JPanelCampos, true, null, true, "");
 
@@ -212,9 +212,9 @@ public class Curso extends javax.swing.JInternalFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setForeground(new java.awt.Color(0, 0, 0));
         setIconifiable(true);
-        setTitle("Puesto Politico");
+        setTitle("Partido Politico");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setName("curso"); // NOI18N
+        setName("Puesto Politico"); // NOI18N
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
             }
@@ -487,7 +487,7 @@ public class Curso extends javax.swing.JInternalFrame {
             jLabel8.setFont(new java.awt.Font("Script MT Bold", 1, 32)); // NOI18N
             jLabel8.setForeground(new java.awt.Color(255, 255, 255));
             jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/ciclo.png"))); // NOI18N
-            jLabel8.setText("<--Puesto Politico-->");
+            jLabel8.setText("<--Partido Politico-->");
             pnlPaginador.add(jLabel8, new java.awt.GridBagConstraints());
 
             panelImage.add(pnlPaginador);
@@ -577,7 +577,7 @@ public class Curso extends javax.swing.JInternalFrame {
                 int fila = curso.getSelectedRow();
                 String id = (String) "" + curso.getValueAt(fila, 0);
                 String nombreTabla = tabla, nomColumnaCambiar = "estado";
-                String nomColumnaId = "idpuesto";
+                String nomColumnaId = "idpartido";
                 int seguardo = 0;
 
                 seguardo = peticiones.eliminarRegistro(nombreTabla, nomColumnaCambiar, nomColumnaId, id);
@@ -611,7 +611,7 @@ public class Curso extends javax.swing.JInternalFrame {
             if (resp == 0) {
 
                 //String nomTabla = "puesto";
-                String columnaId = "idpuesto";
+                String columnaId = "idpartido";
                 int seguardo = 0;
                 int fila = curso.getSelectedRow();
                 String id = (String) "" + curso.getValueAt(fila, 0);

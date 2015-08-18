@@ -58,7 +58,7 @@ public class Login1 extends javax.swing.JFrame {
                     Principal j = new Principal();
                     j.setVisible(true);
                     this.dispose();
-                    CalcularMoras.moras();//Si el usuario tiene acceso calcula moras si las hay
+                    //CalcularMoras.moras();//Si el usuario tiene acceso calcula moras si las hay
                     BackupDiario.GenerarBackupDiarioMySQL();
                     accesoConcedido = true;
                     return;

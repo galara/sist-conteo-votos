@@ -262,12 +262,30 @@
                 </MenuItem>
               </SubComponents>
             </Menu>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem19">
+            <MenuItem class="javax.swing.JMenuItem" name="mpuesto_politico">
               <Properties>
-                <Property name="text" type="java.lang.String" value="jMenuItem19"/>
+                <Property name="text" type="java.lang.String" value="Cargo Pol&#xed;tico"/>
+                <Property name="name" type="java.lang.String" value="mpuesto_politico" noResource="true"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem19ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mpuesto_politicoActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="mpartido">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Pardido Politico"/>
+                <Property name="name" type="java.lang.String" value="Pardido Politico" noResource="true"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mpartidoActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="mcandidato">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Candidato"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mcandidatoActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
