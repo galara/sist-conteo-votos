@@ -41,8 +41,8 @@ public class BackupDiario {
         fechadelete = fechadelete + "-" + cdelete.get(Calendar.MONTH);//String.valueOf(c.get(Calendar.MONTH));
         fechadelete = fechadelete + "-" + cdelete.get(Calendar.YEAR);
 
-        currentDir = currentDir + "\\Backup_Compuvision_" + fecha + ".sql"; //Nuevo Backup
-        currentDirDelete = currentDirDelete + "\\Backup_Compuvision_" + fechadelete + ".sql"; //Boarrar Backup
+        currentDir = currentDir + "\\Backup_" + fecha + ".sql"; //Nuevo Backup
+        currentDirDelete = currentDirDelete + "\\Backup_" + fechadelete + ".sql"; //Boarrar Backup
 
         File fichero = new File(currentDir); //Para verificar si el Backup ya esxiste si no existe crearlo
         File ficherodelete = new File(currentDirDelete); //Para verificar si el Backup esxiste si existe borrarlo
@@ -57,7 +57,7 @@ public class BackupDiario {
 
                 fw = new FileWriter(currentDir);
 
-                Process child = runtime.exec("C:\\Archivos de programa\\MySQL\\MySQL Server 5.6\\bin\\mysqldump -u " + BdConexion.user + " -p" + BdConexion.pass + " --default-character_set=utf8 " + BdConexion.dataBase);
+                Process child = runtime.exec("C:\\Archivos de programa\\MySQL\\MySQL Server 5.5\\bin\\mysqldump -u " + BdConexion.user + " -p" + BdConexion.pass + " --default-character_set=utf8 " + BdConexion.dataBase);
                 InputStreamReader irs = new InputStreamReader(child.getInputStream());
                 BufferedReader br = new BufferedReader(irs);
 

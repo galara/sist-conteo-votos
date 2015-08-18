@@ -35,10 +35,8 @@ public class Curso extends javax.swing.JInternalFrame {
     String[] titulos = {"Id", "Descripción", "Fecha Registro", "Estado"};//Titulos para Jtabla
     /*Se hace una instancia de la clase que recibira las peticiones de esta capa de aplicación*/
     Peticiones peticiones = new Peticiones();
-    public Hashtable<String, String> hashHorario = new Hashtable<>();
-    private static Horario frmHorario = new Horario();
-    /*Se hace una instancia de la clase que recibira las peticiones de mensages de la capa de aplicación*/
-    //public static JOptionMessage msg = new JOptionMessage();
+    String tabla = "puesto";
+    String idp= "puesto.idpuesto";
     /**
      * Creates new form Cliente
      */
@@ -123,9 +121,9 @@ public class Curso extends javax.swing.JInternalFrame {
      * @return 
      */
     private void MostrarDatos(String Dato) {
-        String[] campos = {"curso.idcurso", "curso.nombrecurso", "DATE_FORMAT(curso.fecharegistro,'%d-%m-%Y')", "curso.estado"};
+        String[] campos = {idp, "puesto.nombre", "DATE_FORMAT(puesto.fecharegistro,'%d-%m-%Y')", "puesto.estado"};
 
-        String[] condiciones = {"curso.idcurso"};
+        String[] condiciones = {idp};
         String[] Id = {Dato};
 
         if (this.rbCodigo.isSelected()) {
@@ -133,7 +131,7 @@ public class Curso extends javax.swing.JInternalFrame {
                 removejtable();
                 Utilidades.setEditableTexto(this.JPanelCampos, false, null, true, "");
                 Utilidades.esObligatorio(this.JPanelCampos, false);
-                model = peticiones.getRegistroPorPks(model, "curso", campos, condiciones, Id, "");
+                model = peticiones.getRegistroPorPks(model, tabla, campos, condiciones, Id, "");
             } else {
                 JOptionPane.showInternalMessageDialog(this, "Debe ingresar un codigo para la busqueda");
             }
@@ -142,7 +140,7 @@ public class Curso extends javax.swing.JInternalFrame {
             removejtable();
             Utilidades.setEditableTexto(this.JPanelCampos, false, null, true, "");
             Utilidades.esObligatorio(this.JPanelCampos, false);
-            model = peticiones.getRegistroPorLike(model, "curso", campos, "curso.nombrecurso", Dato, "");
+            model = peticiones.getRegistroPorLike(model, tabla, campos, "puesto.nombre", Dato, "");
         }
         Utilidades.ajustarAnchoColumnas(curso);
     }
@@ -155,16 +153,16 @@ public class Curso extends javax.swing.JInternalFrame {
     private void filaseleccionada() {
 
         int fila = curso.getSelectedRow();
-        String[] cond = {"curso.idcurso"};
+        String[] cond = {idp};
         String[] id = {"" + curso.getValueAt(fila, 0)};
 
         if (curso.getValueAt(fila, 0) != null) {
 
-            String[] campos = {"curso.nombrecurso", "curso.fecharegistro", "curso.estado"};
+            String[] campos = {"puesto.nombre", "puesto.fecharegistro", "puesto.estado"};
             Component[] cmps = {descripcion, fechainicio, estado};
             Utilidades.setEditableTexto(this.JPanelCampos, true, null, true, "");
 
-            peticiones.getRegistroSeleccionado(cmps, "curso", campos, cond, id, "", null);
+            peticiones.getRegistroSeleccionado(cmps, tabla, campos, cond, id, "", null);
 
             this.bntGuardar.setEnabled(false);
             this.bntModificar.setEnabled(true);
@@ -214,7 +212,7 @@ public class Curso extends javax.swing.JInternalFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setForeground(new java.awt.Color(0, 0, 0));
         setIconifiable(true);
-        setTitle("Cursos");
+        setTitle("Puesto Politico");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setName("curso"); // NOI18N
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
@@ -489,7 +487,7 @@ public class Curso extends javax.swing.JInternalFrame {
             jLabel8.setFont(new java.awt.Font("Script MT Bold", 1, 32)); // NOI18N
             jLabel8.setForeground(new java.awt.Color(255, 255, 255));
             jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/ciclo.png"))); // NOI18N
-            jLabel8.setText("<--Cursos-->");
+            jLabel8.setText("<--Puesto Politico-->");
             pnlPaginador.add(jLabel8, new java.awt.GridBagConstraints());
 
             panelImage.add(pnlPaginador);
@@ -530,8 +528,8 @@ public class Curso extends javax.swing.JInternalFrame {
             if (resp == 0) {
 
                 boolean seguardo = false;
-                String nombreTabla = "curso";
-                String campos = "nombrecurso, fecharegistro, estado";
+                //String nombreTabla = "puesto";
+                String campos = "nombre, fecharegistro, estado";
                 String fechaini = FormatoFecha.getFormato(fechainicio.getCalendar().getTime(), FormatoFecha.A_M_D);
 
                 int estad = 0;
@@ -541,7 +539,7 @@ public class Curso extends javax.swing.JInternalFrame {
                 Object[] valores = {descripcion.getText(), fechaini, estad
                 };
 
-                seguardo = peticiones.guardarRegistros(nombreTabla, campos, valores);
+                seguardo = peticiones.guardarRegistros(tabla, campos, valores);
 
                 if (seguardo) {
                     Utilidades.setEditableTexto(this.JPanelCampos, false, null, true, "");
@@ -578,8 +576,8 @@ public class Curso extends javax.swing.JInternalFrame {
 
                 int fila = curso.getSelectedRow();
                 String id = (String) "" + curso.getValueAt(fila, 0);
-                String nombreTabla = "curso", nomColumnaCambiar = "estado";
-                String nomColumnaId = "idcurso";
+                String nombreTabla = tabla, nomColumnaCambiar = "estado";
+                String nomColumnaId = "idpuesto";
                 int seguardo = 0;
 
                 seguardo = peticiones.eliminarRegistro(nombreTabla, nomColumnaCambiar, nomColumnaId, id);
@@ -612,12 +610,12 @@ public class Curso extends javax.swing.JInternalFrame {
             int resp = JOptionPane.showInternalConfirmDialog(this, "¿Desea Modificar el Registro?", "Pregunta", 0);
             if (resp == 0) {
 
-                String nomTabla = "curso";
-                String columnaId = "idcurso";
+                //String nomTabla = "puesto";
+                String columnaId = "idpuesto";
                 int seguardo = 0;
                 int fila = curso.getSelectedRow();
                 String id = (String) "" + curso.getValueAt(fila, 0);
-                String campos = "nombrecurso, fecharegistro, estado";
+                String campos = "nombre, fecharegistro, estado";
                 String fechaini = FormatoFecha.getFormato(fechainicio.getCalendar().getTime(), FormatoFecha.A_M_D);
 
                 int estad = 0;
@@ -625,7 +623,7 @@ public class Curso extends javax.swing.JInternalFrame {
                     estad = 1;
                 }
                 Object[] valores = {descripcion.getText(), fechaini, estad, id};
-                seguardo = peticiones.actualizarRegistro(nomTabla, campos, valores, columnaId, id);
+                seguardo = peticiones.actualizarRegistro(tabla, campos, valores, columnaId, id);
                 if (seguardo == 1) {
                     Utilidades.setEditableTexto(this.JPanelCampos, false, null, true, "");
                     MostrarDatos(busqueda.getText());
