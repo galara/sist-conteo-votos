@@ -695,7 +695,7 @@ public class Candidato extends javax.swing.JInternalFrame {
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel3.setText("Partido:");
         JPanelCampos.add(jLabel3);
-        jLabel3.setBounds(30, 90, 80, 20);
+        jLabel3.setBounds(30, 120, 80, 20);
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -770,7 +770,7 @@ public class Candidato extends javax.swing.JInternalFrame {
         partido.setName("Profesor"); // NOI18N
         partido.setNextFocusableComponent(puesto);
         JPanelCampos.add(partido);
-        partido.setBounds(120, 90, 250, 21);
+        partido.setBounds(120, 120, 250, 21);
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -794,14 +794,14 @@ public class Candidato extends javax.swing.JInternalFrame {
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel5.setText("Cargo:");
         JPanelCampos.add(jLabel5);
-        jLabel5.setBounds(30, 120, 80, 20);
+        jLabel5.setBounds(30, 150, 80, 20);
 
         puesto.setModel(modelCombo = new DefaultComboBoxModel());
         puesto.setComponentPopupMenu(popupcarrera);
         puesto.setEnabled(false);
         puesto.setName("Profesor"); // NOI18N
         JPanelCampos.add(puesto);
-        puesto.setBounds(120, 120, 250, 21);
+        puesto.setBounds(120, 150, 250, 21);
 
         apellidos.setEditable(false);
         apellidos.setHorizontalAlignment(javax.swing.JTextField.LEFT);
@@ -821,13 +821,13 @@ public class Candidato extends javax.swing.JInternalFrame {
             }
         });
         JPanelCampos.add(apellidos);
-        apellidos.setBounds(530, 60, 110, 21);
+        apellidos.setBounds(120, 90, 250, 21);
 
         jLabel16.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel16.setText("Apellidos:");
         JPanelCampos.add(jLabel16);
-        jLabel16.setBounds(440, 60, 83, 17);
+        jLabel16.setBounds(30, 90, 80, 17);
 
         panelImage.add(JPanelCampos);
         JPanelCampos.setBounds(0, 40, 880, 190);
