@@ -9,13 +9,13 @@ import Capa_Negocio.FormatoFecha;
 import Capa_Negocio.Peticiones;
 import Capa_Negocio.TipoFiltro;
 import Capa_Negocio.Utilidades;
-import static Capa_Presentacion.Pagos.beca;
-import static Capa_Presentacion.Pagos.cGrupo;
-import static Capa_Presentacion.Pagos.codigoa;
-import static Capa_Presentacion.Pagos.estado;
-import static Capa_Presentacion.Pagos.inicioalumno;
-import static Capa_Presentacion.Pagos.nombrealumno;
-import static Capa_Presentacion.Pagos.idalumno;
+import static Capa_Presentacion.Ingreso_Votos.beca;
+import static Capa_Presentacion.Ingreso_Votos.cGrupo;
+import static Capa_Presentacion.Ingreso_Votos.codigoa;
+import static Capa_Presentacion.Ingreso_Votos.estado;
+import static Capa_Presentacion.Ingreso_Votos.inicioalumno;
+import static Capa_Presentacion.Ingreso_Votos.nombrealumno;
+import static Capa_Presentacion.Ingreso_Votos.idalumno;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -38,7 +38,7 @@ public class BuscarAlumno extends javax.swing.JInternalFrame {
     /*El modelo se define en : Jtable-->propiedades-->model--> <User Code> */
     DefaultTableModel model;
     DefaultComboBoxModel modelCombo;
-    String[] titulos = {"Código", "Nombres", "Apellidos", "Fecha Nec", "Estado","Id"};//Titulos para Jtabla
+    String[] titulos = {"Código", "Centro", "Estado","Id"};//Titulos para Jtabla
     /*Se hace una instancia de la clase que recibira las peticiones de esta capa de aplicación*/
     Peticiones peticiones = new Peticiones();
     int nidalumno;
@@ -125,25 +125,26 @@ public class BuscarAlumno extends javax.swing.JInternalFrame {
      * @return 
      */
     private void MostrarDatos(String Dato) {
-        String[] campos = {"alumno.codigo", "alumno.nombres", "alumno.apellidos", "DATE_FORMAT(alumno.fechanacimiento,'%d-%m-%Y')", "alumno.estado","alumno.idalumno"};
-        String[] condiciones = {"alumno.estado=1 and alumno.codigo"};
+        String[] campos = {"mesa.nombre", "centro.nombre", "mesa.estado", "mesa.idmesa"};
+        String[] condiciones = {"mesa.estado=1 and mesa.nombre"};
         String[] Id = {Dato};
+        String inner = " INNER JOIN centro on mesa.centro_idcentro=centro.idcentro";
 
         if (this.rbCodigo.isSelected()) {
             if (!Dato.isEmpty()) {
                 removejtable();
-                model = peticiones.getRegistroPorPks(model, "alumno", campos, condiciones, Id, "");
+                model = peticiones.getRegistroPorPks(model, "mesa", campos, condiciones, Id, inner);
             } else {
                 JOptionPane.showInternalMessageDialog(this, "Debe ingresar un codigo para la busqueda");
             }
         }
         if (this.rbNombre.isSelected()) {
             removejtable();
-            model = peticiones.getRegistroPorLike(model, "alumno", campos, "alumno.estado=1 and alumno.nombres", Dato, "");
+            model = peticiones.getRegistroPorLike(model, "mesa", campos, "mesa.estado=1 and mesa.nombre", Dato, inner);
         }
         if (this.rbApellido.isSelected()) {
             removejtable();
-            model = peticiones.getRegistroPorLike(model, "alumno", campos, "alumno.estado=1 and alumno.apellidos", Dato, "");
+            model = peticiones.getRegistroPorLike(model, "mesa", campos, "mesa.estado=1 and mesa.nombre", Dato, inner);
         }
         Utilidades.ajustarAnchoColumnas(alumnos);
     }
@@ -218,7 +219,7 @@ public class BuscarAlumno extends javax.swing.JInternalFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setForeground(new java.awt.Color(0, 0, 0));
         setIconifiable(true);
-        setTitle("Alumnos");
+        setTitle("Mesas");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setName("buscaralumnos"); // NOI18N
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
@@ -318,9 +319,9 @@ public class BuscarAlumno extends javax.swing.JInternalFrame {
 
             jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
             jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/buscar.png"))); // NOI18N
-            jLabel7.setText("Buscar Alumno por:");
+            jLabel7.setText("Buscar Mesa por:");
             JPanelBusqueda.add(jLabel7);
-            jLabel7.setBounds(117, 2, 173, 40);
+            jLabel7.setBounds(117, 2, 155, 40);
 
             busqueda.setPreferredSize(new java.awt.Dimension(250, 27));
             busqueda.addActionListener(new java.awt.event.ActionListener() {
@@ -378,7 +379,7 @@ public class BuscarAlumno extends javax.swing.JInternalFrame {
             jLabel8.setFont(new java.awt.Font("Script MT Bold", 1, 32)); // NOI18N
             jLabel8.setForeground(new java.awt.Color(255, 255, 255));
             jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/alumno.png"))); // NOI18N
-            jLabel8.setText("<--Alumnos-->");
+            jLabel8.setText("<--Buscar Mesa-->");
             pnlPaginador.add(jLabel8, new java.awt.GridBagConstraints());
 
             panelImage.add(pnlPaginador);
@@ -441,22 +442,22 @@ public class BuscarAlumno extends javax.swing.JInternalFrame {
 
             codigoa.setText(alumnos.getValueAt(p, 0).toString());
             //filaseleccionada(alumnos.getValueAt(p, 0).toString());
-            cGrupo.removeAllItems();
-            Pagos.llenarcombogrupo(alumnos.getValueAt(p, 0).toString());
-            nombrealumno.setText(alumnos.getValueAt(p, 1).toString() + " " + alumnos.getValueAt(p, 2).toString());
+            //cGrupo.removeAllItems();
+            //Ingreso_Votos.llenarcombogrupo(alumnos.getValueAt(p, 0).toString());
+            nombrealumno.setText(alumnos.getValueAt(p, 1).toString());
             //beca.setText(alumnos.getValueAt(p, 4).toString());
             //Date fechaini = FormatoFecha.StringToDate(alumnos.getValueAt(p, 5).toString());
             //inicioalumno.setDate(fechaini);
 
-            if (alumnos.getValueAt(p, 4).toString().equals("Inactivo")) {
-                estado.setText(alumnos.getValueAt(p, 4).toString());
+            if (alumnos.getValueAt(p, 2).toString().equals("Inactivo")) {
+                estado.setText(alumnos.getValueAt(p, 2).toString());
                 //estado.setText("Inactivo");
                 estado.setForeground(Color.red);
-            } else if (alumnos.getValueAt(p, 4).toString().equals("Activo")) {
-                estado.setText(alumnos.getValueAt(p, 4).toString());
+            } else if (alumnos.getValueAt(p, 2).toString().equals("Activo")) {
+                estado.setText(alumnos.getValueAt(p, 2).toString());
                 estado.setForeground(Color.WHITE);
             }
-            idalumno=(alumnos.getValueAt(p, 5).toString());
+            idalumno=(alumnos.getValueAt(p, 3).toString());
             this.dispose();
         }
     }//GEN-LAST:event_alumnosKeyPressed

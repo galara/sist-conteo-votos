@@ -69,6 +69,9 @@ public class Principal extends javax.swing.JFrame {
         mpuesto_politico = new javax.swing.JMenuItem();
         mpartido = new javax.swing.JMenuItem();
         mcandidato = new javax.swing.JMenuItem();
+        mmesa = new javax.swing.JMenuItem();
+        mcentro = new javax.swing.JMenuItem();
+        mvotos = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         musuario = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
@@ -197,6 +200,30 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jMenu3.add(mcandidato);
+
+        mmesa.setText("Mesa");
+        mmesa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mmesaActionPerformed(evt);
+            }
+        });
+        jMenu3.add(mmesa);
+
+        mcentro.setText("Centro");
+        mcentro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mcentroActionPerformed(evt);
+            }
+        });
+        jMenu3.add(mcentro);
+
+        mvotos.setText("Votos");
+        mvotos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mvotosActionPerformed(evt);
+            }
+        });
+        jMenu3.add(mvotos);
 
         jMenuBar1.add(jMenu3);
 
@@ -401,6 +428,45 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_mcandidatoActionPerformed
 
+    private void mmesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mmesaActionPerformed
+        // TODO add your handling code here:
+        if (AccesoUsuario.AccesosUsuario(mpuesto_politico.getName()) == true) {
+            Mesa form = new Mesa();
+            if (form == null) {
+                form = new Mesa();
+            }
+            AddForms.adminInternalFrame(dp, form);
+        } else {
+            JOptionPane.showMessageDialog(this, "No tiene Acceso para realizar esta operación ");
+        }
+    }//GEN-LAST:event_mmesaActionPerformed
+
+    private void mcentroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mcentroActionPerformed
+        // TODO add your handling code here:
+        if (AccesoUsuario.AccesosUsuario(mpuesto_politico.getName()) == true) {
+            Centro form = new Centro();
+            if (form == null) {
+                form = new Centro();
+            }
+            AddForms.adminInternalFrame(dp, form);
+        } else {
+            JOptionPane.showMessageDialog(this, "No tiene Acceso para realizar esta operación ");
+        }
+    }//GEN-LAST:event_mcentroActionPerformed
+
+    private void mvotosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mvotosActionPerformed
+        // TODO add your handling code here:
+        if (AccesoUsuario.AccesosUsuario(mpuesto_politico.getName()) == true) {
+            Ingreso_Votos form = new Ingreso_Votos();
+            if (form == null) {
+                form = new Ingreso_Votos();
+            }
+            AddForms.adminInternalFrame(dp, form);
+        } else {
+            JOptionPane.showMessageDialog(this, "No tiene Acceso para realizar esta operación ");
+        }
+    }//GEN-LAST:event_mvotosActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -439,10 +505,13 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JMenuItem mcandidato;
+    private javax.swing.JMenuItem mcentro;
+    private javax.swing.JMenuItem mmesa;
     private javax.swing.JMenuItem mpartido;
     private javax.swing.JMenuItem mpuesto_politico;
     private javax.swing.JMenuItem msalir;
     private javax.swing.JMenuItem musuario;
+    private javax.swing.JMenuItem mvotos;
     private javax.swing.JLabel sistema;
     private javax.swing.JLabel usuario;
     // End of variables declaration//GEN-END:variables

@@ -11,7 +11,7 @@
       <Color blue="0" green="0" red="0" type="rgb"/>
     </Property>
     <Property name="iconifiable" type="boolean" value="true"/>
-    <Property name="title" type="java.lang.String" value="Alumnos"/>
+    <Property name="title" type="java.lang.String" value="Mesas"/>
     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
       <Color id="Cursor Por defecto"/>
     </Property>
@@ -210,7 +210,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/Recursos/buscar.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Buscar Alumno por:"/>
+                <Property name="text" type="java.lang.String" value="Buscar Mesa por:"/>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -330,7 +330,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/Recursos/alumno.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="&lt;--Alumnos--&gt;"/>
+                <Property name="text" type="java.lang.String" value="&lt;--Buscar Mesa--&gt;"/>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
