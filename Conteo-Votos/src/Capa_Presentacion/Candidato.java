@@ -525,11 +525,11 @@ public class Candidato extends javax.swing.JInternalFrame {
         java.awt.GridBagConstraints gridBagConstraints;
 
         popupprofesor = new javax.swing.JPopupMenu();
-        Nuevo_Profesor = new javax.swing.JMenuItem();
-        Actualizar_Profesor = new javax.swing.JMenuItem();
+        Nuevo_Partido = new javax.swing.JMenuItem();
+        Actualizar_Partido = new javax.swing.JMenuItem();
         popupcarrera = new javax.swing.JPopupMenu();
-        Nueva_Carrera = new javax.swing.JMenuItem();
-        Actualizar_Carrera = new javax.swing.JMenuItem();
+        Nueva_Candidatura = new javax.swing.JMenuItem();
+        Actualizar_Candidatura = new javax.swing.JMenuItem();
         panelImage = new elaprendiz.gui.panel.PanelImage();
         pnlActionButtons = new javax.swing.JPanel();
         bntNuevo = new elaprendiz.gui.button.ButtonRect();
@@ -569,43 +569,43 @@ public class Candidato extends javax.swing.JInternalFrame {
         pnlPaginador = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
 
-        Nuevo_Profesor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/profesor.png"))); // NOI18N
-        Nuevo_Profesor.setText("Nuevo Profesor");
-        Nuevo_Profesor.setName("Profesor Principal"); // NOI18N
-        Nuevo_Profesor.addActionListener(new java.awt.event.ActionListener() {
+        Nuevo_Partido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/profesor.png"))); // NOI18N
+        Nuevo_Partido.setText("Nuevo Profesor");
+        Nuevo_Partido.setName("Profesor Principal"); // NOI18N
+        Nuevo_Partido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Nuevo_ProfesorActionPerformed(evt);
+                Nuevo_PartidoActionPerformed(evt);
             }
         });
-        popupprofesor.add(Nuevo_Profesor);
+        popupprofesor.add(Nuevo_Partido);
 
-        Actualizar_Profesor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/update.png"))); // NOI18N
-        Actualizar_Profesor.setText("Actualizar Combo");
-        Actualizar_Profesor.addActionListener(new java.awt.event.ActionListener() {
+        Actualizar_Partido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/update.png"))); // NOI18N
+        Actualizar_Partido.setText("Actualizar Combo");
+        Actualizar_Partido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Actualizar_ProfesorActionPerformed(evt);
+                Actualizar_PartidoActionPerformed(evt);
             }
         });
-        popupprofesor.add(Actualizar_Profesor);
+        popupprofesor.add(Actualizar_Partido);
 
-        Nueva_Carrera.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/carrera.png"))); // NOI18N
-        Nueva_Carrera.setText("Nueva Carrera");
-        Nueva_Carrera.setName("Carrera Principal"); // NOI18N
-        Nueva_Carrera.addActionListener(new java.awt.event.ActionListener() {
+        Nueva_Candidatura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/carrera.png"))); // NOI18N
+        Nueva_Candidatura.setText("Nueva Carrera");
+        Nueva_Candidatura.setName("Carrera Principal"); // NOI18N
+        Nueva_Candidatura.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Nueva_CarreraActionPerformed(evt);
+                Nueva_CandidaturaActionPerformed(evt);
             }
         });
-        popupcarrera.add(Nueva_Carrera);
+        popupcarrera.add(Nueva_Candidatura);
 
-        Actualizar_Carrera.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/update.png"))); // NOI18N
-        Actualizar_Carrera.setText("Actualizar Combo");
-        Actualizar_Carrera.addActionListener(new java.awt.event.ActionListener() {
+        Actualizar_Candidatura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/update.png"))); // NOI18N
+        Actualizar_Candidatura.setText("Actualizar Combo");
+        Actualizar_Candidatura.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Actualizar_CarreraActionPerformed(evt);
+                Actualizar_CandidaturaActionPerformed(evt);
             }
         });
-        popupcarrera.add(Actualizar_Carrera);
+        popupcarrera.add(Actualizar_Candidatura);
 
         setBackground(new java.awt.Color(0, 0, 0));
         setClosable(true);
@@ -808,7 +808,7 @@ public class Candidato extends javax.swing.JInternalFrame {
         fechafin.setMinSelectableDate(new java.util.Date(-62135744300000L));
         fechafin.setPreferredSize(new java.awt.Dimension(120, 22));
         JPanelCampos.add(fechafin);
-        fechafin.setBounds(530, 150, 110, 21);
+        fechafin.setBounds(530, 150, 150, 21);
 
         estado.setBackground(new java.awt.Color(51, 153, 255));
         estado.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -818,7 +818,7 @@ public class Candidato extends javax.swing.JInternalFrame {
         estado.setName("JRadioButton"); // NOI18N
         estado.setNextFocusableComponent(fechainicio);
         JPanelCampos.add(estado);
-        estado.setBounds(530, 90, 110, 21);
+        estado.setBounds(530, 90, 150, 21);
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
@@ -850,13 +850,13 @@ public class Candidato extends javax.swing.JInternalFrame {
         fechainicio.setNextFocusableComponent(fechafin);
         fechainicio.setPreferredSize(new java.awt.Dimension(120, 22));
         JPanelCampos.add(fechainicio);
-        fechainicio.setBounds(530, 120, 110, 21);
+        fechainicio.setBounds(530, 120, 150, 21);
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel5.setText("Cargo:");
+        jLabel5.setText("Candidatura:");
         JPanelCampos.add(jLabel5);
-        jLabel5.setBounds(30, 150, 80, 20);
+        jLabel5.setBounds(20, 150, 90, 20);
 
         puesto.setModel(modelCombo = new DefaultComboBoxModel());
         puesto.setComponentPopupMenu(popupcarrera);
@@ -902,7 +902,7 @@ public class Candidato extends javax.swing.JInternalFrame {
         Cmunicipio.setEnabled(false);
         Cmunicipio.setName("Profesor"); // NOI18N
         JPanelCampos.add(Cmunicipio);
-        Cmunicipio.setBounds(530, 60, 110, 20);
+        Cmunicipio.setBounds(530, 60, 150, 20);
 
         panelImage.add(JPanelCampos);
         JPanelCampos.setBounds(0, 40, 880, 190);
@@ -1271,41 +1271,41 @@ public class Candidato extends javax.swing.JInternalFrame {
         busqueda.requestFocus();
     }//GEN-LAST:event_rbApellidosActionPerformed
 
-    private void Actualizar_ProfesorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Actualizar_ProfesorActionPerformed
+    private void Actualizar_PartidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Actualizar_PartidoActionPerformed
         // TODO add your handling code here:
         llenarcombopartido_politico();
-    }//GEN-LAST:event_Actualizar_ProfesorActionPerformed
+    }//GEN-LAST:event_Actualizar_PartidoActionPerformed
 
-    private void Nuevo_ProfesorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Nuevo_ProfesorActionPerformed
+    private void Nuevo_PartidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Nuevo_PartidoActionPerformed
         // TODO add your handling code here:
-        if (AccesoUsuario.AccesosUsuario(Nuevo_Profesor.getName()) == true) {
-            Profesor frmProfesor = new Profesor();
+        if (AccesoUsuario.AccesosUsuario(Nuevo_Partido.getName()) == true) {
+            Cargo_politico frmProfesor = new Cargo_politico();
             if (frmProfesor == null) {
-                frmProfesor = new Profesor();
+                frmProfesor = new Cargo_politico();
             }
             adminInternalFrame(dp, frmProfesor);
         } else {
             JOptionPane.showMessageDialog(this, "No tiene Acceso para realizar esta operación ");
         }
-    }//GEN-LAST:event_Nuevo_ProfesorActionPerformed
+    }//GEN-LAST:event_Nuevo_PartidoActionPerformed
 
-    private void Nueva_CarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Nueva_CarreraActionPerformed
+    private void Nueva_CandidaturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Nueva_CandidaturaActionPerformed
         // TODO add your handling code here:
-        if (AccesoUsuario.AccesosUsuario(Nueva_Carrera.getName()) == true) {
-            Carrera frmCarrera = new Carrera();
+        if (AccesoUsuario.AccesosUsuario(Nueva_Candidatura.getName()) == true) {
+            Partido_politico frmCarrera = new Partido_politico();
             if (frmCarrera == null) {
-                frmCarrera = new Carrera();
+                frmCarrera = new Partido_politico();
             }
             adminInternalFrame(dp, frmCarrera);
         } else {
             JOptionPane.showMessageDialog(this, "No tiene Acceso para realizar esta operación ");
         }
-    }//GEN-LAST:event_Nueva_CarreraActionPerformed
+    }//GEN-LAST:event_Nueva_CandidaturaActionPerformed
 
-    private void Actualizar_CarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Actualizar_CarreraActionPerformed
+    private void Actualizar_CandidaturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Actualizar_CandidaturaActionPerformed
         // TODO add your handling code here:
         llenarcombopuesto();
-    }//GEN-LAST:event_Actualizar_CarreraActionPerformed
+    }//GEN-LAST:event_Actualizar_CandidaturaActionPerformed
 
     private void diaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_diaKeyPressed
         // TODO add your handling code here:
@@ -1331,14 +1331,14 @@ public class Candidato extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem Actualizar_Carrera;
-    private javax.swing.JMenuItem Actualizar_Profesor;
+    private javax.swing.JMenuItem Actualizar_Candidatura;
+    private javax.swing.JMenuItem Actualizar_Partido;
     private javax.swing.JComboBox Cmunicipio;
     private javax.swing.JPanel JPanelBusqueda;
     private javax.swing.JPanel JPanelCampos;
     private javax.swing.JPanel JPanelTable;
-    private javax.swing.JMenuItem Nueva_Carrera;
-    private javax.swing.JMenuItem Nuevo_Profesor;
+    private javax.swing.JMenuItem Nueva_Candidatura;
+    private javax.swing.JMenuItem Nuevo_Partido;
     private elaprendiz.gui.textField.TextField apellidos;
     private elaprendiz.gui.button.ButtonRect bntCancelar;
     private elaprendiz.gui.button.ButtonRect bntEliminar;

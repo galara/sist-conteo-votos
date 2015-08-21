@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 public class AccesoUsuario {
 
     private static String usuario = null;
+    private static int idusuario ;
     PreparedStatement ps = null;
     static java.sql.Connection conn;//getConnection intentara establecer una conexión.
     static boolean activo = false;
@@ -68,11 +69,21 @@ public class AccesoUsuario {
         return usuario;
     }
 
+    public static int getIdusuario() {
+        return idusuario;
+    }
+
+    public static void setIdusuario(int idusuario) {
+        AccesoUsuario.idusuario = idusuario;
+    }
+    
+    
+
     private static Estado initUsuario(String login, String clave) {
 
         conn = BdConexion.getConexion();
         ResultSet rs;
-        String sql = "SELECT usuario,password,estado FROM usuario where usuario='" + login + "'";
+        String sql = "SELECT usuario,password,estado,idusuario FROM usuario where usuario='" + login + "'";
         String password = null;
         rs = BdConexion.getResultSet(sql);
 
@@ -85,6 +96,7 @@ public class AccesoUsuario {
                         usuario = (rs.getString(1));
                         password = (rs.getString(2));
                         activo = rs.getBoolean(3);
+                        setIdusuario(rs.getInt(4));
                     }
                 } else {
                     usuario = null;

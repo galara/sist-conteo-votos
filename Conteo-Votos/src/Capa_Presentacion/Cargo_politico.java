@@ -347,7 +347,7 @@ public class Cargo_politico extends javax.swing.JInternalFrame {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel1.setText("Descripción:");
+        jLabel1.setText("Candidatura:");
         JPanelCampos.add(jLabel1);
         jLabel1.setBounds(120, 40, 100, 20);
 

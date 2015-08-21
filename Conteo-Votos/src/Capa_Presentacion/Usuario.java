@@ -843,7 +843,8 @@ public class Usuario extends javax.swing.JInternalFrame {
                             conn.setAutoCommit(true);
                         }
                     } catch (SQLException ex1) {
-                        Logger.getLogger(Pagos.class.getName()).log(Level.SEVERE, null, ex1);
+                        JOptionPane.showMessageDialog(null, ex1);
+                        //Logger.getLogger(Pagos.class.getName()).log(Level.SEVERE, null, ex1);
                     }
                     JOptionPane.showMessageDialog(null, ex);
                 }

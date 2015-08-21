@@ -8,13 +8,13 @@ import Capa_Negocio.FiltroCampos;
 import Capa_Negocio.Peticiones;
 import Capa_Negocio.TipoFiltro;
 import Capa_Negocio.Utilidades;
-import static Capa_Presentacion.Ingreso_Votos.codigoa;
-import static Capa_Presentacion.Ingreso_Votos.estado;
-import static Capa_Presentacion.Ingreso_Votos.idalumno;
+import static Capa_Presentacion.Ingreso_Votos.codigomesa;
+//import static Capa_Presentacion.Ingreso_Votos.estado;
+import static Capa_Presentacion.Ingreso_Votos.idmesa;
 import static Capa_Presentacion.Ingreso_Votos.idcentro;
 import static Capa_Presentacion.Ingreso_Votos.idmunicipio;
-import static Capa_Presentacion.Ingreso_Votos.municipio;
-import static Capa_Presentacion.Ingreso_Votos.nombrealumno;
+import static Capa_Presentacion.Ingreso_Votos.nombremunicipio;
+import static Capa_Presentacion.Ingreso_Votos.nombrecentro;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -32,7 +32,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class BuscarAlumno extends javax.swing.JInternalFrame {
 
-    private static Horario frmHorario = new Horario();
+    //private static Horario frmHorario = new Horario();
     /*El modelo se define en : Jtable-->propiedades-->model--> <User Code> */
     DefaultTableModel model;
     DefaultComboBoxModel modelCombo;
@@ -174,7 +174,7 @@ public class BuscarAlumno extends javax.swing.JInternalFrame {
 //        String[] cond = {"alumno.codigo"};
 //        String[] id = {codigo};
 //
-//        String inner = " grupo INNER JOIN alumnosengrupo ON grupo.idgrupo = alumnosengrupo.grupo_idgrupo INNER JOIN alumno ON alumnosengrupo.alumno_idalumno = alumno.idalumno ";
+//        String inner = " grupo INNER JOIN alumnosengrupo ON grupo.idgrupo = alumnosengrupo.grupo_idgrupo INNER JOIN alumno ON alumnosengrupo.alumno_idalumno = alumno.idmesa ";
 //        if (!codigo.isEmpty()) {
 //
 //            String conct = "concat(grupo.codigo,' ',grupo.descripcion)";
@@ -334,9 +334,9 @@ public class BuscarAlumno extends javax.swing.JInternalFrame {
 
             jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
             jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/buscar.png"))); // NOI18N
-            jLabel7.setText("Buscar Mesa por:");
+            jLabel7.setText("Buscar :");
             JPanelBusqueda.add(jLabel7);
-            jLabel7.setBounds(117, 2, 155, 40);
+            jLabel7.setBounds(172, 2, 100, 40);
 
             busqueda.setPreferredSize(new java.awt.Dimension(250, 27));
             busqueda.addActionListener(new java.awt.event.ActionListener() {
@@ -455,25 +455,25 @@ public class BuscarAlumno extends javax.swing.JInternalFrame {
         if (key == java.awt.event.KeyEvent.VK_ENTER) {
             int p = alumnos.getSelectedRow();
 
-            codigoa.setText(alumnos.getValueAt(p, 0).toString());
+            codigomesa.setText(alumnos.getValueAt(p, 0).toString());
             //filaseleccionada(alumnos.getValueAt(p, 0).toString());
             //cGrupo.removeAllItems();
             //Ingreso_Votos.llenarcombogrupo(alumnos.getValueAt(p, 0).toString());
-            nombrealumno.setText(alumnos.getValueAt(p, 1).toString());
+            nombrecentro.setText(alumnos.getValueAt(p, 1).toString());
             //beca.setText(alumnos.getValueAt(p, 4).toString());
             //Date fechaini = FormatoFecha.StringToDate(alumnos.getValueAt(p, 5).toString());
             //inicioalumno.setDate(fechaini);
 
-            if (alumnos.getValueAt(p, 2).toString().equals("Inactivo")) {
-                estado.setText(alumnos.getValueAt(p, 2).toString());
-                //estado.setText("Inactivo");
-                estado.setForeground(Color.red);
-            } else if (alumnos.getValueAt(p, 2).toString().equals("Activo")) {
-                estado.setText(alumnos.getValueAt(p, 2).toString());
-                estado.setForeground(Color.WHITE);
-            }
-            idalumno=(alumnos.getValueAt(p, 3).toString());
-            municipio.setText(alumnos.getValueAt(p, 4).toString());
+//            if (alumnos.getValueAt(p, 2).toString().equals("Inactivo")) {
+//                estado.setText(alumnos.getValueAt(p, 2).toString());
+//                //estado.setText("Inactivo");
+//                estado.setForeground(Color.red);
+//            } else if (alumnos.getValueAt(p, 2).toString().equals("Activo")) {
+//                estado.setText(alumnos.getValueAt(p, 2).toString());
+//                estado.setForeground(Color.WHITE);
+//            }
+            idmesa=(alumnos.getValueAt(p, 3).toString());
+            nombremunicipio.setText(alumnos.getValueAt(p, 4).toString());
             idcentro.setText(alumnos.getValueAt(p, 5).toString());
             idmunicipio.setText(alumnos.getValueAt(p, 6).toString());
             

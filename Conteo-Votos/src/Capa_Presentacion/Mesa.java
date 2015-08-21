@@ -483,7 +483,7 @@ public class Mesa extends javax.swing.JInternalFrame {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel1.setText("Pensum:");
+        jLabel1.setText("No. Mesa:");
         JPanelCampos.add(jLabel1);
         jLabel1.setBounds(90, 30, 90, 20);
 
@@ -512,9 +512,9 @@ public class Mesa extends javax.swing.JInternalFrame {
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel5.setText("Centro:");
+        jLabel5.setText("Centro Votación:");
         JPanelCampos.add(jLabel5);
-        jLabel5.setBounds(100, 60, 80, 20);
+        jLabel5.setBounds(50, 60, 130, 20);
 
         nombre.setEditable(false);
         nombre.setHorizontalAlignment(javax.swing.JTextField.LEFT);
@@ -802,9 +802,9 @@ public class Mesa extends javax.swing.JInternalFrame {
     private void Nueva_CarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Nueva_CarreraActionPerformed
         // TODO add your handling code here:
         if (AccesoUsuario.AccesosUsuario(Nueva_Carrera.getName()) == true) {
-            Carrera frmCarrera = new Carrera();
+            Centro frmCarrera = new Centro();
             if (frmCarrera == null) {
-                frmCarrera = new Carrera();
+                frmCarrera = new Centro();
             }
             adminInternalFrame(dp, frmCarrera);
         } else {

@@ -295,9 +295,6 @@ public class Centro extends javax.swing.JInternalFrame {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        popupcarrera = new javax.swing.JPopupMenu();
-        Nueva_Carrera = new javax.swing.JMenuItem();
-        Actualizar_Carrera = new javax.swing.JMenuItem();
         panelImage = new elaprendiz.gui.panel.PanelImage();
         pnlActionButtons = new javax.swing.JPanel();
         bntNuevo = new elaprendiz.gui.button.ButtonRect();
@@ -322,25 +319,6 @@ public class Centro extends javax.swing.JInternalFrame {
         rbNombres = new javax.swing.JRadioButton();
         pnlPaginador = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
-
-        Nueva_Carrera.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/carrera.png"))); // NOI18N
-        Nueva_Carrera.setText("Nueva Carrera");
-        Nueva_Carrera.setName("Carrera Principal"); // NOI18N
-        Nueva_Carrera.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Nueva_CarreraActionPerformed(evt);
-            }
-        });
-        popupcarrera.add(Nueva_Carrera);
-
-        Actualizar_Carrera.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/update.png"))); // NOI18N
-        Actualizar_Carrera.setText("Actualizar Combo");
-        Actualizar_Carrera.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Actualizar_CarreraActionPerformed(evt);
-            }
-        });
-        popupcarrera.add(Actualizar_Carrera);
 
         setBackground(new java.awt.Color(0, 0, 0));
         setClosable(true);
@@ -504,7 +482,6 @@ public class Centro extends javax.swing.JInternalFrame {
         estado.setBounds(190, 90, 160, 21);
 
         centro.setModel(modelCombo = new DefaultComboBoxModel());
-        centro.setComponentPopupMenu(popupcarrera);
         centro.setEnabled(false);
         centro.setName("Pensum"); // NOI18N
         JPanelCampos.add(centro);
@@ -799,31 +776,11 @@ public class Centro extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_tcentroKeyPressed
 
-    private void Nueva_CarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Nueva_CarreraActionPerformed
-        // TODO add your handling code here:
-        if (AccesoUsuario.AccesosUsuario(Nueva_Carrera.getName()) == true) {
-            Carrera frmCarrera = new Carrera();
-            if (frmCarrera == null) {
-                frmCarrera = new Carrera();
-            }
-            adminInternalFrame(dp, frmCarrera);
-        } else {
-            JOptionPane.showMessageDialog(this, "No tiene Acceso para realizar esta operación ");
-        }
-    }//GEN-LAST:event_Nueva_CarreraActionPerformed
-
-    private void Actualizar_CarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Actualizar_CarreraActionPerformed
-        // TODO add your handling code here:
-        llenarcombocentro();
-    }//GEN-LAST:event_Actualizar_CarreraActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem Actualizar_Carrera;
     private javax.swing.JPanel JPanelBusqueda;
     private javax.swing.JPanel JPanelCampos;
     private javax.swing.JPanel JPanelTable;
-    private javax.swing.JMenuItem Nueva_Carrera;
     private elaprendiz.gui.button.ButtonRect bntCancelar;
     private elaprendiz.gui.button.ButtonRect bntEliminar;
     private elaprendiz.gui.button.ButtonRect bntGuardar;
@@ -843,7 +800,6 @@ public class Centro extends javax.swing.JInternalFrame {
     private elaprendiz.gui.panel.PanelImage panelImage;
     private javax.swing.JPanel pnlActionButtons;
     private javax.swing.JPanel pnlPaginador;
-    private javax.swing.JPopupMenu popupcarrera;
     private javax.swing.JRadioButton rbNombres;
     private javax.swing.JTable tcentro;
     // End of variables declaration//GEN-END:variables

@@ -1,6 +1,6 @@
 package Capa_Negocio;
 
-import Capa_Presentacion.Pagos;
+//import Capa_Presentacion.Pagos;
 import java.awt.Component;
 import java.awt.Font;
 import javax.swing.AbstractCellEditor;
@@ -31,7 +31,7 @@ public class CellEditorSpinnerPago extends AbstractCellEditor implements TableCe
         spinner = new JSpinner();
         spinner.setFont(new Font("Tahoma", 1, 14));
         spinner.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        spinner.setModel(new SpinnerNumberModel(0.00, 0.00, 10000.00, sizeDes));
+        spinner.setModel(new SpinnerNumberModel(0, 0, 10000, sizeDes));
 
         ChangeListener listener = new ChangeListener() {
             @Override
@@ -43,9 +43,9 @@ public class CellEditorSpinnerPago extends AbstractCellEditor implements TableCe
                     int sd = -1;
                     valorActual = temp.getValue();
                     if (tbl != null) {
-                        Float pr = (Float) tbl.getValueAt(fila, 2);
-                        float subtotal=(float) (Math.round((Float.parseFloat(valorActual.toString()) * pr) * 100.0) / 100.0);
-                        tbl.setValueAt(subtotal, getFila(), 4);
+                        //Float pr = (Float) tbl.getValueAt(fila, 2);
+                        //float subtotal=(float) (Math.round((Float.parseFloat(valorActual.toString()) * pr) * 100.0) / 100.0);
+                        //tbl.setValueAt(subtotal, getFila(), 4);
                     }
                 }
                 ((DefaultEditor) temp.getEditor()).getTextField().setHorizontalAlignment(JTextField.LEFT);
