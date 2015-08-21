@@ -30,6 +30,7 @@ import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableModel;
 import modelos.mCarrera;
+import modelos.mMunicipio;
 import modelos.mProfesor;
 
 /**
@@ -41,18 +42,18 @@ public class Candidato extends javax.swing.JInternalFrame {
     /*El modelo se define en : Jtable-->propiedades-->model--> <User Code> */
     DefaultTableModel model;
     DefaultComboBoxModel modelCombo;
-    String[] titulos = {"Codigo", "Nombre", "Partido", "Cargo", "Fecha de","Fecha a"};//Titulos para Jtabla
+    String[] titulos = {"Codigo", "Nombre", "Partido", "Cargo", "Fecha de", "Fecha a", "Municipio"};//Titulos para Jtabla
     /*Se hace una instancia de la clase que recibira las peticiones de esta capa de aplicación*/
     Peticiones peticiones = new Peticiones();
     public Hashtable<String, String> hashProfesor = new Hashtable<>();
     public Hashtable<String, String> hashCarrera = new Hashtable<>();
+    public Hashtable<String, String> hashMunicipio = new Hashtable<>();
     int newcodcandidato, idcandidato;
     //private static Profesor frmProfesor = new Profesor();
     //private static Carrera frmCarrera = new Carrera();
     /*Se hace una instancia de la clase que recibira las peticiones de mensages de la capa de aplicación*/
 
     //public static JOptionMessage msg = new JOptionMessage();
-
     /**
      * Creates new form Cliente
      */
@@ -229,6 +230,62 @@ public class Candidato extends javax.swing.JInternalFrame {
         }
     }
 
+    /*
+     *Prepara los parametros para la consulta de datos que deseamos agregar al model del ComboBox
+     *y se los envia a un metodo interno getRegistroCombo() 
+     *
+     */
+    public void llenarcombomunicipio() {
+        String Dato = "1";
+        String[] campos = {"nombre", "idmunicipio"};
+        String[] condiciones = {"estado"};
+        String[] Id = {Dato};
+        Cmunicipio.removeAllItems();
+        //Component cmps = municipio;
+        getRegistromunicipio("municipio", campos, condiciones, Id);
+
+    }
+
+    /*El metodo llenarcombo() envia los parametros para la consulta a la BD y el medoto
+     *getRegistroCombo() se encarga de enviarlos a la capa de AccesoDatos.getRegistros()
+     *quiern devolcera un ResultSet para luego obtener los valores y agregarlos al JConboBox
+     *y a una Hashtable que nos servira para obtener el id y seleccionar valores.
+     */
+    public void getRegistromunicipio(String tabla, String[] campos, String[] campocondicion, String[] condicionid) {
+        try {
+            ResultSet rs;
+            AccesoDatos ac = new AccesoDatos();
+
+            rs = ac.getRegistros(tabla, campos, campocondicion, condicionid, "");
+
+            int cantcampos = campos.length;
+            if (rs != null) {
+
+                DefaultComboBoxModel modeloComboBox;
+                modeloComboBox = new DefaultComboBoxModel();
+                Cmunicipio.setModel(modeloComboBox);
+
+                modeloComboBox.addElement(new mMunicipio("", "0"));
+                if (rs.next()) {//verifica si esta vacio, pero desplaza el puntero al siguiente elemento
+                    int count = 0;
+                    rs.beforeFirst();//regresa el puntero al primer registro
+                    Object[] fila = new Object[cantcampos];
+                    while (rs.next()) {//mientras tenga registros que haga lo siguiente
+                        count++;
+                        modeloComboBox.addElement(new mMunicipio(rs.getString(1), "" + rs.getInt(2)));
+                        hashMunicipio.put(rs.getString(1), "" + count);
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontraron datos para la busqueda", "Error", JOptionPane.INFORMATION_MESSAGE);
+            }
+            //rs.close();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Ocurrio un Error :" + ex, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     /* Este metodo se encarga de filtrar los datos que se deben ingresar en cada uno de los campos del formulario
      * podemos indicar que el usuario ingrese solo numeros , solo letras, numeros y letras, o cualquier caracter
      * tambien podemos validar si se aseptaran espacios en blanco en la cadena ingresada , para mas detalle visualizar
@@ -258,11 +315,11 @@ public class Candidato extends javax.swing.JInternalFrame {
     private void MostrarDatos(String Dato) {
         //String[] titulos = {"Codigo", "Descripción", "Dia", "Profesor","Carrera", "Hora De", "Hora A", "Fecha Inicio","Fecha Fin", "Alumnos","Estado"};//Titulos para Jtabla
         String conct = "concat(candidato.nombres,' ',candidato.apellidos)";
-        String[] campos = {"candidato.codigo", conct, "partido_politico.nombre", "puesto.nombre", "DATE_FORMAT(candidato.fechainicio,'%d-%m-%Y')", "DATE_FORMAT(candidato.fechafin,'%d-%m-%Y')"};
+        String[] campos = {"candidato.codigo", conct, "partido_politico.nombre", "puesto.nombre", "DATE_FORMAT(candidato.fechainicio,'%d-%m-%Y')", "DATE_FORMAT(candidato.fechafin,'%d-%m-%Y')", "municipio.nombre"};
         //String[] campos = {"codigo", "descripcion", "dia", "horariode", "horarioa", "fechainicio", "estado"};
         String[] condiciones = {"candidato.codigo"};
         String[] Id = {Dato};
-        String inner = " INNER JOIN partido_politico on candidato.partido_idpartido=partido_politico.idpartido INNER JOIN puesto on candidato.puesto_idpuesto=puesto.idpuesto ";
+        String inner = " INNER JOIN partido_politico on candidato.partido_idpartido=partido_politico.idpartido INNER JOIN puesto on candidato.puesto_idpuesto=puesto.idpuesto INNER JOIN municipio on candidato.municipio_idmunicipio=municipio.idmunicipio ";
 
         if (this.rbCodigo.isSelected()) {
             if (!Dato.isEmpty()) {
@@ -327,14 +384,15 @@ public class Candidato extends javax.swing.JInternalFrame {
         int fila = horarios.getSelectedRow();
         String[] cond = {"candidato.codigo"};
         String[] id = {(String) horarios.getValueAt(fila, 0)};
-        String inner = " INNER JOIN partido_politico on candidato.partido_idpartido=partido_politico.idpartido INNER JOIN puesto on candidato.puesto_idpuesto=puesto.idpuesto ";
+        String inner = " INNER JOIN partido_politico on candidato.partido_idpartido=partido_politico.idpartido INNER JOIN puesto on candidato.puesto_idpuesto=puesto.idpuesto INNER JOIN municipio on candidato.municipio_idmunicipio=municipio.idmunicipio";
         if (horarios.getValueAt(fila, 0) != null) {
 
             //String conct = "concat(candidato.nombres,' ',candidato.apellidos)";
-            String[] campos = {"candidato.codigo", "candidato.nombres", "candidato.apellidos", "partido_politico.nombre", "puesto.nombre", "candidato.fechainicio", "candidato.fechafin", "candidato.estado", "candidato.idcandidato"};
+            String[] campos = {"candidato.codigo", "candidato.nombres", "candidato.apellidos", "partido_politico.nombre", "puesto.nombre", "candidato.fechainicio", "candidato.fechafin", "candidato.estado", "candidato.idcandidato", "municipio.nombre"};
 
             llenarcombopartido_politico();
             llenarcombopuesto();
+            llenarcombomunicipio();
             Utilidades.setEditableTexto(this.JPanelCampos, true, null, true, "");
 
             ResultSet rs;
@@ -374,6 +432,8 @@ public class Candidato extends javax.swing.JInternalFrame {
                             //inscripcion.setValue(rs.getFloat(12));
                             //colegiatura.setValue(rs.getFloat(13));
                             newcodcandidato = rs.getInt(9);
+                            int munici = Integer.parseInt((String) hashMunicipio.get(rs.getString(10)));
+                            Cmunicipio.setSelectedIndex(munici);
                         }
                     }
                 } catch (SQLException e) {
@@ -495,6 +555,8 @@ public class Candidato extends javax.swing.JInternalFrame {
         puesto = new javax.swing.JComboBox();
         apellidos = new elaprendiz.gui.textField.TextField();
         jLabel16 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        Cmunicipio = new javax.swing.JComboBox();
         JPanelTable = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         horarios = new javax.swing.JTable();
@@ -829,6 +891,19 @@ public class Candidato extends javax.swing.JInternalFrame {
         JPanelCampos.add(jLabel16);
         jLabel16.setBounds(30, 90, 80, 17);
 
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel10.setText("Municipio:");
+        JPanelCampos.add(jLabel10);
+        jLabel10.setBounds(457, 60, 70, 17);
+
+        Cmunicipio.setModel(modelCombo = new DefaultComboBoxModel());
+        Cmunicipio.setComponentPopupMenu(popupcarrera);
+        Cmunicipio.setEnabled(false);
+        Cmunicipio.setName("Profesor"); // NOI18N
+        JPanelCampos.add(Cmunicipio);
+        Cmunicipio.setBounds(530, 60, 110, 20);
+
         panelImage.add(JPanelCampos);
         JPanelCampos.setBounds(0, 40, 880, 190);
 
@@ -959,6 +1034,7 @@ public class Candidato extends javax.swing.JInternalFrame {
             Utilidades.setEditableTexto(this.JPanelCampos, true, null, true, "");
             llenarcombopartido_politico();
             llenarcombopuesto();
+            llenarcombomunicipio();
             estado.setSelected(true);
             this.bntGuardar.setEnabled(true);
             this.bntModificar.setEnabled(false);
@@ -988,7 +1064,7 @@ public class Candidato extends javax.swing.JInternalFrame {
                 generacodigocandidato();
                 boolean seguardo = false;
                 String nombreTabla = "candidato";
-                String campos = "codigo, nombres, apellidos, partido_idpartido, puesto_idpuesto, fechainicio, fechafin, estado";
+                String campos = "codigo, nombres, apellidos, partido_idpartido,puesto_idpuesto, municipio_idmunicipio, fechainicio, fechafin, estado";
                 String fechaini = FormatoFecha.getFormato(fechainicio.getCalendar().getTime(), FormatoFecha.A_M_D);
                 String fechafn = FormatoFecha.getFormato(fechafin.getCalendar().getTime(), FormatoFecha.A_M_D);
 
@@ -998,13 +1074,15 @@ public class Candidato extends javax.swing.JInternalFrame {
                 String idprof = prof.getID();
                 mCarrera carr = (mCarrera) puesto.getSelectedItem();
                 String idpuesto = carr.getID();
+                mMunicipio mun = (mMunicipio) Cmunicipio.getSelectedItem();
+                String idmun = mun.getID();
 
                 int estad = 0;
                 if (this.estado.isSelected()) {
                     estad = 1;
                 }
 
-                Object[] valores = {codigo.getText(), nombres.getText(), apellidos.getText(), idprof, idpuesto,
+                Object[] valores = {codigo.getText(), nombres.getText(), apellidos.getText(), idprof, idpuesto, idmun,
                     fechaini, fechafn, estad
                 };
 
@@ -1102,7 +1180,7 @@ public class Candidato extends javax.swing.JInternalFrame {
                 int fila = horarios.getSelectedRow();
                 String id = (String) "" + horarios.getValueAt(fila, 0);
 
-                String campos = "codigo, nombres, apellidos, partido_idpartido, puesto_idpuesto,fechainicio, fechafin, estado ";
+                String campos = "codigo, nombres, apellidos, partido_idpartido, puesto_idpuesto,municipio_idmunicipio,fechainicio, fechafin, estado ";
                 String fechaini = FormatoFecha.getFormato(fechainicio.getCalendar().getTime(), FormatoFecha.A_M_D);
                 String fechafn = FormatoFecha.getFormato(fechafin.getCalendar().getTime(), FormatoFecha.A_M_D);
                 //Para obtener el id en la base de datos
@@ -1110,13 +1188,15 @@ public class Candidato extends javax.swing.JInternalFrame {
                 String idprof = prof.getID();
                 mCarrera carr = (mCarrera) puesto.getSelectedItem();
                 String idpuesto = carr.getID();
+                mMunicipio mun = (mMunicipio) Cmunicipio.getSelectedItem();
+                String idmun = mun.getID();
 
                 int estad = 0;
                 if (this.estado.isSelected()) {
                     estad = 1;
                 }
 
-                Object[] valores = {codigo.getText(), nombres.getText(),apellidos.getText(), idprof, idpuesto,
+                Object[] valores = {codigo.getText(), nombres.getText(), apellidos.getText(), idprof, idpuesto, idmun,
                     fechaini, fechafn, estad, id
                 };
 
@@ -1253,6 +1333,7 @@ public class Candidato extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem Actualizar_Carrera;
     private javax.swing.JMenuItem Actualizar_Profesor;
+    private javax.swing.JComboBox Cmunicipio;
     private javax.swing.JPanel JPanelBusqueda;
     private javax.swing.JPanel JPanelCampos;
     private javax.swing.JPanel JPanelTable;
@@ -1272,6 +1353,7 @@ public class Candidato extends javax.swing.JInternalFrame {
     private com.toedter.calendar.JDateChooser fechainicio;
     private javax.swing.JTable horarios;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel3;

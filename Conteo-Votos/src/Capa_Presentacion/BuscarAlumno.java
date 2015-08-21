@@ -5,21 +5,19 @@
 package Capa_Presentacion;
 
 import Capa_Negocio.FiltroCampos;
-import Capa_Negocio.FormatoFecha;
 import Capa_Negocio.Peticiones;
 import Capa_Negocio.TipoFiltro;
 import Capa_Negocio.Utilidades;
-import static Capa_Presentacion.Ingreso_Votos.beca;
-import static Capa_Presentacion.Ingreso_Votos.cGrupo;
 import static Capa_Presentacion.Ingreso_Votos.codigoa;
 import static Capa_Presentacion.Ingreso_Votos.estado;
-import static Capa_Presentacion.Ingreso_Votos.inicioalumno;
-import static Capa_Presentacion.Ingreso_Votos.nombrealumno;
 import static Capa_Presentacion.Ingreso_Votos.idalumno;
+import static Capa_Presentacion.Ingreso_Votos.idcentro;
+import static Capa_Presentacion.Ingreso_Votos.idmunicipio;
+import static Capa_Presentacion.Ingreso_Votos.municipio;
+import static Capa_Presentacion.Ingreso_Votos.nombrealumno;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.util.Date;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.DefaultComboBoxModel;
@@ -38,7 +36,7 @@ public class BuscarAlumno extends javax.swing.JInternalFrame {
     /*El modelo se define en : Jtable-->propiedades-->model--> <User Code> */
     DefaultTableModel model;
     DefaultComboBoxModel modelCombo;
-    String[] titulos = {"Código", "Centro", "Estado","Id"};//Titulos para Jtabla
+    String[] titulos = {"Código", "Centro", "Estado","Id","Municipio","idcentro","idmunicipio"};//Titulos para Jtabla
     /*Se hace una instancia de la clase que recibira las peticiones de esta capa de aplicación*/
     Peticiones peticiones = new Peticiones();
     int nidalumno;
@@ -54,6 +52,15 @@ public class BuscarAlumno extends javax.swing.JInternalFrame {
         setFiltroTexto();
         addEscapeKey();
         limpiar();
+        
+        alumnos.getColumnModel().getColumn(5).setMaxWidth(0);
+        alumnos.getColumnModel().getColumn(5).setMinWidth(0);
+        alumnos.getColumnModel().getColumn(5).setPreferredWidth(0);
+        alumnos.doLayout();
+        alumnos.getColumnModel().getColumn(6).setMaxWidth(0);
+        alumnos.getColumnModel().getColumn(6).setMinWidth(0);
+        alumnos.getColumnModel().getColumn(6).setPreferredWidth(0);
+        alumnos.doLayout();
         }
 
     /*addEscapeKey agrega a este JInternalFrame un evento de cerrarVentana() al presionar la tecla "ESC" */
@@ -125,10 +132,10 @@ public class BuscarAlumno extends javax.swing.JInternalFrame {
      * @return 
      */
     private void MostrarDatos(String Dato) {
-        String[] campos = {"mesa.nombre", "centro.nombre", "mesa.estado", "mesa.idmesa"};
+        String[] campos = {"mesa.nombre", "centro.nombre", "mesa.estado", "mesa.idmesa","municipio.nombre","centro.idcentro","municipio.idmunicipio"};
         String[] condiciones = {"mesa.estado=1 and mesa.nombre"};
         String[] Id = {Dato};
-        String inner = " INNER JOIN centro on mesa.centro_idcentro=centro.idcentro";
+        String inner = " INNER JOIN centro on mesa.centro_idcentro=centro.idcentro INNER JOIN municipio on centro.municipio_idmunicipio=municipio.idmunicipio ";
 
         if (this.rbCodigo.isSelected()) {
             if (!Dato.isEmpty()) {
@@ -147,6 +154,14 @@ public class BuscarAlumno extends javax.swing.JInternalFrame {
             model = peticiones.getRegistroPorLike(model, "mesa", campos, "mesa.estado=1 and mesa.nombre", Dato, inner);
         }
         Utilidades.ajustarAnchoColumnas(alumnos);
+        alumnos.getColumnModel().getColumn(5).setMaxWidth(0);
+        alumnos.getColumnModel().getColumn(5).setMinWidth(0);
+        alumnos.getColumnModel().getColumn(5).setPreferredWidth(0);
+        alumnos.doLayout();
+        alumnos.getColumnModel().getColumn(6).setMaxWidth(0);
+        alumnos.getColumnModel().getColumn(6).setMinWidth(0);
+        alumnos.getColumnModel().getColumn(6).setPreferredWidth(0);
+        alumnos.doLayout();
     }
 
 //    /* Este metodo  consulta en la BD el codigo de la fila seleccionada y llena los componentes
@@ -458,6 +473,10 @@ public class BuscarAlumno extends javax.swing.JInternalFrame {
                 estado.setForeground(Color.WHITE);
             }
             idalumno=(alumnos.getValueAt(p, 3).toString());
+            municipio.setText(alumnos.getValueAt(p, 4).toString());
+            idcentro.setText(alumnos.getValueAt(p, 5).toString());
+            idmunicipio.setText(alumnos.getValueAt(p, 6).toString());
+            
             this.dispose();
         }
     }//GEN-LAST:event_alumnosKeyPressed
