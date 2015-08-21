@@ -95,7 +95,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem15.setText("jMenuItem15");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("Principal SYSTEMA DE GESTIÓN \"COMPUVISIÓN\"");
+        setTitle("Principal SYSTEMA DE CONTEO DE VOTOS 2015");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -309,6 +309,8 @@ public class Principal extends javax.swing.JFrame {
         jMenuBar1.add(jMenu4);
 
         setJMenuBar(jMenuBar1);
+
+        getAccessibleContext().setAccessibleName("Principal SYSTEMA DE CONTEO DE VOTOS 2015");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
