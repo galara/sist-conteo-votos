@@ -57,7 +57,7 @@ public class BackupDiario {
 
                 fw = new FileWriter(currentDir);
 
-                Process child = runtime.exec("C:\\Archivos de programa\\MySQL\\MySQL Server 5.6\\bin\\mysqldump -u " + BdConexion.user + " -p" + BdConexion.pass + " --default-character_set=utf8 " + BdConexion.dataBase);
+                Process child = runtime.exec("C:\\Archivos de programa\\MySQL\\MySQL Server 5.5\\bin\\mysqldump -u " + BdConexion.user + " -p" + BdConexion.pass + " --default-character_set=utf8 " + BdConexion.dataBase);
                 InputStreamReader irs = new InputStreamReader(child.getInputStream());
                 BufferedReader br = new BufferedReader(irs);
 

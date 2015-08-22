@@ -296,19 +296,19 @@ public class Ingreso_Votos extends javax.swing.JInternalFrame {
             //Diputados1
             String sql2 = "select candidato.idcandidato, candidato.codigo, concat(candidato.nombres,' ',candidato.apellidos)AS nombre, partido_politico.nombre, puesto.nombre, municipio.nombre,\n"
                     + "        IFNULL((SELECT detalle_votos.cant_votos FROM detalle_votos where candidato.idcandidato = detalle_votos.candidato_idcandidato and detalle_votos.mesa_idmesa=" + "'" + idmesa + "'),0.0) AS 'votoss'\n"
-                    + "        from candidato INNER JOIN partido_politico on candidato.partido_idpartido=partido_politico.idpartido INNER JOIN puesto on candidato.puesto_idpuesto=puesto.idpuesto INNER JOIN municipio on candidato.municipio_idmunicipio=municipio.idmunicipio   where puesto.nombre = 'Diputados1' order by candidato.idcandidato";
+                    + "        from candidato INNER JOIN partido_politico on candidato.partido_idpartido=partido_politico.idpartido INNER JOIN puesto on candidato.puesto_idpuesto=puesto.idpuesto INNER JOIN municipio on candidato.municipio_idmunicipio=municipio.idmunicipio   where puesto.nombre = 'Diputado Listado Nacianal' order by candidato.idcandidato";
             MostrarProductos(model2, tdiputados1, sql2);
 
             //Diputados2
             String sql3 = "select candidato.idcandidato, candidato.codigo, concat(candidato.nombres,' ',candidato.apellidos)AS nombre, partido_politico.nombre, puesto.nombre, municipio.nombre,\n"
                     + "        IFNULL((SELECT detalle_votos.cant_votos FROM detalle_votos where candidato.idcandidato = detalle_votos.candidato_idcandidato and detalle_votos.mesa_idmesa=" + "'" + idmesa + "'),0.0) AS 'votoss'\n"
-                    + "        from candidato INNER JOIN partido_politico on candidato.partido_idpartido=partido_politico.idpartido INNER JOIN puesto on candidato.puesto_idpuesto=puesto.idpuesto INNER JOIN municipio on candidato.municipio_idmunicipio=municipio.idmunicipio   where puesto.nombre = 'Diputados2' order by candidato.idcandidato";
+                    + "        from candidato INNER JOIN partido_politico on candidato.partido_idpartido=partido_politico.idpartido INNER JOIN puesto on candidato.puesto_idpuesto=puesto.idpuesto INNER JOIN municipio on candidato.municipio_idmunicipio=municipio.idmunicipio   where puesto.nombre = 'Diputado Parlacen' order by candidato.idcandidato";
             MostrarProductos(model3, tdiputados2, sql3);
 
             //Diputados3
             String sql4 = "select candidato.idcandidato, candidato.codigo, concat(candidato.nombres,' ',candidato.apellidos)AS nombre, partido_politico.nombre, puesto.nombre, municipio.nombre,\n"
                     + "        IFNULL((SELECT detalle_votos.cant_votos FROM detalle_votos where candidato.idcandidato = detalle_votos.candidato_idcandidato and detalle_votos.mesa_idmesa=" + "'" + idmesa + "'),0.0) AS 'votoss'\n"
-                    + "        from candidato INNER JOIN partido_politico on candidato.partido_idpartido=partido_politico.idpartido INNER JOIN puesto on candidato.puesto_idpuesto=puesto.idpuesto INNER JOIN municipio on candidato.municipio_idmunicipio=municipio.idmunicipio   where puesto.nombre = 'Diputados3' order by candidato.idcandidato";
+                    + "        from candidato INNER JOIN partido_politico on candidato.partido_idpartido=partido_politico.idpartido INNER JOIN puesto on candidato.puesto_idpuesto=puesto.idpuesto INNER JOIN municipio on candidato.municipio_idmunicipio=municipio.idmunicipio   where puesto.nombre = 'Diputado Distrital' order by candidato.idcandidato";
             MostrarProductos(model4, tdiputados3, sql4);
 
             //Alcalde
@@ -466,10 +466,22 @@ public class Ingreso_Votos extends javax.swing.JInternalFrame {
         bntGuardar = new elaprendiz.gui.button.ButtonRect();
         bntCancelar = new elaprendiz.gui.button.ButtonRect();
         bntSalir = new elaprendiz.gui.button.ButtonRect();
-        bntGuardar1 = new elaprendiz.gui.button.ButtonRect();
         JPanelGrupo = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
-        JPanelTable = new javax.swing.JPanel();
+        jLabel19 = new javax.swing.JLabel();
+        nombrecentro = new elaprendiz.gui.textField.TextField();
+        jLabel20 = new javax.swing.JLabel();
+        nombremunicipio = new elaprendiz.gui.textField.TextField();
+        JPanelBusqueda = new javax.swing.JPanel();
+        codigomesa = new elaprendiz.gui.textField.TextField();
+        jLabel16 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        idcentro = new elaprendiz.gui.textField.TextField();
+        idmunicipio = new elaprendiz.gui.textField.TextField();
+        pnlPaginador1 = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        clockDigital2 = new elaprendiz.gui.varios.ClockDigital();
         tbPane = new elaprendiz.gui.panel.TabbedPaneHeader();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -486,21 +498,6 @@ public class Ingreso_Votos extends javax.swing.JInternalFrame {
         jPanel7 = new javax.swing.JPanel();
         jScrollPane7 = new javax.swing.JScrollPane();
         talcalde = new javax.swing.JTable();
-        JPanelBusqueda = new javax.swing.JPanel();
-        codigomesa = new elaprendiz.gui.textField.TextField();
-        jLabel16 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        nombrecentro = new elaprendiz.gui.textField.TextField();
-        jLabel19 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
-        nombremunicipio = new elaprendiz.gui.textField.TextField();
-        idcentro = new elaprendiz.gui.textField.TextField();
-        idmunicipio = new elaprendiz.gui.textField.TextField();
-        JPanelRecibo = new javax.swing.JPanel();
-        jLabel21 = new javax.swing.JLabel();
-        clockDigital2 = new elaprendiz.gui.varios.ClockDigital();
-        pnlPaginador1 = new javax.swing.JPanel();
-        jLabel11 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(0, 0, 0));
         setClosable(true);
@@ -576,22 +573,6 @@ public class Ingreso_Votos extends javax.swing.JInternalFrame {
         gridBagConstraints.insets = new java.awt.Insets(13, 5, 12, 93);
         pnlActionButtons.add(bntSalir, gridBagConstraints);
 
-        bntGuardar1.setBackground(new java.awt.Color(51, 153, 255));
-        bntGuardar1.setMnemonic(KeyEvent.VK_E);
-        bntGuardar1.setText("Resultado General");
-        bntGuardar1.setName("EstadoDeCuenta"); // NOI18N
-        bntGuardar1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bntGuardar1ActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(13, 5, 12, 0);
-        pnlActionButtons.add(bntGuardar1, gridBagConstraints);
-
         panelImage.add(pnlActionButtons);
         pnlActionButtons.setBounds(0, 580, 880, 50);
 
@@ -608,14 +589,101 @@ public class Ingreso_Votos extends javax.swing.JInternalFrame {
             }
         });
         JPanelGrupo.add(jButton2);
-        jButton2.setBounds(120, 10, 100, 23);
+        jButton2.setBounds(40, 10, 100, 23);
+
+        jLabel19.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel19.setText("Centro:");
+        JPanelGrupo.add(jLabel19);
+        jLabel19.setBounds(170, 10, 60, 24);
+
+        nombrecentro.setEditable(false);
+        nombrecentro.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
+        nombrecentro.setPreferredSize(new java.awt.Dimension(250, 27));
+        JPanelGrupo.add(nombrecentro);
+        nombrecentro.setBounds(240, 10, 290, 24);
+
+        jLabel20.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel20.setText("Municipio:");
+        JPanelGrupo.add(jLabel20);
+        jLabel20.setBounds(540, 10, 69, 24);
+
+        nombremunicipio.setEditable(false);
+        nombremunicipio.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
+        nombremunicipio.setPreferredSize(new java.awt.Dimension(250, 27));
+        JPanelGrupo.add(nombremunicipio);
+        nombremunicipio.setBounds(610, 10, 260, 24);
 
         panelImage.add(JPanelGrupo);
-        JPanelGrupo.setBounds(0, 160, 880, 50);
+        JPanelGrupo.setBounds(0, 90, 880, 50);
 
-        JPanelTable.setOpaque(false);
-        JPanelTable.setPreferredSize(new java.awt.Dimension(786, 402));
-        JPanelTable.setLayout(new java.awt.BorderLayout());
+        JPanelBusqueda.setBackground(java.awt.SystemColor.inactiveCaption);
+        JPanelBusqueda.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        JPanelBusqueda.setLayout(null);
+
+        codigomesa.setPreferredSize(new java.awt.Dimension(250, 27));
+        codigomesa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                codigomesaActionPerformed(evt);
+            }
+        });
+        JPanelBusqueda.add(codigomesa);
+        codigomesa.setBounds(120, 10, 97, 24);
+
+        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel16.setText("No. Mesa:");
+        JPanelBusqueda.add(jLabel16);
+        jLabel16.setBounds(10, 10, 100, 24);
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/buscar 2.png"))); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        JPanelBusqueda.add(jButton1);
+        jButton1.setBounds(220, 10, 20, 24);
+
+        idcentro.setEditable(false);
+        idcentro.setVisible(false);
+        idcentro.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        idcentro.setPreferredSize(new java.awt.Dimension(120, 21));
+        JPanelBusqueda.add(idcentro);
+        idcentro.setBounds(270, 10, 20, 24);
+
+        idmunicipio.setEditable(false);
+        idmunicipio.setVisible(false);
+        idmunicipio.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        idmunicipio.setPreferredSize(new java.awt.Dimension(120, 21));
+        JPanelBusqueda.add(idmunicipio);
+        idmunicipio.setBounds(290, 10, 20, 24);
+
+        panelImage.add(JPanelBusqueda);
+        JPanelBusqueda.setBounds(0, 40, 880, 50);
+
+        pnlPaginador1.setBackground(new java.awt.Color(57, 104, 163));
+        pnlPaginador1.setPreferredSize(new java.awt.Dimension(786, 40));
+        pnlPaginador1.setLayout(new java.awt.GridBagLayout());
+
+        jLabel11.setFont(new java.awt.Font("Script MT Bold", 1, 32)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/update.png"))); // NOI18N
+        jLabel11.setText("<--Registro de Votos-->");
+        pnlPaginador1.add(jLabel11, new java.awt.GridBagConstraints());
+
+        jLabel21.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
+        jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel21.setText("Hora");
+        pnlPaginador1.add(jLabel21, new java.awt.GridBagConstraints());
+
+        clockDigital2.setForeground(new java.awt.Color(255, 255, 255));
+        clockDigital2.setFont(new java.awt.Font("Microsoft Sans Serif", 1, 16)); // NOI18N
+        pnlPaginador1.add(clockDigital2, new java.awt.GridBagConstraints());
+
+        panelImage.add(pnlPaginador1);
+        pnlPaginador1.setBounds(0, 0, 880, 40);
 
         tbPane.setOpaque(true);
 
@@ -644,7 +712,7 @@ public class Ingreso_Votos extends javax.swing.JInternalFrame {
 
             jPanel4.add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
-            tbPane.addTab("Presidentes", jPanel4);
+            tbPane.addTab("Presidente", jPanel4);
 
             jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
             jPanel3.setLayout(new java.awt.BorderLayout());
@@ -685,7 +753,7 @@ public class Ingreso_Votos extends javax.swing.JInternalFrame {
 
                 jPanel3.add(jScrollPane4, java.awt.BorderLayout.CENTER);
 
-                tbPane.addTab("Diputado 1", jPanel3);
+                tbPane.addTab("Diputado Listado Nacional", jPanel3);
 
                 jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
                 jPanel5.setLayout(new java.awt.BorderLayout());
@@ -726,7 +794,7 @@ public class Ingreso_Votos extends javax.swing.JInternalFrame {
 
                     jPanel5.add(jScrollPane5, java.awt.BorderLayout.CENTER);
 
-                    tbPane.addTab("Diputado 2", jPanel5);
+                    tbPane.addTab("Diputado Parlacen", jPanel5);
 
                     jPanel6.setBorder(javax.swing.BorderFactory.createEtchedBorder());
                     jPanel6.setLayout(new java.awt.BorderLayout());
@@ -767,7 +835,7 @@ public class Ingreso_Votos extends javax.swing.JInternalFrame {
 
                         jPanel6.add(jScrollPane6, java.awt.BorderLayout.CENTER);
 
-                        tbPane.addTab("Diputado 3", jPanel6);
+                        tbPane.addTab("Diputado Distrital", jPanel6);
 
                         jPanel7.setBorder(javax.swing.BorderFactory.createEtchedBorder());
                         jPanel7.setLayout(new java.awt.BorderLayout());
@@ -810,108 +878,8 @@ public class Ingreso_Votos extends javax.swing.JInternalFrame {
 
                             tbPane.addTab("Alcalde", jPanel7);
 
-                            JPanelTable.add(tbPane, java.awt.BorderLayout.CENTER);
-
-                            panelImage.add(JPanelTable);
-                            JPanelTable.setBounds(0, 210, 880, 370);
-
-                            JPanelBusqueda.setBackground(java.awt.SystemColor.inactiveCaption);
-                            JPanelBusqueda.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-                            JPanelBusqueda.setLayout(null);
-
-                            codigomesa.setPreferredSize(new java.awt.Dimension(250, 27));
-                            codigomesa.addActionListener(new java.awt.event.ActionListener() {
-                                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                    codigomesaActionPerformed(evt);
-                                }
-                            });
-                            JPanelBusqueda.add(codigomesa);
-                            codigomesa.setBounds(120, 10, 97, 24);
-
-                            jLabel16.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-                            jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-                            jLabel16.setText("No. Mesa:");
-                            JPanelBusqueda.add(jLabel16);
-                            jLabel16.setBounds(10, 10, 100, 24);
-
-                            jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/buscar 2.png"))); // NOI18N
-                            jButton1.addActionListener(new java.awt.event.ActionListener() {
-                                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                    jButton1ActionPerformed(evt);
-                                }
-                            });
-                            JPanelBusqueda.add(jButton1);
-                            jButton1.setBounds(220, 10, 20, 24);
-
-                            nombrecentro.setEditable(false);
-                            nombrecentro.setPreferredSize(new java.awt.Dimension(250, 27));
-                            JPanelBusqueda.add(nombrecentro);
-                            nombrecentro.setBounds(390, 10, 190, 24);
-
-                            jLabel19.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-                            jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-                            jLabel19.setText("Centro:");
-                            JPanelBusqueda.add(jLabel19);
-                            jLabel19.setBounds(320, 10, 60, 24);
-
-                            jLabel20.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-                            jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-                            jLabel20.setText("Municipio:");
-                            JPanelBusqueda.add(jLabel20);
-                            jLabel20.setBounds(590, 10, 69, 24);
-
-                            nombremunicipio.setEditable(false);
-                            nombremunicipio.setPreferredSize(new java.awt.Dimension(250, 27));
-                            JPanelBusqueda.add(nombremunicipio);
-                            nombremunicipio.setBounds(660, 10, 200, 24);
-
-                            idcentro.setEditable(false);
-                            idcentro.setVisible(false);
-                            idcentro.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-                            idcentro.setPreferredSize(new java.awt.Dimension(120, 21));
-                            JPanelBusqueda.add(idcentro);
-                            idcentro.setBounds(270, 10, 20, 24);
-
-                            idmunicipio.setEditable(false);
-                            idmunicipio.setVisible(false);
-                            idmunicipio.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-                            idmunicipio.setPreferredSize(new java.awt.Dimension(120, 21));
-                            JPanelBusqueda.add(idmunicipio);
-                            idmunicipio.setBounds(290, 10, 20, 24);
-
-                            panelImage.add(JPanelBusqueda);
-                            JPanelBusqueda.setBounds(0, 110, 880, 50);
-
-                            JPanelRecibo.setBackground(java.awt.SystemColor.activeCaption);
-                            JPanelRecibo.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-                            JPanelRecibo.setLayout(null);
-
-                            jLabel21.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
-                            jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-                            jLabel21.setText("Hora");
-                            JPanelRecibo.add(jLabel21);
-                            jLabel21.setBounds(690, 10, 100, 19);
-
-                            clockDigital2.setForeground(new java.awt.Color(255, 255, 255));
-                            clockDigital2.setFont(new java.awt.Font("Microsoft Sans Serif", 1, 16)); // NOI18N
-                            JPanelRecibo.add(clockDigital2);
-                            clockDigital2.setBounds(690, 30, 100, 27);
-
-                            panelImage.add(JPanelRecibo);
-                            JPanelRecibo.setBounds(0, 40, 880, 70);
-
-                            pnlPaginador1.setBackground(new java.awt.Color(57, 104, 163));
-                            pnlPaginador1.setPreferredSize(new java.awt.Dimension(786, 40));
-                            pnlPaginador1.setLayout(new java.awt.GridBagLayout());
-
-                            jLabel11.setFont(new java.awt.Font("Script MT Bold", 1, 32)); // NOI18N
-                            jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-                            jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/update.png"))); // NOI18N
-                            jLabel11.setText("<--Registro de Votos-->");
-                            pnlPaginador1.add(jLabel11, new java.awt.GridBagConstraints());
-
-                            panelImage.add(pnlPaginador1);
-                            pnlPaginador1.setBounds(0, 0, 880, 40);
+                            panelImage.add(tbPane);
+                            tbPane.setBounds(0, 140, 880, 440);
 
                             getContentPane().add(panelImage, java.awt.BorderLayout.CENTER);
 
@@ -1062,21 +1030,6 @@ public class Ingreso_Votos extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_bntGuardarActionPerformed
 
-    private void bntGuardar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntGuardar1ActionPerformed
-        // TODO add your handling code here:
-        if (AccesoUsuario.AccesosUsuario(bntGuardar1.getName()) == true) {
-
-            if (Utilidades.esObligatorio(this.JPanelGrupo, true)) {
-                JOptionPane.showInternalMessageDialog(this, "Los campos marcados son Obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            } else {
-   
-            }
-        } else {
-            JOptionPane.showInternalMessageDialog(this, "No tiene Acceso para realizar esta operación ");
-        }
-    }//GEN-LAST:event_bntGuardar1ActionPerformed
-
     private void tdiputados2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tdiputados2MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_tdiputados2MouseClicked
@@ -1122,11 +1075,8 @@ public class Ingreso_Votos extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel JPanelBusqueda;
     private javax.swing.JPanel JPanelGrupo;
-    private javax.swing.JPanel JPanelRecibo;
-    private javax.swing.JPanel JPanelTable;
     private elaprendiz.gui.button.ButtonRect bntCancelar;
     private elaprendiz.gui.button.ButtonRect bntGuardar;
-    private elaprendiz.gui.button.ButtonRect bntGuardar1;
     private elaprendiz.gui.button.ButtonRect bntSalir;
     private elaprendiz.gui.varios.ClockDigital clockDigital2;
     public static elaprendiz.gui.textField.TextField codigomesa;

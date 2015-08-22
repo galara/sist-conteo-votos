@@ -1,7 +1,8 @@
+-- MySQL dump 10.13  Distrib 5.5.45, for Win64 (x86)
 --
 -- Host: localhost    Database: votos
 -- ------------------------------------------------------
--- Server version	5.6.10
+-- Server version	5.5.45
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -31,13 +32,16 @@ CREATE TABLE `candidato` (
   `estado` tinyint(1) DEFAULT '0',
   `fechainicio` date NOT NULL,
   `fechafin` date NOT NULL,
-  PRIMARY KEY (`idcandidato`,`partido_idpartido`,`puesto_idpuesto`),
+  `municipio_idmunicipio` int(11) NOT NULL,
+  PRIMARY KEY (`idcandidato`,`partido_idpartido`,`puesto_idpuesto`,`municipio_idmunicipio`),
   UNIQUE KEY `codigo_UNIQUE` (`codigo`),
   KEY `fk_candidato_partido1_idx` (`partido_idpartido`),
   KEY `fk_candidato_puesto1_idx` (`puesto_idpuesto`),
+  KEY `fk_candidato_municipio1_idx` (`municipio_idmunicipio`),
+  CONSTRAINT `fk_candidato_municipio1` FOREIGN KEY (`municipio_idmunicipio`) REFERENCES `municipio` (`idmunicipio`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_candidato_partido1` FOREIGN KEY (`partido_idpartido`) REFERENCES `partido_politico` (`idpartido`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_candidato_puesto1` FOREIGN KEY (`puesto_idpuesto`) REFERENCES `puesto` (`idpuesto`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -46,7 +50,7 @@ CREATE TABLE `candidato` (
 
 LOCK TABLES `candidato` WRITE;
 /*!40000 ALTER TABLE `candidato` DISABLE KEYS */;
-INSERT INTO `candidato` VALUES (1,'LGA-1','GUSTAVO ADOLFO','LARA',3,1,1,'2015-08-18','2015-08-19'),(2,'PJM-2','JOSE MANUEL','PEREZ LOPEZ',2,1,1,'2015-08-18','2015-08-18');
+INSERT INTO `candidato` VALUES (2,'UM-2','MANUEL','VALDIZON',2,1,1,'2015-08-20','2015-08-21',3),(3,'VZ-3','ZURI','RIOS',4,1,1,'2015-08-20','2015-08-20',3),(4,'VP-4','PORTILLO','A',4,3,1,'2015-08-22','2015-08-23',3),(5,'PO-5','OBDULIO','OQUELI',3,3,1,'2015-08-23','2015-08-28',3),(6,'LA1-6','ALCANDE 1','ALCALDE 1',1,2,1,'2015-08-22','2015-08-23',1),(7,'UA2-7','ALCALDE 2','ALCALDE 2',2,2,1,'2015-08-22','2015-08-23',1),(8,'PA3-8','ALCALDE 3','ALCALDE 3',3,2,1,'2015-08-22','2015-08-23',1),(9,'VA4-9','ALCALDE 4','ALCALDE 4',4,2,1,'2015-08-22','2015-08-23',1),(10,'LA4-10','ALCALDE 4','ALCALDE 4',1,2,1,'2015-08-22','2015-08-23',2);
 /*!40000 ALTER TABLE `candidato` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -61,11 +65,12 @@ CREATE TABLE `centro` (
   `idcentro` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(70) NOT NULL,
   `municipio_idmunicipio` int(11) NOT NULL,
+  `estado` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`idcentro`,`municipio_idmunicipio`),
   UNIQUE KEY `nombre_UNIQUE` (`nombre`),
   KEY `fk_centro_municipio1_idx` (`municipio_idmunicipio`),
   CONSTRAINT `fk_centro_municipio1` FOREIGN KEY (`municipio_idmunicipio`) REFERENCES `municipio` (`idmunicipio`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -74,6 +79,7 @@ CREATE TABLE `centro` (
 
 LOCK TABLES `centro` WRITE;
 /*!40000 ALTER TABLE `centro` DISABLE KEYS */;
+INSERT INTO `centro` VALUES (1,'E.O.U.M JORNADA MATUTINA BARRIO MONTERREY ',1,1),(2,'E.O.U. DE PARVULOS FEDERICO MORA ',1,1),(3,'E.O.U.M. SOLEDAD AYAU ',1,1),(4,'E.O.U.M NUMERO 1 SAN SEBASTIAN ',2,1),(5,'E.O.U.M NUMERO 2 SAN SEBASTIAN ',2,1);
 /*!40000 ALTER TABLE `centro` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -88,7 +94,7 @@ CREATE TABLE `departamento` (
   `iddepartamento` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`iddepartamento`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -97,6 +103,7 @@ CREATE TABLE `departamento` (
 
 LOCK TABLES `departamento` WRITE;
 /*!40000 ALTER TABLE `departamento` DISABLE KEYS */;
+INSERT INTO `departamento` VALUES (1,'RETALHULEU');
 /*!40000 ALTER TABLE `departamento` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -120,7 +127,7 @@ CREATE TABLE `detalle_votos` (
   CONSTRAINT `fk_detalle_votos_candidato1` FOREIGN KEY (`candidato_idcandidato`) REFERENCES `candidato` (`idcandidato`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_detalle_votos_mesa1` FOREIGN KEY (`mesa_idmesa`) REFERENCES `mesa` (`idmesa`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_detalle_votos_usuario1` FOREIGN KEY (`usuario_idusuario`) REFERENCES `usuario` (`idusuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -129,6 +136,7 @@ CREATE TABLE `detalle_votos` (
 
 LOCK TABLES `detalle_votos` WRITE;
 /*!40000 ALTER TABLE `detalle_votos` DISABLE KEYS */;
+INSERT INTO `detalle_votos` VALUES (1,34,2,1,1),(2,60,3,1,1),(3,100,4,1,1),(4,20,5,1,1),(5,100,6,1,1),(6,50,7,1,1),(7,24,8,1,1),(8,5,9,1,1);
 /*!40000 ALTER TABLE `detalle_votos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -145,7 +153,7 @@ CREATE TABLE `menu` (
   `principal` varchar(45) DEFAULT NULL,
   `estado` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`idmenu`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -154,7 +162,7 @@ CREATE TABLE `menu` (
 
 LOCK TABLES `menu` WRITE;
 /*!40000 ALTER TABLE `menu` DISABLE KEYS */;
-INSERT INTO `menu` VALUES (1,'mpuesto_politico','Principal',0);
+INSERT INTO `menu` VALUES (1,'mpartido','Principal',1),(2,'mcandidato','Principal',1),(3,'Reu','Retalhuleu',1);
 /*!40000 ALTER TABLE `menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -167,13 +175,14 @@ DROP TABLE IF EXISTS `mesa`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `mesa` (
   `idmesa` int(11) NOT NULL AUTO_INCREMENT,
-  `num_mesa` varchar(45) NOT NULL,
+  `nombre` varchar(45) NOT NULL,
   `centro_idcentro` int(11) NOT NULL,
+  `estado` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`idmesa`,`centro_idcentro`),
-  UNIQUE KEY `num_mesa_UNIQUE` (`num_mesa`),
+  UNIQUE KEY `num_mesa_UNIQUE` (`nombre`),
   KEY `fk_mesa_centro1_idx` (`centro_idcentro`),
   CONSTRAINT `fk_mesa_centro1` FOREIGN KEY (`centro_idcentro`) REFERENCES `centro` (`idcentro`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -182,6 +191,7 @@ CREATE TABLE `mesa` (
 
 LOCK TABLES `mesa` WRITE;
 /*!40000 ALTER TABLE `mesa` DISABLE KEYS */;
+INSERT INTO `mesa` VALUES (1,'10236 ',1,1),(2,'10237 ',1,1),(3,'10238 ',1,1),(4,'10250',2,1),(5,'10251',2,1);
 /*!40000 ALTER TABLE `mesa` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -199,11 +209,12 @@ CREATE TABLE `municipio` (
   `mesas_del` int(11) DEFAULT NULL,
   `mesas_al` int(11) DEFAULT NULL,
   `departamento_iddepartamento` int(11) NOT NULL,
+  `estado` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`idmunicipio`,`departamento_iddepartamento`),
   UNIQUE KEY `nombre_UNIQUE` (`nombre`),
   KEY `fk_municipio_departamento1_idx` (`departamento_iddepartamento`),
   CONSTRAINT `fk_municipio_departamento1` FOREIGN KEY (`departamento_iddepartamento`) REFERENCES `departamento` (`iddepartamento`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -212,6 +223,7 @@ CREATE TABLE `municipio` (
 
 LOCK TABLES `municipio` WRITE;
 /*!40000 ALTER TABLE `municipio` DISABLE KEYS */;
+INSERT INTO `municipio` VALUES (1,'RETALHULEU',14,10236,10349,1,1),(2,'SAN SEBASTIAN ',4,10350,10387,1,1),(3,'N/A',0,0,0,1,1);
 /*!40000 ALTER TABLE `municipio` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -229,7 +241,7 @@ CREATE TABLE `partido_politico` (
   `fecharegistro` date DEFAULT NULL,
   PRIMARY KEY (`idpartido`),
   UNIQUE KEY `nombre_UNIQUE` (`nombre`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -238,7 +250,7 @@ CREATE TABLE `partido_politico` (
 
 LOCK TABLES `partido_politico` WRITE;
 /*!40000 ALTER TABLE `partido_politico` DISABLE KEYS */;
-INSERT INTO `partido_politico` VALUES (2,'PRI',1,'2015-08-12'),(3,'LIDER',1,'2015-08-18');
+INSERT INTO `partido_politico` VALUES (1,'LIDER',1,'2015-08-19'),(2,'UNE',1,'2015-08-19'),(3,'PATRIOTA',1,'2015-08-19'),(4,'VIVA',1,'2015-08-22');
 /*!40000 ALTER TABLE `partido_politico` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -259,7 +271,7 @@ CREATE TABLE `perfilusuario` (
   KEY `fk_perfilusuario_usuario1_idx` (`usuario_idusuario`),
   CONSTRAINT `fk_perfilusuario_menu1` FOREIGN KEY (`menu_idmenu`) REFERENCES `menu` (`idmenu`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_perfilusuario_usuario1` FOREIGN KEY (`usuario_idusuario`) REFERENCES `usuario` (`idusuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -268,7 +280,7 @@ CREATE TABLE `perfilusuario` (
 
 LOCK TABLES `perfilusuario` WRITE;
 /*!40000 ALTER TABLE `perfilusuario` DISABLE KEYS */;
-INSERT INTO `perfilusuario` VALUES (3,1,2,1),(4,1,3,0);
+INSERT INTO `perfilusuario` VALUES (5,1,2,1),(6,2,2,0);
 /*!40000 ALTER TABLE `perfilusuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -286,7 +298,7 @@ CREATE TABLE `puesto` (
   `fecharegistro` date DEFAULT NULL,
   PRIMARY KEY (`idpuesto`),
   UNIQUE KEY `nombre_UNIQUE` (`nombre`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -295,7 +307,7 @@ CREATE TABLE `puesto` (
 
 LOCK TABLES `puesto` WRITE;
 /*!40000 ALTER TABLE `puesto` DISABLE KEYS */;
-INSERT INTO `puesto` VALUES (1,'Usuario Digitador',1,'2015-08-18');
+INSERT INTO `puesto` VALUES (1,'Presidente',1,'2015-08-19'),(2,'Alcalde',1,'2015-08-19'),(3,'Diputados1',1,'2015-08-19');
 /*!40000 ALTER TABLE `puesto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -317,7 +329,7 @@ CREATE TABLE `usuario` (
   PRIMARY KEY (`idusuario`),
   UNIQUE KEY `nombre_UNIQUE` (`nombre`),
   UNIQUE KEY `usuario_UNIQUE` (`usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -326,7 +338,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (2,'Gustavo Adolfo Lara','','glara','glara',1,'2015-08-19'),(3,'Lara','123456','lara','lara',1,'2015-08-18');
+INSERT INTO `usuario` VALUES (1,'Gustavo','23232323','glara','glara',1,'2015-08-19'),(2,'Fernando','','fer','fer',1,'2015-08-22');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -339,4 +351,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-08-21  8:04:30
+-- Dump completed on 2015-08-22 10:16:24

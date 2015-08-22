@@ -66,7 +66,7 @@ public class Principal extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         msalir = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
-        mpuesto_politico = new javax.swing.JMenuItem();
+        mcandidatura = new javax.swing.JMenuItem();
         mpartido = new javax.swing.JMenuItem();
         mcandidato = new javax.swing.JMenuItem();
         mmesa = new javax.swing.JMenuItem();
@@ -77,8 +77,8 @@ public class Principal extends javax.swing.JFrame {
         jMenu7 = new javax.swing.JMenu();
         jMenuItem14 = new javax.swing.JMenuItem();
         jMenuItem16 = new javax.swing.JMenuItem();
-        jMenuItem17 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
 
@@ -175,14 +175,14 @@ public class Principal extends javax.swing.JFrame {
         jMenu3.setText("Mantenimiento");
         jMenu3.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
 
-        mpuesto_politico.setText("Cargo Político");
-        mpuesto_politico.setName("mpuesto_politico"); // NOI18N
-        mpuesto_politico.addActionListener(new java.awt.event.ActionListener() {
+        mcandidatura.setText("Candidatura");
+        mcandidatura.setName("mcandidatura"); // NOI18N
+        mcandidatura.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mpuesto_politicoActionPerformed(evt);
+                mcandidaturaActionPerformed(evt);
             }
         });
-        jMenu3.add(mpuesto_politico);
+        jMenu3.add(mcandidatura);
 
         mpartido.setText("Pardido Politico");
         mpartido.setName("Pardido Politico"); // NOI18N
@@ -201,7 +201,7 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu3.add(mcandidato);
 
-        mmesa.setText("Mesa");
+        mmesa.setText("Mesa de votación");
         mmesa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mmesaActionPerformed(evt);
@@ -209,7 +209,7 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu3.add(mmesa);
 
-        mcentro.setText("Centro");
+        mcentro.setText("Centro Votación");
         mcentro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mcentroActionPerformed(evt);
@@ -217,7 +217,7 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu3.add(mcentro);
 
-        mvotos.setText("Votos");
+        mvotos.setText("Ingreso Votos");
         mvotos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mvotosActionPerformed(evt);
@@ -272,23 +272,15 @@ public class Principal extends javax.swing.JFrame {
 
         jMenu2.add(jMenu7);
 
-        jMenuItem17.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        jMenuItem17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/Menu.png"))); // NOI18N
-        jMenuItem17.setText("Menu");
-        jMenuItem17.setName("Menu Principal"); // NOI18N
-        jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem17ActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jMenuItem17);
-        jMenuItem17.setVisible(false);
-
         jMenuBar1.add(jMenu2);
 
         jMenu5.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jMenu5.setText("Informes");
         jMenu5.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+
+        jMenuItem3.setText("Resultados Preliminares Generales");
+        jMenu5.add(jMenuItem3);
+
         jMenuBar1.add(jMenu5);
 
         jMenu4.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -309,8 +301,6 @@ public class Principal extends javax.swing.JFrame {
         jMenuBar1.add(jMenu4);
 
         setJMenuBar(jMenuBar1);
-
-        getAccessibleContext().setAccessibleName("Principal SYSTEMA DE CONTEO DE VOTOS 2015");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -352,19 +342,6 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
-        // TODO add your handling code here:
-//        if (AccesoUsuario.AccesosUsuario(jMenuItem17.getName()) == true) {
-//            Menu frmMenu = new Menu();
-//            if (frmMenu == null) {
-//                frmMenu = new Menu();
-//            }
-//            AddForms.adminInternalFrame(dp, frmMenu);
-//        } else {
-//            JOptionPane.showMessageDialog(this, "No tiene Acceso para realizar esta operación ");
-//        }
-    }//GEN-LAST:event_jMenuItem17ActionPerformed
-
     private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
         // TODO add your handling code here:
         if (AccesoUsuario.AccesosUsuario(jMenuItem14.getName()) == true) {
@@ -391,9 +368,9 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem16ActionPerformed
 
-    private void mpuesto_politicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mpuesto_politicoActionPerformed
+    private void mcandidaturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mcandidaturaActionPerformed
         // TODO add your handling code here:
-        if (AccesoUsuario.AccesosUsuario(mpuesto_politico.getName()) == true) {
+        if (AccesoUsuario.AccesosUsuario(mcandidatura.getName()) == true) {
             Cargo_politico form = new Cargo_politico();
             if (form == null) {
                 form = new Cargo_politico();
@@ -402,11 +379,11 @@ public class Principal extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "No tiene Acceso para realizar esta operación ");
         }
-    }//GEN-LAST:event_mpuesto_politicoActionPerformed
+    }//GEN-LAST:event_mcandidaturaActionPerformed
 
     private void mpartidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mpartidoActionPerformed
         // TODO add your handling code here:
-        if (AccesoUsuario.AccesosUsuario(mpuesto_politico.getName()) == true) {
+        if (AccesoUsuario.AccesosUsuario(mcandidatura.getName()) == true) {
             Partido_politico form = new Partido_politico();
             if (form == null) {
                 form = new Partido_politico();
@@ -419,7 +396,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void mcandidatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mcandidatoActionPerformed
         // TODO add your handling code here:
-        if (AccesoUsuario.AccesosUsuario(mpuesto_politico.getName()) == true) {
+        if (AccesoUsuario.AccesosUsuario(mcandidatura.getName()) == true) {
             Candidato form = new Candidato();
             if (form == null) {
                 form = new Candidato();
@@ -432,7 +409,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void mmesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mmesaActionPerformed
         // TODO add your handling code here:
-        if (AccesoUsuario.AccesosUsuario(mpuesto_politico.getName()) == true) {
+        if (AccesoUsuario.AccesosUsuario(mcandidatura.getName()) == true) {
             Mesa form = new Mesa();
             if (form == null) {
                 form = new Mesa();
@@ -445,7 +422,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void mcentroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mcentroActionPerformed
         // TODO add your handling code here:
-        if (AccesoUsuario.AccesosUsuario(mpuesto_politico.getName()) == true) {
+        if (AccesoUsuario.AccesosUsuario(mcandidatura.getName()) == true) {
             Centro form = new Centro();
             if (form == null) {
                 form = new Centro();
@@ -458,7 +435,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void mvotosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mvotosActionPerformed
         // TODO add your handling code here:
-        if (AccesoUsuario.AccesosUsuario(mpuesto_politico.getName()) == true) {
+        if (AccesoUsuario.AccesosUsuario(mcandidatura.getName()) == true) {
             Ingreso_Votos form = new Ingreso_Votos();
             if (form == null) {
                 form = new Ingreso_Votos();
@@ -499,18 +476,18 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem16;
-    private javax.swing.JMenuItem jMenuItem17;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JMenuItem mcandidato;
+    private javax.swing.JMenuItem mcandidatura;
     private javax.swing.JMenuItem mcentro;
     private javax.swing.JMenuItem mmesa;
     private javax.swing.JMenuItem mpartido;
-    private javax.swing.JMenuItem mpuesto_politico;
     private javax.swing.JMenuItem msalir;
     private javax.swing.JMenuItem musuario;
     private javax.swing.JMenuItem mvotos;
