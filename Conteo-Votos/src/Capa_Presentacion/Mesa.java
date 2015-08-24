@@ -26,7 +26,7 @@ import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableModel;
-import modelos.mCarrera;
+import modelos.mCentro;
 
 /**
  *
@@ -40,7 +40,7 @@ public class Mesa extends javax.swing.JInternalFrame {
     String[] titulos = {"Código", "Descripción", "Centro", "Estado"};//Titulos para Jtabla
     /*Se hace una instancia de la clase que recibira las peticiones de esta capa de aplicación*/
     Peticiones peticiones = new Peticiones();
-    public Hashtable<String, String> hashCarrera = new Hashtable<>();
+    public Hashtable<String, String> hashCentro = new Hashtable<>();
     /*Se hace una instancia de la clase que recibira las peticiones de mensages de la capa de aplicación*/
     //public static JOptionMessage msg = new JOptionMessage();
     /**
@@ -121,7 +121,7 @@ public class Mesa extends javax.swing.JInternalFrame {
         String[] condiciones = {"estado"};
         String[] Id = {Dato};
         centro.removeAllItems();
-        Component cmps = centro;
+        //Component cmps = centro;
         getRegistroCombocentro("centro", campos, condiciones, Id);
 
     }
@@ -145,15 +145,16 @@ public class Mesa extends javax.swing.JInternalFrame {
                 modeloComboBox = new DefaultComboBoxModel();
                 centro.setModel(modeloComboBox);
 
-                modeloComboBox.addElement(new mCarrera("", "0"));
+                modeloComboBox.addElement(new mCentro("", "0"));
                 if (rs.next()) {//verifica si esta vacio, pero desplaza el puntero al siguiente elemento
                     int count = 0;
                     rs.beforeFirst();//regresa el puntero al primer registro
                     Object[] fila = new Object[cantcampos];
                     while (rs.next()) {//mientras tenga registros que haga lo siguiente
                         count++;
-                        modeloComboBox.addElement(new mCarrera(rs.getString(1), "" + rs.getInt(2)));
-                        hashCarrera.put(rs.getString(1), "" + count);
+                        modeloComboBox.addElement(new mCentro(rs.getString(1), ""+rs.getInt(2)));
+                        hashCentro.put(rs.getString(1), "" + count);
+                        System.out.print( rs.getString(1)+"" + count  +"combo \n");
                     }
                 }
             } else {
@@ -259,7 +260,8 @@ public class Mesa extends javax.swing.JInternalFrame {
                         while (rs.next()) {//mientras tenga registros que haga lo siguiente
 
                             nombre.setText(rs.getString(1));
-                            int car = Integer.parseInt((String) hashCarrera.get(rs.getString(2)));
+                            System.out.print( hashCentro.get(rs.getString(2)) +"\n");
+                            int car = Integer.parseInt((String) hashCentro.get(rs.getString(2)));
                             centro.setSelectedIndex(car);
 
                             if (rs.getObject(3).equals(true)) {
@@ -650,7 +652,7 @@ public class Mesa extends javax.swing.JInternalFrame {
                 boolean seguardo = false;
                 String nombreTabla = "mesa";
                 String campos = "nombre, estado, centro_idcentro";
-                mCarrera carr = (mCarrera) centro.getSelectedItem();
+                mCentro carr = (mCentro) centro.getSelectedItem();
                 String idcentro = carr.getID();
 
                 int estad = 0;
@@ -735,7 +737,7 @@ public class Mesa extends javax.swing.JInternalFrame {
                 int fila = mesa.getSelectedRow();
                 String id = (String) "" + mesa.getValueAt(fila, 0);
                 String campos = "nombre, estado, centro_idcentro";
-                mCarrera carr = (mCarrera) centro.getSelectedItem();
+                mCentro carr = (mCentro) centro.getSelectedItem();
                 String idcentro = carr.getID();
 
                 int estad = 0;
