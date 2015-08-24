@@ -34,14 +34,14 @@ public class Login1 extends javax.swing.JFrame {
         String fechaactual = "";
         String fechapc = FormatoFecha.getFormato(c.getTime(), FormatoFecha.A_M_D);
 
-        if (fechainicio.getCalendar() != null) {
-            fechaactual = FormatoFecha.getFormato(fechainicio.getCalendar().getTime(), FormatoFecha.A_M_D);
-        } else {
-            JOptionPane.showMessageDialog(this, "Seleccione la fecha Actual", "Error: Datos vacios.", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+//        if (fechainicio.getCalendar() != null) {
+//            fechaactual = FormatoFecha.getFormato(fechainicio.getCalendar().getTime(), FormatoFecha.A_M_D);
+//        } else {
+//            JOptionPane.showMessageDialog(this, "Seleccione la fecha Actual", "Error: Datos vacios.", JOptionPane.ERROR_MESSAGE);
+//            return;
+//        }
 
-        if (fechaactual.equals(fechapc)) {
+       // if (fechaactual.equals(fechapc)) {
             if (!this.usuario.getText().isEmpty() && !this.password.getText().isEmpty()) {
 
                 String msg = "";
@@ -68,10 +68,10 @@ public class Login1 extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Ingrese un nombre de usuario y su contraseña", "Error: Datos vacios.", JOptionPane.ERROR_MESSAGE);
             }
 
-        } else {
-            JOptionPane.showMessageDialog(this, "Verifique la fecha de la PC no Conicide con la fecha Actual");
-            return;
-        }
+//        } else {
+//            JOptionPane.showMessageDialog(this, "Verifique la fecha de la PC no Conicide con la fecha Actual");
+//            return;
+//        }
     }
 
     public boolean isAccesoConcedido() {
@@ -96,8 +96,6 @@ public class Login1 extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         iniciar = new elaprendiz.gui.button.ButtonAction();
-        fechainicio = new com.toedter.calendar.JDateChooser();
-        jLabel9 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         pnlPaginador2 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
@@ -151,18 +149,6 @@ public class Login1 extends javax.swing.JFrame {
             }
         });
 
-        fechainicio.setDateFormatString("dd/MM/yyyy");
-        fechainicio.setFocusable(false);
-        fechainicio.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        fechainicio.setMaxSelectableDate(new java.util.Date(3093496470100000L));
-        fechainicio.setMinSelectableDate(new java.util.Date(-62135744300000L));
-        fechainicio.setPreferredSize(new java.awt.Dimension(120, 22));
-
-        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setText("Fecha Actual:");
-
         javax.swing.GroupLayout panelImage2Layout = new javax.swing.GroupLayout(panelImage2);
         panelImage2.setLayout(panelImage2Layout);
         panelImage2Layout.setHorizontalGroup(
@@ -170,19 +156,12 @@ public class Login1 extends javax.swing.JFrame {
             .addGroup(panelImage2Layout.createSequentialGroup()
                 .addContainerGap(31, Short.MAX_VALUE)
                 .addGroup(panelImage2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelImage2Layout.createSequentialGroup()
-                        .addGroup(panelImage2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panelImage2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(24, 24, 24))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelImage2Layout.createSequentialGroup()
-                        .addGroup(panelImage2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(fechainicio, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap())))
+                    .addGroup(panelImage2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24))
             .addGroup(panelImage2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(panelImage2Layout.createSequentialGroup()
                     .addGap(32, 32, 32)
@@ -200,11 +179,7 @@ public class Login1 extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addGap(2, 2, 2)
                 .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
-                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fechainicio, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29))
+                .addContainerGap(146, Short.MAX_VALUE))
             .addGroup(panelImage2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(panelImage2Layout.createSequentialGroup()
                     .addGap(129, 129, 129)
@@ -310,7 +285,6 @@ public class Login1 extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.toedter.calendar.JDateChooser fechainicio;
     private elaprendiz.gui.button.ButtonAction iniciar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -318,7 +292,6 @@ public class Login1 extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel9;
     private elaprendiz.gui.panel.PanelCurves panelCurves1;
     private elaprendiz.gui.panel.PanelImage panelImage1;
     private elaprendiz.gui.panel.PanelImage panelImage2;

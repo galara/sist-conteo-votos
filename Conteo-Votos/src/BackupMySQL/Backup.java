@@ -55,7 +55,7 @@ public class Backup extends javax.swing.JInternalFrame {
                 File backupFile = new File(String.valueOf(RealizarBackupMySQL.getSelectedFile().toString())
                         + "_" + fecha + ".sql");
                 FileWriter fw = new FileWriter(backupFile);
-                Process child = runtime.exec("C:\\Archivos de programa\\MySQL\\MySQL Server 5.5\\bin\\mysqldump -u "+BdConexion.user+" -p"+BdConexion.pass+" --default-character_set=utf8 "+BdConexion.dataBase);
+                Process child = runtime.exec("C:\\Archivos de programa\\MySQL\\MySQL Server 5.6\\bin\\mysqldump -u "+BdConexion.user+" -p"+BdConexion.pass+" --default-character_set=utf8 "+BdConexion.dataBase);
                 InputStreamReader irs = new InputStreamReader(child.getInputStream());
                 BufferedReader br = new BufferedReader(irs);
 
