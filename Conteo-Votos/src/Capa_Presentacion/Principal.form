@@ -46,6 +46,9 @@
                 <BevelBorder/>
               </Border>
             </Property>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/Recursos/folder.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Archivo"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="13" style="0"/>
@@ -78,6 +81,9 @@
                 <BevelBorder/>
               </Border>
             </Property>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/Recursos/cog.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Mantenimiento"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="13" style="0"/>
@@ -86,6 +92,9 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="mcandidatura">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/Recursos/group.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Candidatura"/>
                 <Property name="name" type="java.lang.String" value="mcandidatura" noResource="true"/>
               </Properties>
@@ -95,6 +104,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mpartido">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/Recursos/book_addresses.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Pardido Politico"/>
                 <Property name="name" type="java.lang.String" value="Pardido Politico" noResource="true"/>
               </Properties>
@@ -104,6 +116,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mcandidato">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/Recursos/status_online.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Candidato"/>
               </Properties>
               <Events>
@@ -112,6 +127,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mmesa">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/Recursos/accept.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Mesa de votaci&#xf3;n"/>
               </Properties>
               <Events>
@@ -120,6 +138,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mcentro">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/Recursos/carrera.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Centro Votaci&#xf3;n"/>
               </Properties>
               <Events>
@@ -128,6 +149,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mvotos">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/Recursos/application_form.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Ingreso Votos"/>
               </Properties>
               <Events>
@@ -142,6 +166,9 @@
               <Border info="org.netbeans.modules.form.compat2.border.SoftBevelBorderInfo">
                 <BevelBorder/>
               </Border>
+            </Property>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/Recursos/application_form.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Sistema"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -220,6 +247,9 @@
                 <BevelBorder/>
               </Border>
             </Property>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/Recursos/report.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Informes"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="13" style="0"/>
@@ -228,7 +258,10 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem3">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Resultados Preliminares Generales"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/Recursos/calculator.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Resultados Preliminares"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem3ActionPerformed"/>
@@ -243,6 +276,9 @@
                 <BevelBorder/>
               </Border>
             </Property>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/Recursos/help.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Ayuda"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="13" style="0"/>
@@ -255,7 +291,7 @@
                   <Font name="Segoe UI" size="13" style="0"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Recursos/Help.png"/>
+                  <Image iconType="3" name="/Recursos/information.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Acerca de"/>
                 <Property name="name" type="java.lang.String" value="Acerca de Principal" noResource="true"/>
@@ -317,7 +353,7 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="543" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="530" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>

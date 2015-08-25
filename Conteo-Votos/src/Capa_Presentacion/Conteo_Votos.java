@@ -5,39 +5,26 @@
 package Capa_Presentacion;
 
 import Capa_Datos.AccesoDatos;
-import Capa_Datos.BdConexion;
-import Capa_Negocio.AccesoUsuario;
-import static Capa_Negocio.AddForms.adminInternalFrame;
-import Capa_Negocio.CellEditorSpinnerPago;
 import Capa_Negocio.Peticiones;
-import Capa_Negocio.Renderer_CheckBox;
-import Capa_Negocio.TableCellFormatter;
 import Capa_Negocio.Utilidades;
-import static Capa_Presentacion.Principal.dp;
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
 import java.awt.event.KeyEvent;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Calendar;
 import java.util.Hashtable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableModel;
-import modelos.MCandidatura;
-import modelos.MPartido;
+import modelos.MMunicipio;
+//import modelos.MPartido;
 //import modelos.MMunicipio;
+
 /**
  *
  * @author GLARA
@@ -49,7 +36,8 @@ public class Conteo_Votos extends javax.swing.JInternalFrame {
     DefaultComboBoxModel modelCombo;
     //DefaultComboBoxModel modelCombo;
     //String[] titulos = {"Id", "Codigo", "Nombre Candidato", "Partido", "Candidatura", "Municipio", "Mora", "Subtotal", "Pagar Mora", "Pagar Mes"};//Titulos para Jtabla
-    String[] titulos2 = {"Id", "Partido", "Candidatura", "Municipio", "Votos", "Ingresado"};//Titulos para Jtabla
+    String[] titulos2 = {"Partido", "Votos", "%"};//Titulos para Jtabla
+    String[] titulos3 = {"Municipio", "Partido", "Votos", "%"};//Titulos para Jtabla
     /*Se hace una instancia de la clase que recibira las peticiones de esta capa de aplicación*/
     Peticiones peticiones = new Peticiones();
     public Hashtable<String, String> hashCandidatura = new Hashtable<>();
@@ -67,9 +55,16 @@ public class Conteo_Votos extends javax.swing.JInternalFrame {
         initComponents();
         setFiltroTexto();
         addEscapeKey();
-        llenarcombopuesto();
+        //llenarcombopuesto();
         llenarcombomunicipio();
-        
+
+        seleccion.addItemListener(
+                (ItemEvent e) -> {
+                    if (e.getStateChange() == ItemEvent.SELECTED) {
+                        seleccion();
+                    }
+                });
+
     }
 
     /*addEscapeKey agrega a este JInternalFrame un evento de cerrarVentana() al presionar la tecla "ESC" */
@@ -97,10 +92,27 @@ public class Conteo_Votos extends javax.swing.JInternalFrame {
             Utilidades.esObligatorio(this.JPanelGrupo, false);
             this.bntGuardar.setEnabled(false);
             //removejtable2();
-            codigomesa.setText("");
-            codigomesa.requestFocus();
+            //codigomesa.setText("");
+            //codigomesa.requestFocus();
             this.dispose();
         }
+    }
+
+    private void seleccion() {
+        if (seleccion.getSelectedItem() == "General") {
+            cmunicipio.setSelectedIndex(0);
+            cmunicipio.setVisible(false);
+            jLabel10.setVisible(false);
+            cmunicipio.setEnabled(false);
+            cmunicipio.setEditable(false);
+        } else {
+            cmunicipio.setSelectedIndex(0);
+            cmunicipio.setVisible(true);
+            jLabel10.setVisible(true);
+            cmunicipio.setEnabled(true);
+            cmunicipio.setEditable(true);
+        }
+
     }
 
     public void removejtable2(DefaultTableModel modelo, JTable table) {
@@ -110,14 +122,14 @@ public class Conteo_Votos extends javax.swing.JInternalFrame {
     }
 
     private void limpiartodo() {
-        codigomesa.setText("");
-        //codigomesa.requestFocus();
-        idcentro.setText("");
-        idmunicipio.setText("");
-        nombrecentro.setText("");
-        nombremunicipio.setText("");
+//        codigomesa.setText("");
+//        //codigomesa.requestFocus();
+//        idcentro.setText("");
+//        idmunicipio.setText("");
+//        nombrecentro.setText("");
+//        nombremunicipio.setText("");
         Utilidades.esObligatorio(this.JPanelBusqueda, false);
-        codigomesa.requestFocus();
+        //codigomesa.requestFocus();
         removejtable2(model, tpresidentes);
         removejtable2(model2, tdiputados1);
         removejtable2(model3, tdiputados2);
@@ -126,129 +138,127 @@ public class Conteo_Votos extends javax.swing.JInternalFrame {
         removejtable2(model5, talcalde);
     }
 
-    /*
-     * Metodo para buscar un alumno por su codigo devuelde el id
-     */
-    public void balumnocodigo(String codigo) {
-        if (codigo.isEmpty()) {
-            limpiartodo();
-            //nombrecentro.setText("");
-            //estado.setText("");
-            //cGrupo.removeAllItems();
-            //idmesa = "";
-            //inicioalumno.setText("");
-            //beca.setText("");
-            //dia.setText("");
-
-        } else if (!codigo.isEmpty()) {
-
-            ResultSet rs;
-            AccesoDatos ac = new AccesoDatos();
-            String[] campos = {"mesa.nombre", "centro.nombre", "mesa.estado", "mesa.idmesa", "municipio.nombre", "centro.idcentro", "municipio.idmunicipio"};
-            String[] condiciones = {"mesa.estado=1 and mesa.nombre"};
-            String[] id = {codigo};
-            String inner = " INNER JOIN centro on mesa.centro_idcentro=centro.idcentro INNER JOIN municipio on centro.municipio_idmunicipio=municipio.idmunicipio ";
-
-//            String[] campos = {"alumno.codigo", "alumno.nombres", "alumno.apellidos", "DATE_FORMAT(alumno.fechanacimiento,'%d-%m-%Y')", "alumno.estado", "alumno.idalumno"};
-//            String[] cond = {"alumno.codigo"};
+//    /*
+//     * Metodo para buscar un alumno por su codigo devuelde el id
+//     */
+//    public void balumnocodigo(String codigo) {
+//        if (codigo.isEmpty()) {
+//            limpiartodo();
+//            //nombrecentro.setText("");
+//            //estado.setText("");
+//            //cGrupo.removeAllItems();
+//            //idmesa = "";
+//            //inicioalumno.setText("");
+//            //beca.setText("");
+//            //dia.setText("");
+//
+//        } else if (!codigo.isEmpty()) {
+//
+//            ResultSet rs;
+//            AccesoDatos ac = new AccesoDatos();
+//            String[] campos = {"mesa.nombre", "centro.nombre", "mesa.estado", "mesa.idmesa", "municipio.nombre", "centro.idcentro", "municipio.idmunicipio"};
+//            String[] condiciones = {"mesa.estado=1 and mesa.nombre"};
 //            String[] id = {codigo};
-            if (!id.equals(0)) {
-
-                rs = ac.getRegistros("mesa", campos, condiciones, id, inner);
-
-                if (rs != null) {
-                    try {
-                        if (rs.next()) {//verifica si esta vacio, pero desplaza el puntero al siguiente elemento
-                            rs.beforeFirst();//regresa el puntero al primer registro
-                            while (rs.next()) {//mientras tenga registros que haga lo siguiente
-                                codigomesa.setText(rs.getString(1));
-                                nombrecentro.setText(rs.getString(2));
-//                                if (rs.getString(3).equals("0")) {
-//                                    estado.setText("Inactivo");
-//                                    estado.setForeground(Color.red);
-//                                } else if (rs.getString(3).equals("1")) {
-//                                    estado.setText("Activo");
-//                                    estado.setForeground(Color.WHITE/*new java.awt.Color(102, 204, 0)*/);
-//                                }
-                                idmesa = (rs.getString(4));
-                                nombremunicipio.setText(rs.getString(5));
-                                idcentro.setText(rs.getString(6));
-                                idmunicipio.setText(rs.getString(7));
-                                llenartablas();
-                            }
-                        } else {
-                            JOptionPane.showInternalMessageDialog(this, " El codigo no fue encontrado ");
-                            limpiartodo();
-                            idmesa = null;
-                        }
-                    } catch (SQLException e) {
-                        JOptionPane.showInternalMessageDialog(this, e);
-                    }
-                } else {
-                    JOptionPane.showInternalMessageDialog(this, " El codigo no fue encontrado ");
-                    limpiartodo();
-                }
-
-            }
-        }
-    }
-    
-    
-    /*
-     *Prepara los parametros para la consulta de datos que deseamos agregar al model del ComboBox
-     *y se los envia a un metodo interno getRegistroCombo() 
-     *
-     */
-    public void llenarcombopuesto() {
-        String Dato = "1";
-        String[] campos = {"nombre", "idpuesto"};
-        String[] condiciones = {"estado"};
-        String[] Id = {Dato};
-        puesto.removeAllItems();
-        Component cmps = puesto;
-        getRegistroCombopuesto("puesto", campos, condiciones, Id);
-
-    }
-
-    /*El metodo llenarcombo() envia los parametros para la consulta a la BD y el medoto
-     *getRegistroCombo() se encarga de enviarlos a la capa de AccesoDatos.getRegistros()
-     *quiern devolcera un ResultSet para luego obtener los valores y agregarlos al JConboBox
-     *y a una Hashtable que nos servira para obtener el id y seleccionar valores.
-     */
-    public void getRegistroCombopuesto(String tabla, String[] campos, String[] campocondicion, String[] condicionid) {
-        try {
-            ResultSet rs;
-            AccesoDatos ac = new AccesoDatos();
-
-            rs = ac.getRegistros(tabla, campos, campocondicion, condicionid, "");
-
-            int cantcampos = campos.length;
-            if (rs != null) {
-
-                DefaultComboBoxModel modeloComboBox;
-                modeloComboBox = new DefaultComboBoxModel();
-                puesto.setModel(modeloComboBox);
-
-                modeloComboBox.addElement(new MCandidatura("", "0"));
-                if (rs.next()) {//verifica si esta vacio, pero desplaza el puntero al siguiente elemento
-                    int count = 0;
-                    rs.beforeFirst();//regresa el puntero al primer registro
-                    Object[] fila = new Object[cantcampos];
-                    while (rs.next()) {//mientras tenga registros que haga lo siguiente
-                        count++;
-                        modeloComboBox.addElement(new MCandidatura(rs.getString(1), "" + rs.getInt(2)));
-                        hashCandidatura.put(rs.getString(1), "" + count);
-                    }
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "No se encontraron datos para la busqueda", "Error", JOptionPane.INFORMATION_MESSAGE);
-            }
-            //rs.close();
-
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Ocurrio un Error :" + ex, "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
+//            String inner = " INNER JOIN centro on mesa.centro_idcentro=centro.idcentro INNER JOIN municipio on centro.municipio_idmunicipio=municipio.idmunicipio ";
+//
+////            String[] campos = {"alumno.codigo", "alumno.nombres", "alumno.apellidos", "DATE_FORMAT(alumno.fechanacimiento,'%d-%m-%Y')", "alumno.estado", "alumno.idalumno"};
+////            String[] cond = {"alumno.codigo"};
+////            String[] id = {codigo};
+//            if (!id.equals(0)) {
+//
+//                rs = ac.getRegistros("mesa", campos, condiciones, id, inner);
+//
+//                if (rs != null) {
+//                    try {
+//                        if (rs.next()) {//verifica si esta vacio, pero desplaza el puntero al siguiente elemento
+//                            rs.beforeFirst();//regresa el puntero al primer registro
+//                            while (rs.next()) {//mientras tenga registros que haga lo siguiente
+//                                codigomesa.setText(rs.getString(1));
+//                                nombrecentro.setText(rs.getString(2));
+////                                if (rs.getString(3).equals("0")) {
+////                                    estado.setText("Inactivo");
+////                                    estado.setForeground(Color.red);
+////                                } else if (rs.getString(3).equals("1")) {
+////                                    estado.setText("Activo");
+////                                    estado.setForeground(Color.WHITE/*new java.awt.Color(102, 204, 0)*/);
+////                                }
+//                                idmesa = (rs.getString(4));
+//                                nombremunicipio.setText(rs.getString(5));
+//                                idcentro.setText(rs.getString(6));
+//                                idmunicipio.setText(rs.getString(7));
+//                                llenartablas();
+//                            }
+//                        } else {
+//                            JOptionPane.showInternalMessageDialog(this, " El codigo no fue encontrado ");
+//                            limpiartodo();
+//                            idmesa = null;
+//                        }
+//                    } catch (SQLException e) {
+//                        JOptionPane.showInternalMessageDialog(this, e);
+//                    }
+//                } else {
+//                    JOptionPane.showInternalMessageDialog(this, " El codigo no fue encontrado ");
+//                    limpiartodo();
+//                }
+//
+//            }
+//        }
+//    }
+//    /*
+//     *Prepara los parametros para la consulta de datos que deseamos agregar al model del ComboBox
+//     *y se los envia a un metodo interno getRegistroCombo() 
+//     *
+//     */
+//    public void llenarcombopuesto() {
+//        String Dato = "1";
+//        String[] campos = {"nombre", "idpuesto"};
+//        String[] condiciones = {"estado"};
+//        String[] Id = {Dato};
+//        puesto.removeAllItems();
+//        Component cmps = puesto;
+//        getRegistroCombopuesto("puesto", campos, condiciones, Id);
+//
+//    }
+//
+//    /*El metodo llenarcombo() envia los parametros para la consulta a la BD y el medoto
+//     *getRegistroCombo() se encarga de enviarlos a la capa de AccesoDatos.getRegistros()
+//     *quiern devolcera un ResultSet para luego obtener los valores y agregarlos al JConboBox
+//     *y a una Hashtable que nos servira para obtener el id y seleccionar valores.
+//     */
+//    public void getRegistroCombopuesto(String tabla, String[] campos, String[] campocondicion, String[] condicionid) {
+//        try {
+//            ResultSet rs;
+//            AccesoDatos ac = new AccesoDatos();
+//
+//            rs = ac.getRegistros(tabla, campos, campocondicion, condicionid, "");
+//
+//            int cantcampos = campos.length;
+//            if (rs != null) {
+//
+//                DefaultComboBoxModel modeloComboBox;
+//                modeloComboBox = new DefaultComboBoxModel();
+//                puesto.setModel(modeloComboBox);
+//
+//                modeloComboBox.addElement(new MCandidatura("", "0"));
+//                if (rs.next()) {//verifica si esta vacio, pero desplaza el puntero al siguiente elemento
+//                    int count = 0;
+//                    rs.beforeFirst();//regresa el puntero al primer registro
+//                    Object[] fila = new Object[cantcampos];
+//                    while (rs.next()) {//mientras tenga registros que haga lo siguiente
+//                        count++;
+//                        modeloComboBox.addElement(new MCandidatura(rs.getString(1), "" + rs.getInt(2)));
+//                        hashCandidatura.put(rs.getString(1), "" + count);
+//                    }
+//                }
+//            } else {
+//                JOptionPane.showMessageDialog(null, "No se encontraron datos para la busqueda", "Error", JOptionPane.INFORMATION_MESSAGE);
+//            }
+//            //rs.close();
+//
+//        } catch (SQLException ex) {
+//            JOptionPane.showMessageDialog(null, "Ocurrio un Error :" + ex, "Error", JOptionPane.ERROR_MESSAGE);
+//        }
+//    }
 
     /*
      *Prepara los parametros para la consulta de datos que deseamos agregar al model del ComboBox
@@ -260,7 +270,7 @@ public class Conteo_Votos extends javax.swing.JInternalFrame {
         String[] campos = {"nombre", "idmunicipio"};
         String[] condiciones = {"estado"};
         String[] Id = {Dato};
-        Cmunicipio.removeAllItems();
+        cmunicipio.removeAllItems();
         //Component cmps = municipio;
         getRegistromunicipio("municipio", campos, condiciones, Id);
 
@@ -283,16 +293,16 @@ public class Conteo_Votos extends javax.swing.JInternalFrame {
 
                 DefaultComboBoxModel modeloComboBox;
                 modeloComboBox = new DefaultComboBoxModel();
-                Cmunicipio.setModel(modeloComboBox);
+                cmunicipio.setModel(modeloComboBox);
 
-                modeloComboBox.addElement(new MPartido("", "0"));
+                modeloComboBox.addElement(new MMunicipio("", "0"));
                 if (rs.next()) {//verifica si esta vacio, pero desplaza el puntero al siguiente elemento
                     int count = 0;
                     rs.beforeFirst();//regresa el puntero al primer registro
                     Object[] fila = new Object[cantcampos];
                     while (rs.next()) {//mientras tenga registros que haga lo siguiente
                         count++;
-                        modeloComboBox.addElement(new MPartido(rs.getString(1), "" + rs.getInt(2)));
+                        modeloComboBox.addElement(new MMunicipio(rs.getString(1), "" + rs.getInt(2)));
                         hashMunicipio.put(rs.getString(1), "" + count);
                     }
                 }
@@ -407,86 +417,92 @@ public class Conteo_Votos extends javax.swing.JInternalFrame {
 //    }
     private void llenartablas() {
 
-        if (idmesa != null || !codigomesa.getText().isEmpty()) {
+        removejtable2(model, tpresidentes);
+        removejtable2(model2, tdiputados1);
+        removejtable2(model3, tdiputados2);
+        removejtable2(model4, tdiputados3);
+        removejtable2(model4, tdiputados3);
+        removejtable2(model5, talcalde);
 
-            //Presidentes
-            String sql = "select candidato.idcandidato, partido_politico.nombre, puesto.nombre, municipio.nombre,\n"
-                    + "        IFNULL((SELECT detalle_votos.cant_votos FROM detalle_votos where candidato.idcandidato = detalle_votos.candidato_idcandidato and detalle_votos.mesa_idmesa=" + "'" + idmesa + "'),0.0) AS 'votoss'\n"
-                    + "        from candidato INNER JOIN partido_politico on candidato.partido_idpartido=partido_politico.idpartido INNER JOIN puesto on candidato.puesto_idpuesto=puesto.idpuesto INNER JOIN municipio on candidato.municipio_idmunicipio=municipio.idmunicipio   where puesto.nombre = 'Presidente' order by candidato.idcandidato";
+        //if (cmunicipio.getSelectedIndex() == 0 || cmunicipio.getSelectedIndex() == -1/*idmesa != null || !codigomesa.getText().isEmpty()*/) {
+        if (cmunicipio.getSelectedIndex() == 0 || cmunicipio.getSelectedIndex() == -1) {
+            //titulos2=titulos3;
+            talcalde.setModel(model5 = new DefaultTableModel(null, titulos3));
+            String sql = "SELECT partido_politico.nombre, sum(detalle_votos.cant_votos) FROM candidato INNER JOIN detalle_votos ON candidato.idcandidato = detalle_votos.candidato_idcandidato INNER JOIN partido_politico ON candidato.partido_idpartido = partido_politico.idpartido INNER JOIN puesto ON candidato.puesto_idpuesto = puesto.idpuesto where puesto.nombre = 'Presidente' group by partido_politico.nombre";
             MostrarProductos(model, tpresidentes, sql);
-
             //Diputados1
-            String sql2 = "select candidato.idcandidato, partido_politico.nombre, puesto.nombre, municipio.nombre,\n"
-                    + "        IFNULL((SELECT detalle_votos.cant_votos FROM detalle_votos where candidato.idcandidato = detalle_votos.candidato_idcandidato and detalle_votos.mesa_idmesa=" + "'" + idmesa + "'),0.0) AS 'votoss'\n"
-                    + "        from candidato INNER JOIN partido_politico on candidato.partido_idpartido=partido_politico.idpartido INNER JOIN puesto on candidato.puesto_idpuesto=puesto.idpuesto INNER JOIN municipio on candidato.municipio_idmunicipio=municipio.idmunicipio   where puesto.nombre = 'Diputado Listado Nacianal' order by candidato.idcandidato";
+            String sql2 = "SELECT partido_politico.nombre, sum(detalle_votos.cant_votos) FROM candidato INNER JOIN detalle_votos ON candidato.idcandidato = detalle_votos.candidato_idcandidato INNER JOIN partido_politico ON candidato.partido_idpartido = partido_politico.idpartido INNER JOIN puesto ON candidato.puesto_idpuesto = puesto.idpuesto where puesto.nombre = 'Diputado Listado Nacianal' group by partido_politico.nombre";
             MostrarProductos(model2, tdiputados1, sql2);
-
             //Diputados2
-            String sql3 = "select candidato.idcandidato, partido_politico.nombre, puesto.nombre, municipio.nombre,\n"
-                    + "        IFNULL((SELECT detalle_votos.cant_votos FROM detalle_votos where candidato.idcandidato = detalle_votos.candidato_idcandidato and detalle_votos.mesa_idmesa=" + "'" + idmesa + "'),0.0) AS 'votoss'\n"
-                    + "        from candidato INNER JOIN partido_politico on candidato.partido_idpartido=partido_politico.idpartido INNER JOIN puesto on candidato.puesto_idpuesto=puesto.idpuesto INNER JOIN municipio on candidato.municipio_idmunicipio=municipio.idmunicipio   where puesto.nombre = 'Diputado Parlacen' order by candidato.idcandidato";
+            String sql3 = "SELECT partido_politico.nombre, sum(detalle_votos.cant_votos) FROM candidato INNER JOIN detalle_votos ON candidato.idcandidato = detalle_votos.candidato_idcandidato INNER JOIN partido_politico ON candidato.partido_idpartido = partido_politico.idpartido INNER JOIN puesto ON candidato.puesto_idpuesto = puesto.idpuesto where puesto.nombre = 'Diputado Parlacen' group by partido_politico.nombre";
             MostrarProductos(model3, tdiputados2, sql3);
-
             //Diputados3
-            String sql4 = "select candidato.idcandidato, partido_politico.nombre, puesto.nombre, municipio.nombre,\n"
-                    + "        IFNULL((SELECT detalle_votos.cant_votos FROM detalle_votos where candidato.idcandidato = detalle_votos.candidato_idcandidato and detalle_votos.mesa_idmesa=" + "'" + idmesa + "'),0.0) AS 'votoss'\n"
-                    + "        from candidato INNER JOIN partido_politico on candidato.partido_idpartido=partido_politico.idpartido INNER JOIN puesto on candidato.puesto_idpuesto=puesto.idpuesto INNER JOIN municipio on candidato.municipio_idmunicipio=municipio.idmunicipio   where puesto.nombre = 'Diputado Distrital' order by candidato.idcandidato";
+            String sql4 = "SELECT partido_politico.nombre, sum(detalle_votos.cant_votos) FROM candidato INNER JOIN detalle_votos ON candidato.idcandidato = detalle_votos.candidato_idcandidato INNER JOIN partido_politico ON candidato.partido_idpartido = partido_politico.idpartido INNER JOIN puesto ON candidato.puesto_idpuesto = puesto.idpuesto where puesto.nombre = 'Diputado Distrital' group by partido_politico.nombre";
             MostrarProductos(model4, tdiputados3, sql4);
 
-            //Alcalde
-            String sql5 = "select candidato.idcandidato, partido_politico.nombre, puesto.nombre, municipio.nombre,\n"
-                    + "        IFNULL((SELECT detalle_votos.cant_votos FROM detalle_votos where candidato.idcandidato = detalle_votos.candidato_idcandidato and detalle_votos.mesa_idmesa=" + "'" + idmesa + "'),0.0) AS 'votoss'\n"
-                    + "        from candidato INNER JOIN partido_politico on candidato.partido_idpartido=partido_politico.idpartido INNER JOIN puesto on candidato.puesto_idpuesto=puesto.idpuesto INNER JOIN municipio on candidato.municipio_idmunicipio=municipio.idmunicipio   where puesto.nombre = 'Alcalde' and candidato.municipio_idmunicipio="+idmunicipio.getText()+" order by candidato.idcandidato ";
-            MostrarProductos(model5, talcalde, sql5);
+//                if (cmunicipio.getSelectedIndex() == 0 || cmunicipio.getSelectedIndex() == -1) {
+//                    JOptionPane.showMessageDialog(null, "Debe seleccionar un Municipio para ver resultado de Alcalde");
+//                    removejtable2(model5, talcalde);
+//                } else {
+//                    //Alcalde
+            MMunicipio municip = (MMunicipio) cmunicipio.getSelectedItem();
+            String idmun = municip.getID();
+            //String sql5 = "SELECT partido_politico.nombre, sum(detalle_votos.cant_votos) FROM candidato INNER JOIN detalle_votos ON candidato.idcandidato = detalle_votos.candidato_idcandidato INNER JOIN partido_politico ON candidato.partido_idpartido = partido_politico.idpartido INNER JOIN puesto ON candidato.puesto_idpuesto = puesto.idpuesto where puesto.nombre = 'Alcalde' and candidato.municipio_idmunicipio=" + idmun + " group by partido_politico.nombre";
+            String sql5 = "SELECT municipio.nombre,partido_politico.nombre,SUM(detalle_votos.cant_votos) AS votos  FROM mesa INNER JOIN detalle_votos ON mesa.idmesa = detalle_votos.mesa_idmesa INNER JOIN centro ON mesa.centro_idcentro = centro.idcentro\n"
+                    + "INNER JOIN candidato candidato ON detalle_votos.candidato_idcandidato = candidato.idcandidato INNER JOIN partido_politico ON candidato.partido_idpartido = partido_politico.idpartido INNER JOIN puesto ON candidato.puesto_idpuesto = puesto.idpuesto INNER JOIN municipio ON centro.municipio_idmunicipio = municipio.idmunicipio where puesto.nombre = 'Alcalde' group by partido_politico.nombre";
+            MostrarProductos2(model5, talcalde, sql5);
+
+            //}
         } else {
-            removejtable2(model, tpresidentes);
-            removejtable2(model2, tdiputados1);
-            removejtable2(model3, tdiputados2);
-            removejtable2(model4, tdiputados3);
-            removejtable2(model4, tdiputados3);
-            removejtable2(model5, talcalde);
+            MMunicipio municip = (MMunicipio) cmunicipio.getSelectedItem();
+            String idmun = municip.getID();
+            talcalde.setModel(model5 = new DefaultTableModel(null, titulos2));
+            //String sql = "SELECT partido_politico.nombre, sum(detalle_votos.cant_votos) FROM candidato INNER JOIN detalle_votos ON candidato.idcandidato = detalle_votos.candidato_idcandidato INNER JOIN partido_politico ON candidato.partido_idpartido = partido_politico.idpartido INNER JOIN puesto ON candidato.puesto_idpuesto = puesto.idpuesto where puesto.nombre = 'Presidente' group by partido_politico.nombre";
+            String sql = "SELECT partido_politico.nombre,SUM(detalle_votos.cant_votos) AS votos FROM mesa INNER JOIN detalle_votos ON mesa.idmesa = detalle_votos.mesa_idmesa INNER JOIN centro ON mesa.centro_idcentro = centro.idcentro\n"
+                    + "INNER JOIN candidato candidato ON detalle_votos.candidato_idcandidato = candidato.idcandidato INNER JOIN partido_politico ON candidato.partido_idpartido = partido_politico.idpartido INNER JOIN puesto ON candidato.puesto_idpuesto = puesto.idpuesto INNER JOIN municipio ON centro.municipio_idmunicipio = municipio.idmunicipio where puesto.nombre = 'Presidente' and centro.municipio_idmunicipio=" + idmun + " group by partido_politico.nombre";
+            MostrarProductos(model, tpresidentes, sql);
+                //Diputados1
+            //String sql2 = "SELECT partido_politico.nombre, sum(detalle_votos.cant_votos) FROM candidato INNER JOIN detalle_votos ON candidato.idcandidato = detalle_votos.candidato_idcandidato INNER JOIN partido_politico ON candidato.partido_idpartido = partido_politico.idpartido INNER JOIN puesto ON candidato.puesto_idpuesto = puesto.idpuesto where puesto.nombre = 'Diputado Listado Nacianal' group by partido_politico.nombre";
+            String sql2 = "SELECT partido_politico.nombre,SUM(detalle_votos.cant_votos) AS votos FROM mesa INNER JOIN detalle_votos ON mesa.idmesa = detalle_votos.mesa_idmesa INNER JOIN centro ON mesa.centro_idcentro = centro.idcentro\n"
+                    + "INNER JOIN candidato candidato ON detalle_votos.candidato_idcandidato = candidato.idcandidato INNER JOIN partido_politico ON candidato.partido_idpartido = partido_politico.idpartido INNER JOIN puesto ON candidato.puesto_idpuesto = puesto.idpuesto INNER JOIN municipio ON centro.municipio_idmunicipio = municipio.idmunicipio where puesto.nombre = 'Diputado Listado Nacianal' and centro.municipio_idmunicipio=" + idmun + " group by partido_politico.nombre";
+            MostrarProductos(model2, tdiputados1, sql2);
+                //Diputados2
+            //String sql3 = "SELECT partido_politico.nombre, sum(detalle_votos.cant_votos) FROM candidato INNER JOIN detalle_votos ON candidato.idcandidato = detalle_votos.candidato_idcandidato INNER JOIN partido_politico ON candidato.partido_idpartido = partido_politico.idpartido INNER JOIN puesto ON candidato.puesto_idpuesto = puesto.idpuesto where puesto.nombre = 'Diputado Parlacen' group by partido_politico.nombre";
+            String sql3 = "SELECT partido_politico.nombre,SUM(detalle_votos.cant_votos) AS votos FROM mesa INNER JOIN detalle_votos ON mesa.idmesa = detalle_votos.mesa_idmesa INNER JOIN centro ON mesa.centro_idcentro = centro.idcentro\n"
+                    + "INNER JOIN candidato candidato ON detalle_votos.candidato_idcandidato = candidato.idcandidato INNER JOIN partido_politico ON candidato.partido_idpartido = partido_politico.idpartido INNER JOIN puesto ON candidato.puesto_idpuesto = puesto.idpuesto INNER JOIN municipio ON centro.municipio_idmunicipio = municipio.idmunicipio where puesto.nombre = 'Diputado Parlacen' and centro.municipio_idmunicipio=" + idmun + " group by partido_politico.nombre";
+            MostrarProductos(model3, tdiputados2, sql3);
+                //Diputados3
+            //String sql4 = "SELECT partido_politico.nombre, sum(detalle_votos.cant_votos) FROM candidato INNER JOIN detalle_votos ON candidato.idcandidato = detalle_votos.candidato_idcandidato INNER JOIN partido_politico ON candidato.partido_idpartido = partido_politico.idpartido INNER JOIN puesto ON candidato.puesto_idpuesto = puesto.idpuesto where puesto.nombre = 'Diputado Distrital' group by partido_politico.nombre";
+            String sql4 = "SELECT partido_politico.nombre,SUM(detalle_votos.cant_votos) AS votos FROM mesa INNER JOIN detalle_votos ON mesa.idmesa = detalle_votos.mesa_idmesa INNER JOIN centro ON mesa.centro_idcentro = centro.idcentro\n"
+                    + "INNER JOIN candidato candidato ON detalle_votos.candidato_idcandidato = candidato.idcandidato INNER JOIN partido_politico ON candidato.partido_idpartido = partido_politico.idpartido INNER JOIN puesto ON candidato.puesto_idpuesto = puesto.idpuesto INNER JOIN municipio ON centro.municipio_idmunicipio = municipio.idmunicipio where puesto.nombre = 'Diputado Distrital' and centro.municipio_idmunicipio=" + idmun + " group by partido_politico.nombre";
+            MostrarProductos(model4, tdiputados3, sql4);
+
+//                if (cmunicipio.getSelectedIndex() == 0 || cmunicipio.getSelectedIndex() == -1) {
+//                    JOptionPane.showMessageDialog(null, "Debe seleccionar un Municipio para ver resultado de Alcalde");
+//                    removejtable2(model5, talcalde);
+//                } else {
+            //Alcalde
+//                    MMunicipio municip = (MMunicipio) cmunicipio.getSelectedItem();
+//                    String idmun = municip.getID();
+            String sql5 = "SELECT partido_politico.nombre, sum(detalle_votos.cant_votos) FROM candidato INNER JOIN detalle_votos ON candidato.idcandidato = detalle_votos.candidato_idcandidato INNER JOIN partido_politico ON candidato.partido_idpartido = partido_politico.idpartido INNER JOIN puesto ON candidato.puesto_idpuesto = puesto.idpuesto where puesto.nombre = 'Alcalde' and candidato.municipio_idmunicipio=" + idmun + " group by partido_politico.nombre";
+            MostrarProductos(model5, talcalde, sql5);
+            //}
         }
+//        } else {
+//            removejtable2(model, tpresidentes);
+//            removejtable2(model2, tdiputados1);
+//            removejtable2(model3, tdiputados2);
+//            removejtable2(model4, tdiputados3);
+//            removejtable2(model4, tdiputados3);
+//            removejtable2(model5, talcalde);
+//        }
 
     }
 
     private void MostrarProductos(DefaultTableModel modelo, JTable table, String sql) {
-
-        //String sql = "select candidato.idcandidato, candidato.codigo, concat(candidato.nombres,' ',candidato.apellidos)AS nombre, partido_politico.nombre, puesto.nombre, municipio.nombre from candidato INNER JOIN partido_politico on candidato.partido_idpartido=partido_politico.idpartido INNER JOIN puesto on candidato.puesto_idpuesto=puesto.idpuesto INNER JOIN municipio on candidato.municipio_idmunicipio=municipio.idmunicipio   where puesto.nombre = 'Presidente' order by candidato.idcandidato";
-//        String sql = "select candidato.idcandidato, candidato.codigo, concat(candidato.nombres,' ',candidato.apellidos)AS nombre, partido_politico.nombre, puesto.nombre, municipio.nombre,\n" +
-//        "        IFNULL((SELECT detalle_votos.cant_votos FROM detalle_votos where candidato.idcandidato = detalle_votos.candidato_idcandidato and detalle_votos.mesa_idmesa="+"'"+idmesa+"'),0.0) AS 'votoss'\n" +
-//        "        from candidato INNER JOIN partido_politico on candidato.partido_idpartido=partido_politico.idpartido INNER JOIN puesto on candidato.puesto_idpuesto=puesto.idpuesto INNER JOIN municipio on candidato.municipio_idmunicipio=municipio.idmunicipio   where puesto.nombre = 'Presidente' order by candidato.idcandidato";
-//        
         removejtable2(modelo, table);
-
-        JCheckBox check = new JCheckBox();
-        table.getColumnModel().getColumn(5).setCellEditor(new DefaultCellEditor(check));
-        table.getColumnModel().getColumn(5).setCellRenderer(new Renderer_CheckBox());
-        CellEditorSpinnerPago cnt = new CellEditorSpinnerPago(1);
-        table.getColumnModel().getColumn(4).setCellEditor(cnt);
-        table.getColumnModel().getColumn(4).setCellRenderer(new TableCellFormatter(null));
-
         modelo = getRegistroPorLikell(modelo, sql);
         Utilidades.ajustarAnchoColumnas(table);
-        table.getColumnModel().getColumn(0).setMaxWidth(0);
-        table.getColumnModel().getColumn(0).setMinWidth(0);
-        table.getColumnModel().getColumn(0).setPreferredWidth(0);
-        table.doLayout();
-        table.getColumnModel().getColumn(2).setMaxWidth(0);
-        table.getColumnModel().getColumn(2).setMinWidth(0);
-        table.getColumnModel().getColumn(2).setPreferredWidth(0);
-        table.doLayout();
-        table.getColumnModel().getColumn(3).setMaxWidth(0);
-        table.getColumnModel().getColumn(3).setMinWidth(0);
-        table.getColumnModel().getColumn(3).setPreferredWidth(0);
-        table.doLayout();
-
-        //removejtable2();
-        //model2 = getRegistroPorLikell(model2, sql);
-        //Utilidades.ajustarAnchoColumnas(tpresidentes);
-        //tpresidentes.getColumnModel().getColumn(0).setMaxWidth(0);
-        //tpresidentes.getColumnModel().getColumn(0).setMinWidth(0);
-        //tpresidentes.getColumnModel().getColumn(0).setPreferredWidth(0);
-        //tpresidentes.doLayout();
     }
 
     /**
@@ -514,17 +530,77 @@ public class Conteo_Votos extends javax.swing.JInternalFrame {
                 while (rs.next()) {//mientras tenga registros que haga lo siguiente
                     fila[0] = rs.getString(1);
                     fila[1] = rs.getString(2);
+                    fila[2] = "0.0";//rs.getString(3);
+
+//                    fila[3] = rs.getString(4);
+//                    //fila[4] = rs.getString(5);
+//                    //fila[5] = rs.getString(6);
+//                    //fila[6] = 0.0;
+//                    fila[4] = Double.parseDouble(rs.getString(5));
+//                    if (Double.parseDouble(rs.getString(5)) > 0) {
+//                        fila[5] = true;
+//                    } else {
+//                        fila[5] = false;
+//                    }
+                    modelo.addRow(fila);
+                }
+
+            } //} 
+            else {
+                // JOptionPane.showMessageDialog(null, "No se encontraron datos para la busqueda", "Mensage", JOptionPane.INFORMATION_MESSAGE);
+            }
+            rs.close();
+            return modelo;
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Ocurrio un Error :" + ex, "Error", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+    }
+
+    private void MostrarProductos2(DefaultTableModel modelo, JTable table, String sql) {
+        removejtable2(modelo, table);
+        modelo = getRegistroPorLikell2(modelo, sql);
+        Utilidades.ajustarAnchoColumnas(table);
+    }
+
+    /**
+     * Para una condicion WHERE condicionid LIKE '% campocondicion' * @param
+     * modelo ,modelo de la JTable
+     *
+     * @param tabla , el nombre de la tabla a consultar en la BD
+     * @param campocondicion , los campos de la tabla para las condiciones ejem:
+     * id,estado etc
+     * @return
+     */
+    public DefaultTableModel getRegistroPorLikell2(DefaultTableModel modelo, String tabla) {
+        try {
+
+            ResultSet rs;
+
+            rs = acceso.getRegistroProc(tabla);
+            int cantcampos = 4;
+            //if (rs != null) {
+            if (rs.next()) {//verifica si esta vacio, pero desplaza el puntero al siguiente elemento
+                //int count = 0;
+                rs.beforeFirst();//regresa el puntero al primer registro
+                Object[] fila = new Object[cantcampos];
+
+                while (rs.next()) {//mientras tenga registros que haga lo siguiente
+                    fila[0] = rs.getString(1);
+                    fila[1] = rs.getString(2);
                     fila[2] = rs.getString(3);
-                    fila[3] = rs.getString(4);
-                    //fila[4] = rs.getString(5);
-                    //fila[5] = rs.getString(6);
-                    //fila[6] = 0.0;
-                    fila[4] = Double.parseDouble(rs.getString(5));
-                    if (Double.parseDouble(rs.getString(5)) > 0) {
-                        fila[5] = true;
-                    } else {
-                        fila[5] = false;
-                    }
+                    fila[3] = "0.0";//rs.getString(3);
+
+//                    fila[3] = rs.getString(4);
+//                    //fila[4] = rs.getString(5);
+//                    //fila[5] = rs.getString(6);
+//                    //fila[6] = 0.0;
+//                    fila[4] = Double.parseDouble(rs.getString(5));
+//                    if (Double.parseDouble(rs.getString(5)) > 0) {
+//                        fila[5] = true;
+//                    } else {
+//                        fila[5] = false;
+//                    }
                     modelo.addRow(fila);
                 }
 
@@ -593,25 +669,15 @@ public class Conteo_Votos extends javax.swing.JInternalFrame {
 
         panelImage = new elaprendiz.gui.panel.PanelImage();
         pnlActionButtons = new javax.swing.JPanel();
-        bntGuardar = new elaprendiz.gui.button.ButtonRect();
         bntCancelar = new elaprendiz.gui.button.ButtonRect();
         bntSalir = new elaprendiz.gui.button.ButtonRect();
         JPanelGrupo = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
-        jLabel19 = new javax.swing.JLabel();
-        nombrecentro = new elaprendiz.gui.textField.TextField();
-        jLabel20 = new javax.swing.JLabel();
-        nombremunicipio = new elaprendiz.gui.textField.TextField();
+        bntGuardar = new elaprendiz.gui.button.ButtonRect();
         JPanelBusqueda = new javax.swing.JPanel();
-        codigomesa = new elaprendiz.gui.textField.TextField();
-        jLabel16 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        idcentro = new elaprendiz.gui.textField.TextField();
-        idmunicipio = new elaprendiz.gui.textField.TextField();
-        jLabel5 = new javax.swing.JLabel();
-        puesto = new javax.swing.JComboBox();
         jLabel10 = new javax.swing.JLabel();
-        Cmunicipio = new javax.swing.JComboBox();
+        cmunicipio = new javax.swing.JComboBox();
+        seleccion = new javax.swing.JComboBox();
+        jLabel12 = new javax.swing.JLabel();
         pnlPaginador1 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
@@ -667,17 +733,6 @@ public class Conteo_Votos extends javax.swing.JInternalFrame {
         pnlActionButtons.setPreferredSize(new java.awt.Dimension(786, 52));
         pnlActionButtons.setLayout(new java.awt.GridBagLayout());
 
-        bntGuardar.setBackground(new java.awt.Color(51, 153, 255));
-        bntGuardar.setMnemonic(KeyEvent.VK_G);
-        bntGuardar.setText("Guardar");
-        bntGuardar.setName("Guardar Pagos"); // NOI18N
-        bntGuardar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bntGuardarActionPerformed(evt);
-            }
-        });
-        pnlActionButtons.add(bntGuardar, new java.awt.GridBagConstraints());
-
         bntCancelar.setBackground(new java.awt.Color(51, 153, 255));
         bntCancelar.setMnemonic(KeyEvent.VK_X);
         bntCancelar.setText("Cancelar");
@@ -716,38 +771,17 @@ public class Conteo_Votos extends javax.swing.JInternalFrame {
         JPanelGrupo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         JPanelGrupo.setLayout(null);
 
-        jButton2.setText("Actualizar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        bntGuardar.setBackground(new java.awt.Color(51, 153, 255));
+        bntGuardar.setMnemonic(KeyEvent.VK_G);
+        bntGuardar.setText("Actualizar");
+        bntGuardar.setName("Guardar Pagos"); // NOI18N
+        bntGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                bntGuardarActionPerformed(evt);
             }
         });
-        JPanelGrupo.add(jButton2);
-        jButton2.setBounds(40, 10, 100, 23);
-
-        jLabel19.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel19.setText("Centro:");
-        JPanelGrupo.add(jLabel19);
-        jLabel19.setBounds(170, 10, 60, 24);
-
-        nombrecentro.setEditable(false);
-        nombrecentro.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
-        nombrecentro.setPreferredSize(new java.awt.Dimension(250, 27));
-        JPanelGrupo.add(nombrecentro);
-        nombrecentro.setBounds(240, 10, 290, 24);
-
-        jLabel20.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel20.setText("Municipio:");
-        JPanelGrupo.add(jLabel20);
-        jLabel20.setBounds(540, 10, 69, 24);
-
-        nombremunicipio.setEditable(false);
-        nombremunicipio.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
-        nombremunicipio.setPreferredSize(new java.awt.Dimension(250, 27));
-        JPanelGrupo.add(nombremunicipio);
-        nombremunicipio.setBounds(610, 10, 260, 24);
+        JPanelGrupo.add(bntGuardar);
+        bntGuardar.setBounds(50, 10, 100, 30);
 
         panelImage.add(JPanelGrupo);
         JPanelGrupo.setBounds(0, 90, 880, 50);
@@ -756,69 +790,30 @@ public class Conteo_Votos extends javax.swing.JInternalFrame {
         JPanelBusqueda.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         JPanelBusqueda.setLayout(null);
 
-        codigomesa.setPreferredSize(new java.awt.Dimension(250, 27));
-        codigomesa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                codigomesaActionPerformed(evt);
-            }
-        });
-        JPanelBusqueda.add(codigomesa);
-        codigomesa.setBounds(120, 10, 97, 24);
-
-        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel16.setText("No. Mesa:");
-        JPanelBusqueda.add(jLabel16);
-        jLabel16.setBounds(10, 10, 100, 24);
-
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/buscar 2.png"))); // NOI18N
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        JPanelBusqueda.add(jButton1);
-        jButton1.setBounds(220, 10, 20, 24);
-
-        idcentro.setEditable(false);
-        idcentro.setVisible(false);
-        idcentro.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        idcentro.setPreferredSize(new java.awt.Dimension(120, 21));
-        JPanelBusqueda.add(idcentro);
-        idcentro.setBounds(270, 10, 20, 24);
-
-        idmunicipio.setEditable(false);
-        idmunicipio.setVisible(false);
-        idmunicipio.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        idmunicipio.setPreferredSize(new java.awt.Dimension(120, 21));
-        JPanelBusqueda.add(idmunicipio);
-        idmunicipio.setBounds(290, 10, 20, 24);
-
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel5.setText("Candidatura:");
-        JPanelBusqueda.add(jLabel5);
-        jLabel5.setBounds(360, 10, 90, 17);
-
-        puesto.setEditable(true);
-        puesto.setModel(modelCombo = new DefaultComboBoxModel());
-        puesto.setEnabled(false);
-        puesto.setName("Profesor"); // NOI18N
-        JPanelBusqueda.add(puesto);
-        puesto.setBounds(450, 10, 180, 20);
-
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel10.setText("Municipio:");
+        jLabel10.setText("Seleccion Municipio:");
         JPanelBusqueda.add(jLabel10);
-        jLabel10.setBounds(640, 10, 69, 17);
+        jLabel10.setBounds(360, 20, 140, 20);
+        jLabel10.setVisible(false);
 
-        Cmunicipio.setEditable(true);
-        Cmunicipio.setModel(modelCombo = new DefaultComboBoxModel());
-        Cmunicipio.setEnabled(false);
-        Cmunicipio.setName("Profesor"); // NOI18N
-        JPanelBusqueda.add(Cmunicipio);
-        Cmunicipio.setBounds(710, 10, 150, 20);
+        cmunicipio.setModel(modelCombo = new DefaultComboBoxModel());
+        cmunicipio.setName("Profesor"); // NOI18N
+        JPanelBusqueda.add(cmunicipio);
+        cmunicipio.setBounds(510, 20, 240, 20);
+        cmunicipio.setVisible(false);
+
+        seleccion.setEditable(true);
+        seleccion.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "General", "Por Municipio" }));
+        seleccion.setName("Seleccion"); // NOI18N
+        JPanelBusqueda.add(seleccion);
+        seleccion.setBounds(190, 20, 130, 20);
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel12.setText("Selección de Resultados:");
+        JPanelBusqueda.add(jLabel12);
+        jLabel12.setBounds(10, 20, 170, 20);
 
         panelImage.add(JPanelBusqueda);
         JPanelBusqueda.setBounds(0, 40, 880, 50);
@@ -834,7 +829,7 @@ public class Conteo_Votos extends javax.swing.JInternalFrame {
 
         jLabel21.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
         jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel21.setText("Hora");
+        jLabel21.setText("   Hora   ");
         pnlPaginador1.add(jLabel21, new java.awt.GridBagConstraints());
 
         clockDigital2.setForeground(new java.awt.Color(255, 255, 255));
@@ -1061,22 +1056,6 @@ public class Conteo_Votos extends javax.swing.JInternalFrame {
         cerrarVentana();
     }//GEN-LAST:event_formInternalFrameClosing
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        BuscarMesa frmBuscarAlumno = new BuscarMesa();
-        if (frmBuscarAlumno == null) {
-            frmBuscarAlumno = new BuscarMesa();
-        }
-        adminInternalFrame(dp, frmBuscarAlumno);
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void codigomesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codigomesaActionPerformed
-        // TODO add your handling code here:
-
-        balumnocodigo(codigomesa.getText());
-
-    }//GEN-LAST:event_codigomesaActionPerformed
-
     private void tdiputados1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tdiputados1KeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_tdiputados1KeyPressed
@@ -1091,102 +1070,7 @@ public class Conteo_Votos extends javax.swing.JInternalFrame {
 
     private void bntGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntGuardarActionPerformed
         // TODO add your handling code here:
-        if (AccesoUsuario.AccesosUsuario(bntGuardar.getName()) == true) {
-
-            if (Utilidades.esObligatorio(this.JPanelBusqueda, true)) {
-                JOptionPane.showInternalMessageDialog(this, "Los campos marcados son Obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-//            if (tdiputados1.getRowCount() == 0 /*&& colegiaturas.getSelectedRow() == -1*/ && tpresidentes.getRowCount() == 0) {
-//                JOptionPane.showMessageDialog(null, "La tabla no contiene datos");
-//            } else { //Inicio de Guardar datos
-            int resp = JOptionPane.showInternalConfirmDialog(this, "¿Desea Grabar el Registro?", "Pregunta", 0);
-            if (resp == 0) {
-
-                //idcentro.getText();
-                //idmunicipio.getText();
-                int n = 0;
-                PreparedStatement ps = null;
-                conn = BdConexion.getConexion();
-
-                try {
-                    conn.setAutoCommit(false);
-
-                    DefaultTableModel modelo = null;
-                    JTable tabla = null;
-
-                    for (int j = 0; j < 5; j++) {
-
-                        if (j == 0) {
-                            modelo = model;
-                            tabla = tpresidentes;
-                        } else if (j == 1) {
-                            modelo = model2;
-                            tabla = tdiputados1;
-                        } else if (j == 2) {
-                            modelo = model3;
-                            tabla = tdiputados2;
-                        } else if (j == 3) {
-                            modelo = model4;
-                            tabla = tdiputados3;
-                        } else if (j == 4) {
-                            modelo = model5;
-                            tabla = talcalde;
-                        }
-
-                        if (modelo.getRowCount() != -1 || modelo.getRowCount() > 0) {
-
-                            for (int i = 0; i < modelo.getRowCount(); i++) { //for pago de meses
-                                if (tabla.getValueAt(i, 7).toString().equals("false") && Float.parseFloat(""+tabla.getValueAt(i, 6)) > 0 ) {
-                                    // String idcandidato = (String) "" + tabla.getValueAt(i, 0);
-                                    String sql = "INSERT INTO detalle_votos (cant_votos, candidato_idcandidato, mesa_idmesa, usuario_idusuario) VALUES (?, ?, ?, ?)";
-                                    ps = conn.prepareStatement(sql);
-                                    ps.setString(1, "" + tabla.getValueAt(i, 6));
-                                    ps.setInt(2, Integer.parseInt("" + tabla.getValueAt(i, 0)));
-                                    ps.setInt(3, Integer.parseInt(idmesa));
-                                    ps.setFloat(4, AccesoUsuario.getIdusuario());
-                                    n = ps.executeUpdate();
-
-                                } else if (tabla.getValueAt(i, 7).toString().equals("true") && Float.parseFloat(""+tabla.getValueAt(i, 6)) > 0 ) {
-                                    String idcandidato = (String) "" + tabla.getValueAt(i, 0);
-                                    String sql2 = "update detalle_votos set  cant_votos=? where mesa_idmesa=" + idmesa + " and  candidato_idcandidato=" + idcandidato;
-                                    ps = conn.prepareStatement(sql2);
-                                    ps.setString(1, "" + tabla.getValueAt(i, 6));
-                                    n = ps.executeUpdate();
-                                }
-                            }//fin for pago de meses
-                        }
-                    }
-
-                    if (n > 0) {
-                        JOptionPane.showInternalMessageDialog(this, "Se ha Guardado Correctamente", "Error", JOptionPane.INFORMATION_MESSAGE);
-                        llenartablas();
-                    }
-
-                    conn.commit();// guarda todas las consultas si no ubo error
-                    ps.close();
-                    if (!conn.getAutoCommit()) {
-                        conn.setAutoCommit(true);
-                    }
-
-                } catch (SQLException ex) {
-                    try {
-                        conn.rollback();// no guarda ninguna de las consultas ya que ubo error
-                        ps.close();
-                        if (!conn.getAutoCommit()) {
-                            conn.setAutoCommit(true);
-                        }
-                    } catch (SQLException ex1) {
-                        Logger.getLogger(Conteo_Votos.class.getName()).log(Level.SEVERE, null, ex1);
-                    }
-                    JOptionPane.showMessageDialog(null, ex);
-                }
-            }
-            //}//Fin Guardar datos
-        } else {
-            JOptionPane.showInternalMessageDialog(this, "No tiene Acceso para realizar esta operación ");
-        }
+        llenartablas();
     }//GEN-LAST:event_bntGuardarActionPerformed
 
     private void tdiputados2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tdiputados2MouseClicked
@@ -1225,36 +1109,19 @@ public class Conteo_Votos extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_talcaldeKeyPressed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        MCandidatura carr = (MCandidatura) puesto.getSelectedItem();
-                String idpuesto = carr.getID();
-                MPartido mun = (MPartido) Cmunicipio.getSelectedItem();
-                String idmun = mun.getID();
-        balumnocodigo(codigomesa.getText());
-    }//GEN-LAST:event_jButton2ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox Cmunicipio;
     private javax.swing.JPanel JPanelBusqueda;
     private javax.swing.JPanel JPanelGrupo;
     private elaprendiz.gui.button.ButtonRect bntCancelar;
     private elaprendiz.gui.button.ButtonRect bntGuardar;
     private elaprendiz.gui.button.ButtonRect bntSalir;
     private elaprendiz.gui.varios.ClockDigital clockDigital2;
-    public static elaprendiz.gui.textField.TextField codigomesa;
-    public static elaprendiz.gui.textField.TextField idcentro;
-    public static elaprendiz.gui.textField.TextField idmunicipio;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JComboBox cmunicipio;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -1265,12 +1132,10 @@ public class Conteo_Votos extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
-    public static elaprendiz.gui.textField.TextField nombrecentro;
-    public static elaprendiz.gui.textField.TextField nombremunicipio;
     private elaprendiz.gui.panel.PanelImage panelImage;
     private javax.swing.JPanel pnlActionButtons;
     private javax.swing.JPanel pnlPaginador1;
-    private javax.swing.JComboBox puesto;
+    private javax.swing.JComboBox seleccion;
     private javax.swing.JTable talcalde;
     private elaprendiz.gui.panel.TabbedPaneHeader tbPane;
     private javax.swing.JTable tdiputados1;

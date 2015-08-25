@@ -113,7 +113,7 @@ public class Principal extends javax.swing.JFrame {
         );
         dpLayout.setVerticalGroup(
             dpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 543, Short.MAX_VALUE)
+            .addGap(0, 530, Short.MAX_VALUE)
         );
 
         getContentPane().add(dp);
@@ -155,6 +155,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuBar1.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
 
         jMenu1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/folder.png"))); // NOI18N
         jMenu1.setText("Archivo");
         jMenu1.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
 
@@ -172,9 +173,11 @@ public class Principal extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jMenu3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/cog.png"))); // NOI18N
         jMenu3.setText("Mantenimiento");
         jMenu3.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
 
+        mcandidatura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/group.png"))); // NOI18N
         mcandidatura.setText("Candidatura");
         mcandidatura.setName("mcandidatura"); // NOI18N
         mcandidatura.addActionListener(new java.awt.event.ActionListener() {
@@ -184,6 +187,7 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu3.add(mcandidatura);
 
+        mpartido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/book_addresses.png"))); // NOI18N
         mpartido.setText("Pardido Politico");
         mpartido.setName("Pardido Politico"); // NOI18N
         mpartido.addActionListener(new java.awt.event.ActionListener() {
@@ -193,6 +197,7 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu3.add(mpartido);
 
+        mcandidato.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/status_online.png"))); // NOI18N
         mcandidato.setText("Candidato");
         mcandidato.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -201,6 +206,7 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu3.add(mcandidato);
 
+        mmesa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/accept.png"))); // NOI18N
         mmesa.setText("Mesa de votación");
         mmesa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -209,6 +215,7 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu3.add(mmesa);
 
+        mcentro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/carrera.png"))); // NOI18N
         mcentro.setText("Centro Votación");
         mcentro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -217,6 +224,7 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu3.add(mcentro);
 
+        mvotos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/application_form.png"))); // NOI18N
         mvotos.setText("Ingreso Votos");
         mvotos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -228,6 +236,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuBar1.add(jMenu3);
 
         jMenu2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/application_form.png"))); // NOI18N
         jMenu2.setText("Sistema");
         jMenu2.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
 
@@ -275,10 +284,12 @@ public class Principal extends javax.swing.JFrame {
         jMenuBar1.add(jMenu2);
 
         jMenu5.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/report.png"))); // NOI18N
         jMenu5.setText("Informes");
         jMenu5.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
 
-        jMenuItem3.setText("Resultados Preliminares Generales");
+        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/calculator.png"))); // NOI18N
+        jMenuItem3.setText("Resultados Preliminares");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem3ActionPerformed(evt);
@@ -289,11 +300,12 @@ public class Principal extends javax.swing.JFrame {
         jMenuBar1.add(jMenu5);
 
         jMenu4.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/help.png"))); // NOI18N
         jMenu4.setText("Ayuda");
         jMenu4.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
 
         jMenuItem1.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/Help.png"))); // NOI18N
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/information.png"))); // NOI18N
         jMenuItem1.setText("Acerca de");
         jMenuItem1.setName("Acerca de Principal"); // NOI18N
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
