@@ -15,6 +15,7 @@ import Capa_Negocio.TableCellFormatter;
 import Capa_Negocio.Utilidades;
 import static Capa_Presentacion.Principal.dp;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.sql.PreparedStatement;
@@ -27,27 +28,32 @@ import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.DefaultCellEditor;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableModel;
+import modelos.MCandidatura;
+import modelos.MMunicipio;
 
 /**
  *
  * @author GLARA
  */
-public class Ingreso_Votos extends javax.swing.JInternalFrame {
+public class Conteo_Votos extends javax.swing.JInternalFrame {
 
     /*El modelo se define en : Jtable-->propiedades-->model--> <User Code> */
     DefaultTableModel model, model2, model3, model4, model5;
-
+    DefaultComboBoxModel modelCombo;
     //DefaultComboBoxModel modelCombo;
     //String[] titulos = {"Id", "Codigo", "Nombre Candidato", "Partido", "Candidatura", "Municipio", "Mora", "Subtotal", "Pagar Mora", "Pagar Mes"};//Titulos para Jtabla
     String[] titulos2 = {"Id", "Partido", "Candidatura", "Municipio", "Votos", "Ingresado"};//Titulos para Jtabla
     /*Se hace una instancia de la clase que recibira las peticiones de esta capa de aplicación*/
     Peticiones peticiones = new Peticiones();
+    public Hashtable<String, String> hashCandidatura = new Hashtable<>();
+    public Hashtable<String, String> hashMunicipio = new Hashtable<>();
     //public static Hashtable<String, String> hashGrupo = new Hashtable<>();
     //public static Hashtable<String, String> hashTipopago = new Hashtable<>();
     AccesoDatos acceso = new AccesoDatos();
@@ -57,10 +63,12 @@ public class Ingreso_Votos extends javax.swing.JInternalFrame {
     /**
      * Creates new form Cliente
      */
-    public Ingreso_Votos() {
+    public Conteo_Votos() {
         initComponents();
         setFiltroTexto();
         addEscapeKey();
+        llenarcombopuesto();
+        llenarcombomunicipio();
         
     }
 
@@ -182,6 +190,119 @@ public class Ingreso_Votos extends javax.swing.JInternalFrame {
                 }
 
             }
+        }
+    }
+    
+    
+    /*
+     *Prepara los parametros para la consulta de datos que deseamos agregar al model del ComboBox
+     *y se los envia a un metodo interno getRegistroCombo() 
+     *
+     */
+    public void llenarcombopuesto() {
+        String Dato = "1";
+        String[] campos = {"nombre", "idpuesto"};
+        String[] condiciones = {"estado"};
+        String[] Id = {Dato};
+        puesto.removeAllItems();
+        Component cmps = puesto;
+        getRegistroCombopuesto("puesto", campos, condiciones, Id);
+
+    }
+
+    /*El metodo llenarcombo() envia los parametros para la consulta a la BD y el medoto
+     *getRegistroCombo() se encarga de enviarlos a la capa de AccesoDatos.getRegistros()
+     *quiern devolcera un ResultSet para luego obtener los valores y agregarlos al JConboBox
+     *y a una Hashtable que nos servira para obtener el id y seleccionar valores.
+     */
+    public void getRegistroCombopuesto(String tabla, String[] campos, String[] campocondicion, String[] condicionid) {
+        try {
+            ResultSet rs;
+            AccesoDatos ac = new AccesoDatos();
+
+            rs = ac.getRegistros(tabla, campos, campocondicion, condicionid, "");
+
+            int cantcampos = campos.length;
+            if (rs != null) {
+
+                DefaultComboBoxModel modeloComboBox;
+                modeloComboBox = new DefaultComboBoxModel();
+                puesto.setModel(modeloComboBox);
+
+                modeloComboBox.addElement(new MCandidatura("", "0"));
+                if (rs.next()) {//verifica si esta vacio, pero desplaza el puntero al siguiente elemento
+                    int count = 0;
+                    rs.beforeFirst();//regresa el puntero al primer registro
+                    Object[] fila = new Object[cantcampos];
+                    while (rs.next()) {//mientras tenga registros que haga lo siguiente
+                        count++;
+                        modeloComboBox.addElement(new MCandidatura(rs.getString(1), "" + rs.getInt(2)));
+                        hashCandidatura.put(rs.getString(1), "" + count);
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontraron datos para la busqueda", "Error", JOptionPane.INFORMATION_MESSAGE);
+            }
+            //rs.close();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Ocurrio un Error :" + ex, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    /*
+     *Prepara los parametros para la consulta de datos que deseamos agregar al model del ComboBox
+     *y se los envia a un metodo interno getRegistroCombo() 
+     *
+     */
+    public void llenarcombomunicipio() {
+        String Dato = "1";
+        String[] campos = {"nombre", "idmunicipio"};
+        String[] condiciones = {"estado"};
+        String[] Id = {Dato};
+        Cmunicipio.removeAllItems();
+        //Component cmps = municipio;
+        getRegistromunicipio("municipio", campos, condiciones, Id);
+
+    }
+
+    /*El metodo llenarcombo() envia los parametros para la consulta a la BD y el medoto
+     *getRegistroCombo() se encarga de enviarlos a la capa de AccesoDatos.getRegistros()
+     *quiern devolcera un ResultSet para luego obtener los valores y agregarlos al JConboBox
+     *y a una Hashtable que nos servira para obtener el id y seleccionar valores.
+     */
+    public void getRegistromunicipio(String tabla, String[] campos, String[] campocondicion, String[] condicionid) {
+        try {
+            ResultSet rs;
+            AccesoDatos ac = new AccesoDatos();
+
+            rs = ac.getRegistros(tabla, campos, campocondicion, condicionid, "");
+
+            int cantcampos = campos.length;
+            if (rs != null) {
+
+                DefaultComboBoxModel modeloComboBox;
+                modeloComboBox = new DefaultComboBoxModel();
+                Cmunicipio.setModel(modeloComboBox);
+
+                modeloComboBox.addElement(new MMunicipio("", "0"));
+                if (rs.next()) {//verifica si esta vacio, pero desplaza el puntero al siguiente elemento
+                    int count = 0;
+                    rs.beforeFirst();//regresa el puntero al primer registro
+                    Object[] fila = new Object[cantcampos];
+                    while (rs.next()) {//mientras tenga registros que haga lo siguiente
+                        count++;
+                        modeloComboBox.addElement(new MMunicipio(rs.getString(1), "" + rs.getInt(2)));
+                        hashMunicipio.put(rs.getString(1), "" + count);
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontraron datos para la busqueda", "Error", JOptionPane.INFORMATION_MESSAGE);
+            }
+            //rs.close();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Ocurrio un Error :" + ex, "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -487,6 +608,10 @@ public class Ingreso_Votos extends javax.swing.JInternalFrame {
         jButton1 = new javax.swing.JButton();
         idcentro = new elaprendiz.gui.textField.TextField();
         idmunicipio = new elaprendiz.gui.textField.TextField();
+        jLabel5 = new javax.swing.JLabel();
+        puesto = new javax.swing.JComboBox();
+        jLabel10 = new javax.swing.JLabel();
+        Cmunicipio = new javax.swing.JComboBox();
         pnlPaginador1 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
@@ -668,6 +793,32 @@ public class Ingreso_Votos extends javax.swing.JInternalFrame {
         idmunicipio.setPreferredSize(new java.awt.Dimension(120, 21));
         JPanelBusqueda.add(idmunicipio);
         idmunicipio.setBounds(290, 10, 20, 24);
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel5.setText("Candidatura:");
+        JPanelBusqueda.add(jLabel5);
+        jLabel5.setBounds(360, 10, 90, 17);
+
+        puesto.setEditable(true);
+        puesto.setModel(modelCombo = new DefaultComboBoxModel());
+        puesto.setEnabled(false);
+        puesto.setName("Profesor"); // NOI18N
+        JPanelBusqueda.add(puesto);
+        puesto.setBounds(450, 10, 180, 20);
+
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel10.setText("Municipio:");
+        JPanelBusqueda.add(jLabel10);
+        jLabel10.setBounds(640, 10, 69, 17);
+
+        Cmunicipio.setEditable(true);
+        Cmunicipio.setModel(modelCombo = new DefaultComboBoxModel());
+        Cmunicipio.setEnabled(false);
+        Cmunicipio.setName("Profesor"); // NOI18N
+        JPanelBusqueda.add(Cmunicipio);
+        Cmunicipio.setBounds(710, 10, 150, 20);
 
         panelImage.add(JPanelBusqueda);
         JPanelBusqueda.setBounds(0, 40, 880, 50);
@@ -988,21 +1139,21 @@ public class Ingreso_Votos extends javax.swing.JInternalFrame {
                         if (modelo.getRowCount() != -1 || modelo.getRowCount() > 0) {
 
                             for (int i = 0; i < modelo.getRowCount(); i++) { //for pago de meses
-                                if (tabla.getValueAt(i, 5).toString().equals("false") && Float.parseFloat(""+tabla.getValueAt(i, 4)) > 0 ) {
+                                if (tabla.getValueAt(i, 7).toString().equals("false") && Float.parseFloat(""+tabla.getValueAt(i, 6)) > 0 ) {
                                     // String idcandidato = (String) "" + tabla.getValueAt(i, 0);
                                     String sql = "INSERT INTO detalle_votos (cant_votos, candidato_idcandidato, mesa_idmesa, usuario_idusuario) VALUES (?, ?, ?, ?)";
                                     ps = conn.prepareStatement(sql);
-                                    ps.setString(1, "" + tabla.getValueAt(i, 4));
+                                    ps.setString(1, "" + tabla.getValueAt(i, 6));
                                     ps.setInt(2, Integer.parseInt("" + tabla.getValueAt(i, 0)));
                                     ps.setInt(3, Integer.parseInt(idmesa));
                                     ps.setFloat(4, AccesoUsuario.getIdusuario());
                                     n = ps.executeUpdate();
 
-                                } else if (tabla.getValueAt(i, 5).toString().equals("true") && Float.parseFloat(""+tabla.getValueAt(i, 4)) > 0 ) {
+                                } else if (tabla.getValueAt(i, 7).toString().equals("true") && Float.parseFloat(""+tabla.getValueAt(i, 6)) > 0 ) {
                                     String idcandidato = (String) "" + tabla.getValueAt(i, 0);
                                     String sql2 = "update detalle_votos set  cant_votos=? where mesa_idmesa=" + idmesa + " and  candidato_idcandidato=" + idcandidato;
                                     ps = conn.prepareStatement(sql2);
-                                    ps.setString(1, "" + tabla.getValueAt(i, 4));
+                                    ps.setString(1, "" + tabla.getValueAt(i, 6));
                                     n = ps.executeUpdate();
                                 }
                             }//fin for pago de meses
@@ -1028,7 +1179,7 @@ public class Ingreso_Votos extends javax.swing.JInternalFrame {
                             conn.setAutoCommit(true);
                         }
                     } catch (SQLException ex1) {
-                        Logger.getLogger(Ingreso_Votos.class.getName()).log(Level.SEVERE, null, ex1);
+                        Logger.getLogger(Conteo_Votos.class.getName()).log(Level.SEVERE, null, ex1);
                     }
                     JOptionPane.showMessageDialog(null, ex);
                 }
@@ -1077,11 +1228,16 @@ public class Ingreso_Votos extends javax.swing.JInternalFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        MCandidatura carr = (MCandidatura) puesto.getSelectedItem();
+                String idpuesto = carr.getID();
+                MMunicipio mun = (MMunicipio) Cmunicipio.getSelectedItem();
+                String idmun = mun.getID();
         balumnocodigo(codigomesa.getText());
     }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox Cmunicipio;
     private javax.swing.JPanel JPanelBusqueda;
     private javax.swing.JPanel JPanelGrupo;
     private elaprendiz.gui.button.ButtonRect bntCancelar;
@@ -1093,11 +1249,13 @@ public class Ingreso_Votos extends javax.swing.JInternalFrame {
     public static elaprendiz.gui.textField.TextField idmunicipio;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -1113,6 +1271,7 @@ public class Ingreso_Votos extends javax.swing.JInternalFrame {
     private elaprendiz.gui.panel.PanelImage panelImage;
     private javax.swing.JPanel pnlActionButtons;
     private javax.swing.JPanel pnlPaginador1;
+    private javax.swing.JComboBox puesto;
     private javax.swing.JTable talcalde;
     private elaprendiz.gui.panel.TabbedPaneHeader tbPane;
     private javax.swing.JTable tdiputados1;

@@ -26,7 +26,7 @@ import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableModel;
-import modelos.mCarrera;
+import modelos.MCandidatura;
 
 /**
  *
@@ -145,14 +145,14 @@ public class Centro extends javax.swing.JInternalFrame {
                 modeloComboBox = new DefaultComboBoxModel();
                 centro.setModel(modeloComboBox);
 
-                modeloComboBox.addElement(new mCarrera("", "0"));
+                modeloComboBox.addElement(new MCandidatura("", "0"));
                 if (rs.next()) {//verifica si esta vacio, pero desplaza el puntero al siguiente elemento
                     int count = 0;
                     rs.beforeFirst();//regresa el puntero al primer registro
                     Object[] fila = new Object[cantcampos];
                     while (rs.next()) {//mientras tenga registros que haga lo siguiente
                         count++;
-                        modeloComboBox.addElement(new mCarrera(rs.getString(1), "" + rs.getInt(2)));
+                        modeloComboBox.addElement(new MCandidatura(rs.getString(1), "" + rs.getInt(2)));
                         hashCarrera.put(rs.getString(1), "" + count);
                     }
                 }
@@ -627,7 +627,7 @@ public class Centro extends javax.swing.JInternalFrame {
                 boolean seguardo = false;
                 String nombreTabla = "centro";
                 String campos = "nombre, estado,  municipio_idmunicipio";
-                mCarrera carr = (mCarrera) centro.getSelectedItem();
+                MCandidatura carr = (MCandidatura) centro.getSelectedItem();
                 String idcentro = carr.getID();
 
                 int estad = 0;
@@ -712,7 +712,7 @@ public class Centro extends javax.swing.JInternalFrame {
                 int fila = tcentro.getSelectedRow();
                 String id = (String) "" + tcentro.getValueAt(fila, 0);
                 String campos = "nombre, estado, municipio_idmunicipio";
-                mCarrera carr = (mCarrera) centro.getSelectedItem();
+                MCandidatura carr = (MCandidatura) centro.getSelectedItem();
                 String idcentro = carr.getID();
 
                 int estad = 0;

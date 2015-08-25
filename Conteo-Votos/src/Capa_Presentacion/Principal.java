@@ -279,6 +279,11 @@ public class Principal extends javax.swing.JFrame {
         jMenu5.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
 
         jMenuItem3.setText("Resultados Preliminares Generales");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItem3);
 
         jMenuBar1.add(jMenu5);
@@ -445,6 +450,19 @@ public class Principal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No tiene Acceso para realizar esta operación ");
         }
     }//GEN-LAST:event_mvotosActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+        if (AccesoUsuario.AccesosUsuario(jMenuItem3.getName()) == true) {
+            Conteo_Votos form = new Conteo_Votos();
+            if (form == null) {
+                form = new Conteo_Votos();
+            }
+            AddForms.adminInternalFrame(dp, form);
+        } else {
+            JOptionPane.showMessageDialog(this, "No tiene Acceso para realizar esta operación ");
+        }
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * @param args the command line arguments

@@ -511,7 +511,7 @@ public class Partido_politico extends javax.swing.JInternalFrame {
 
                 boolean seguardo = false;
                 //String nombreTabla = "puesto";
-                String campos = "nombre, fecharegistro, estado";
+                String campos = "nombre, estado";
                 //String fechaini = FormatoFecha.getFormato(fechainicio.getCalendar().getTime(), FormatoFecha.A_M_D);
 
                 int estad = 0;

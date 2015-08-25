@@ -8,13 +8,13 @@ package modelos;
  * @author GLARA
  */
 
-public class mCarrera {
+public class MCandidatura {
 
     private final String nombre;
     private final String id;
     
 
-    public mCarrera(String nombre,String id) {
+    public MCandidatura(String nombre,String id) {
         this.nombre = nombre;
         this.id = id;
     }

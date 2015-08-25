@@ -29,8 +29,8 @@ import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableModel;
-import modelos.mCarrera;
-import modelos.mMunicipio;
+import modelos.MCandidatura;
+import modelos.MMunicipio;
 import modelos.mProfesor;
 
 /**
@@ -45,8 +45,8 @@ public class Candidato extends javax.swing.JInternalFrame {
     String[] titulos = {"Codigo", "Partido", "Candidatura", "Municipio"};//Titulos para Jtabla
     /*Se hace una instancia de la clase que recibira las peticiones de esta capa de aplicación*/
     Peticiones peticiones = new Peticiones();
-    public Hashtable<String, String> hashProfesor = new Hashtable<>();
-    public Hashtable<String, String> hashCarrera = new Hashtable<>();
+    public Hashtable<String, String> hashPartido = new Hashtable<>();
+    public Hashtable<String, String> hashCandidatura = new Hashtable<>();
     public Hashtable<String, String> hashMunicipio = new Hashtable<>();
     int newcodcandidato, idcandidato;
     //private static Profesor frmProfesor = new Profesor();
@@ -161,7 +161,7 @@ public class Candidato extends javax.swing.JInternalFrame {
                     while (rs.next()) {//mientras tenga registros que haga lo siguiente
                         count++;
                         modeloComboBox.addElement(new mProfesor(rs.getString(1), "" + rs.getInt(2)));
-                        hashProfesor.put(rs.getString(1), "" + count);
+                        hashPartido.put(rs.getString(1), "" + count);
                     }
                 }
             } else {
@@ -209,15 +209,15 @@ public class Candidato extends javax.swing.JInternalFrame {
                 modeloComboBox = new DefaultComboBoxModel();
                 puesto.setModel(modeloComboBox);
 
-                modeloComboBox.addElement(new mCarrera("", "0"));
+                modeloComboBox.addElement(new MCandidatura("", "0"));
                 if (rs.next()) {//verifica si esta vacio, pero desplaza el puntero al siguiente elemento
                     int count = 0;
                     rs.beforeFirst();//regresa el puntero al primer registro
                     Object[] fila = new Object[cantcampos];
                     while (rs.next()) {//mientras tenga registros que haga lo siguiente
                         count++;
-                        modeloComboBox.addElement(new mCarrera(rs.getString(1), "" + rs.getInt(2)));
-                        hashCarrera.put(rs.getString(1), "" + count);
+                        modeloComboBox.addElement(new MCandidatura(rs.getString(1), "" + rs.getInt(2)));
+                        hashCandidatura.put(rs.getString(1), "" + count);
                     }
                 }
             } else {
@@ -265,14 +265,14 @@ public class Candidato extends javax.swing.JInternalFrame {
                 modeloComboBox = new DefaultComboBoxModel();
                 Cmunicipio.setModel(modeloComboBox);
 
-                modeloComboBox.addElement(new mMunicipio("", "0"));
+                modeloComboBox.addElement(new MMunicipio("", "0"));
                 if (rs.next()) {//verifica si esta vacio, pero desplaza el puntero al siguiente elemento
                     int count = 0;
                     rs.beforeFirst();//regresa el puntero al primer registro
                     Object[] fila = new Object[cantcampos];
                     while (rs.next()) {//mientras tenga registros que haga lo siguiente
                         count++;
-                        modeloComboBox.addElement(new mMunicipio(rs.getString(1), "" + rs.getInt(2)));
+                        modeloComboBox.addElement(new MMunicipio(rs.getString(1), "" + rs.getInt(2)));
                         hashMunicipio.put(rs.getString(1), "" + count);
                     }
                 }
@@ -411,9 +411,9 @@ public class Candidato extends javax.swing.JInternalFrame {
                             //nombres.setText(rs.getString(2));
                             //apellidos.setText(rs.getString(3));
                             //dia.setSelectedItem(rs.getString(3));
-                            int pr = Integer.parseInt((String) hashProfesor.get(rs.getString(2)));
+                            int pr = Integer.parseInt((String) hashPartido.get(rs.getString(2)));
                             partido.setSelectedIndex(pr);
-                            int car = Integer.parseInt((String) hashCarrera.get(rs.getString(3)));
+                            int car = Integer.parseInt((String) hashCandidatura.get(rs.getString(3)));
                             puesto.setSelectedIndex(car);
                             //horade.setValue(rs.getTime(6));
                             //horaa.setValue(rs.getTime(7));
@@ -975,9 +975,9 @@ public class Candidato extends javax.swing.JInternalFrame {
                 //String fechafn2 = FormatoFecha.getFormato(fechafin.getCalendar().getTime(), FormatoFecha.D_M_A);
                 mProfesor prof = (mProfesor) partido.getSelectedItem();
                 String idprof = prof.getID();
-                mCarrera carr = (mCarrera) puesto.getSelectedItem();
+                MCandidatura carr = (MCandidatura) puesto.getSelectedItem();
                 String idpuesto = carr.getID();
-                mMunicipio mun = (mMunicipio) Cmunicipio.getSelectedItem();
+                MMunicipio mun = (MMunicipio) Cmunicipio.getSelectedItem();
                 String idmun = mun.getID();
 
                 int estad = 0;
@@ -1088,9 +1088,9 @@ public class Candidato extends javax.swing.JInternalFrame {
                 //Para obtener el id en la base de datos
                 mProfesor prof = (mProfesor) partido.getSelectedItem();
                 String idprof = prof.getID();
-                mCarrera carr = (mCarrera) puesto.getSelectedItem();
+                MCandidatura carr = (MCandidatura) puesto.getSelectedItem();
                 String idpuesto = carr.getID();
-                mMunicipio mun = (mMunicipio) Cmunicipio.getSelectedItem();
+                MMunicipio mun = (MMunicipio) Cmunicipio.getSelectedItem();
                 String idmun = mun.getID();
 
                 int estad = 0;
