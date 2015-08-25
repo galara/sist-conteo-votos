@@ -37,7 +37,7 @@ public class Centro extends javax.swing.JInternalFrame {
     /*El modelo se define en : Jtable-->propiedades-->model--> <User Code> */
     DefaultTableModel model;
     DefaultComboBoxModel modelCombo;
-    String[] titulos = {"Código", "Descripción", "Municipio", "Estado"};//Titulos para Jtabla
+    String[] titulos = {"Código", "Descripción Centro", "Municipio", "Estado"};//Titulos para Jtabla
     /*Se hace una instancia de la clase que recibira las peticiones de esta capa de aplicación*/
     Peticiones peticiones = new Peticiones();
     public Hashtable<String, String> hashCarrera = new Hashtable<>();
@@ -451,7 +451,7 @@ public class Centro extends javax.swing.JInternalFrame {
         pnlActionButtons.add(bntSalir, gridBagConstraints);
 
         panelImage.add(pnlActionButtons);
-        pnlActionButtons.setBounds(0, 370, 570, 50);
+        pnlActionButtons.setBounds(0, 370, 880, 50);
 
         JPanelCampos.setBackground(java.awt.SystemColor.activeCaption);
         JPanelCampos.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -461,9 +461,9 @@ public class Centro extends javax.swing.JInternalFrame {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel1.setText("Descripción:");
+        jLabel1.setText("Descripción Centro:");
         JPanelCampos.add(jLabel1);
-        jLabel1.setBounds(90, 30, 90, 20);
+        jLabel1.setBounds(40, 30, 140, 20);
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
@@ -497,10 +497,10 @@ public class Centro extends javax.swing.JInternalFrame {
         nombre.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         nombre.setName("nombre"); // NOI18N
         JPanelCampos.add(nombre);
-        nombre.setBounds(190, 30, 130, 21);
+        nombre.setBounds(190, 30, 440, 21);
 
         panelImage.add(JPanelCampos);
-        JPanelCampos.setBounds(0, 40, 570, 130);
+        JPanelCampos.setBounds(0, 40, 880, 130);
 
         JPanelTable.setOpaque(false);
         JPanelTable.setPreferredSize(new java.awt.Dimension(786, 402));
@@ -541,7 +541,7 @@ public class Centro extends javax.swing.JInternalFrame {
             JPanelTable.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
             panelImage.add(JPanelTable);
-            JPanelTable.setBounds(0, 240, 570, 130);
+            JPanelTable.setBounds(0, 240, 880, 130);
 
             JPanelBusqueda.setBackground(java.awt.SystemColor.inactiveCaption);
             JPanelBusqueda.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -566,17 +566,17 @@ public class Centro extends javax.swing.JInternalFrame {
             rbNombres.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
             rbNombres.setForeground(new java.awt.Color(0, 102, 102));
             rbNombres.setSelected(true);
-            rbNombres.setText("Descripción");
+            rbNombres.setText("Descripción Centro");
             rbNombres.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     rbNombresActionPerformed(evt);
                 }
             });
             JPanelBusqueda.add(rbNombres);
-            rbNombres.setBounds(240, 40, 110, 25);
+            rbNombres.setBounds(240, 40, 170, 25);
 
             panelImage.add(JPanelBusqueda);
-            JPanelBusqueda.setBounds(0, 170, 570, 70);
+            JPanelBusqueda.setBounds(0, 170, 880, 70);
 
             pnlPaginador.setBackground(new java.awt.Color(57, 104, 163));
             pnlPaginador.setPreferredSize(new java.awt.Dimension(786, 40));
@@ -589,11 +589,11 @@ public class Centro extends javax.swing.JInternalFrame {
             pnlPaginador.add(jLabel8, new java.awt.GridBagConstraints());
 
             panelImage.add(pnlPaginador);
-            pnlPaginador.setBounds(0, 0, 570, 40);
+            pnlPaginador.setBounds(0, 0, 880, 40);
 
             getContentPane().add(panelImage, java.awt.BorderLayout.CENTER);
 
-            setBounds(0, 0, 580, 453);
+            setBounds(0, 0, 890, 453);
         }// </editor-fold>//GEN-END:initComponents
 
     private void bntNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntNuevoActionPerformed

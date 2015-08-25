@@ -31,7 +31,7 @@ public class Partido_politico extends javax.swing.JInternalFrame {
     /*El modelo se define en : Jtable-->propiedades-->model--> <User Code> */
     DefaultTableModel model;
     DefaultComboBoxModel modelCombo;
-    String[] titulos = {"Id", "Descripción", "Fecha Registro", "Estado"};//Titulos para Jtabla
+    String[] titulos = {"Id", "Descripción", "Estado"};//Titulos para Jtabla
     /*Se hace una instancia de la clase que recibira las peticiones de esta capa de aplicación*/
     Peticiones peticiones = new Peticiones();
     String tabla = "partido_politico";
@@ -121,7 +121,7 @@ public class Partido_politico extends javax.swing.JInternalFrame {
      * @return 
      */
     private void MostrarDatos(String Dato) {
-        String[] campos = {idp, "partido_politico.nombre", "DATE_FORMAT(partido_politico.fecharegistro,'%d-%m-%Y')", "partido_politico.estado"};
+        String[] campos = {idp, "partido_politico.nombre", "partido_politico.estado"};
 
         String[] condiciones = {idp};
         String[] Id = {Dato};
@@ -158,8 +158,8 @@ public class Partido_politico extends javax.swing.JInternalFrame {
 
         if (curso.getValueAt(fila, 0) != null) {
 
-            String[] campos = {"partido_politico.nombre", "partido_politico.fecharegistro", "partido_politico.estado"};
-            Component[] cmps = {descripcion, fechainicio, estado};
+            String[] campos = {"partido_politico.nombre", "partido_politico.estado"};
+            Component[] cmps = {descripcion, estado};
             Utilidades.setEditableTexto(this.JPanelCampos, true, null, true, "");
 
             peticiones.getRegistroSeleccionado(cmps, tabla, campos, cond, id, "", null);
@@ -191,10 +191,8 @@ public class Partido_politico extends javax.swing.JInternalFrame {
         bntSalir = new elaprendiz.gui.button.ButtonRect();
         JPanelCampos = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         descripcion = new elaprendiz.gui.textField.TextField();
-        fechainicio = new com.toedter.calendar.JDateChooser();
         estado = new javax.swing.JRadioButton();
         JPanelTable = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -348,15 +346,9 @@ public class Partido_politico extends javax.swing.JInternalFrame {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel1.setText("Descripción:");
+        jLabel1.setText("Nombre Pardido:");
         JPanelCampos.add(jLabel1);
-        jLabel1.setBounds(120, 40, 100, 20);
-
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel6.setText("Fecha Inicio:");
-        JPanelCampos.add(jLabel6);
-        jLabel6.setBounds(120, 120, 100, 21);
+        jLabel1.setBounds(90, 40, 130, 20);
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
@@ -369,16 +361,6 @@ public class Partido_politico extends javax.swing.JInternalFrame {
         descripcion.setName("descripcion"); // NOI18N
         JPanelCampos.add(descripcion);
         descripcion.setBounds(230, 40, 250, 21);
-
-        fechainicio.setDate(Calendar.getInstance().getTime());
-        fechainicio.setDateFormatString("dd/MM/yyyy");
-        fechainicio.setEnabled(false);
-        fechainicio.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        fechainicio.setMaxSelectableDate(new java.util.Date(3093496470100000L));
-        fechainicio.setMinSelectableDate(new java.util.Date(-62135744300000L));
-        fechainicio.setPreferredSize(new java.awt.Dimension(120, 22));
-        JPanelCampos.add(fechainicio);
-        fechainicio.setBounds(230, 120, 130, 21);
 
         estado.setBackground(new java.awt.Color(51, 153, 255));
         estado.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -468,7 +450,7 @@ public class Partido_politico extends javax.swing.JInternalFrame {
             rbNombres.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
             rbNombres.setForeground(new java.awt.Color(0, 102, 102));
             rbNombres.setSelected(true);
-            rbNombres.setText("Descripción");
+            rbNombres.setText("Nombre");
             rbNombres.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     rbNombresActionPerformed(evt);
@@ -530,13 +512,13 @@ public class Partido_politico extends javax.swing.JInternalFrame {
                 boolean seguardo = false;
                 //String nombreTabla = "puesto";
                 String campos = "nombre, fecharegistro, estado";
-                String fechaini = FormatoFecha.getFormato(fechainicio.getCalendar().getTime(), FormatoFecha.A_M_D);
+                //String fechaini = FormatoFecha.getFormato(fechainicio.getCalendar().getTime(), FormatoFecha.A_M_D);
 
                 int estad = 0;
                 if (this.estado.isSelected()) {
                     estad = 1;
                 }
-                Object[] valores = {descripcion.getText(), fechaini, estad
+                Object[] valores = {descripcion.getText(), estad
                 };
 
                 seguardo = peticiones.guardarRegistros(tabla, campos, valores);
@@ -615,14 +597,14 @@ public class Partido_politico extends javax.swing.JInternalFrame {
                 int seguardo = 0;
                 int fila = curso.getSelectedRow();
                 String id = (String) "" + curso.getValueAt(fila, 0);
-                String campos = "nombre, fecharegistro, estado";
-                String fechaini = FormatoFecha.getFormato(fechainicio.getCalendar().getTime(), FormatoFecha.A_M_D);
+                String campos = "nombre, estado";
+                //String fechaini = FormatoFecha.getFormato(fechainicio.getCalendar().getTime(), FormatoFecha.A_M_D);
 
                 int estad = 0;
                 if (this.estado.isSelected()) {
                     estad = 1;
                 }
-                Object[] valores = {descripcion.getText(), fechaini, estad, id};
+                Object[] valores = {descripcion.getText(), estad, id};
                 seguardo = peticiones.actualizarRegistro(tabla, campos, valores, columnaId, id);
                 if (seguardo == 1) {
                     Utilidades.setEditableTexto(this.JPanelCampos, false, null, true, "");
@@ -699,10 +681,8 @@ public class Partido_politico extends javax.swing.JInternalFrame {
     private javax.swing.JTable curso;
     private elaprendiz.gui.textField.TextField descripcion;
     private javax.swing.JRadioButton estado;
-    private com.toedter.calendar.JDateChooser fechainicio;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;

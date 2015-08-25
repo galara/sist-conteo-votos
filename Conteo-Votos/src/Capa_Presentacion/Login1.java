@@ -117,7 +117,7 @@ public class Login1 extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 38)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("\"2015\"");
+        jLabel5.setText("\"Elecciones 2015\"");
         panelCurves1.add(jLabel5);
         jLabel5.setBounds(-3, 398, 330, 40);
 

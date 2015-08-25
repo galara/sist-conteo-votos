@@ -45,7 +45,7 @@ public class Ingreso_Votos extends javax.swing.JInternalFrame {
 
     //DefaultComboBoxModel modelCombo;
     //String[] titulos = {"Id", "Codigo", "Nombre Candidato", "Partido", "Candidatura", "Municipio", "Mora", "Subtotal", "Pagar Mora", "Pagar Mes"};//Titulos para Jtabla
-    String[] titulos2 = {"Id", "Código", "Nombre Candidato", "Partido", "Candidatura", "Municipio", "Votos", "Ingresado"};//Titulos para Jtabla
+    String[] titulos2 = {"Id", "Partido", "Candidatura", "Municipio", "Votos", "Ingresado"};//Titulos para Jtabla
     /*Se hace una instancia de la clase que recibira las peticiones de esta capa de aplicación*/
     Peticiones peticiones = new Peticiones();
     //public static Hashtable<String, String> hashGrupo = new Hashtable<>();
@@ -61,6 +61,7 @@ public class Ingreso_Votos extends javax.swing.JInternalFrame {
         initComponents();
         setFiltroTexto();
         addEscapeKey();
+        
     }
 
     /*addEscapeKey agrega a este JInternalFrame un evento de cerrarVentana() al presionar la tecla "ESC" */
@@ -288,31 +289,31 @@ public class Ingreso_Votos extends javax.swing.JInternalFrame {
         if (idmesa != null || !codigomesa.getText().isEmpty()) {
 
             //Presidentes
-            String sql = "select candidato.idcandidato, candidato.codigo, concat(candidato.nombres,' ',candidato.apellidos)AS nombre, partido_politico.nombre, puesto.nombre, municipio.nombre,\n"
+            String sql = "select candidato.idcandidato, partido_politico.nombre, puesto.nombre, municipio.nombre,\n"
                     + "        IFNULL((SELECT detalle_votos.cant_votos FROM detalle_votos where candidato.idcandidato = detalle_votos.candidato_idcandidato and detalle_votos.mesa_idmesa=" + "'" + idmesa + "'),0.0) AS 'votoss'\n"
                     + "        from candidato INNER JOIN partido_politico on candidato.partido_idpartido=partido_politico.idpartido INNER JOIN puesto on candidato.puesto_idpuesto=puesto.idpuesto INNER JOIN municipio on candidato.municipio_idmunicipio=municipio.idmunicipio   where puesto.nombre = 'Presidente' order by candidato.idcandidato";
             MostrarProductos(model, tpresidentes, sql);
 
             //Diputados1
-            String sql2 = "select candidato.idcandidato, candidato.codigo, concat(candidato.nombres,' ',candidato.apellidos)AS nombre, partido_politico.nombre, puesto.nombre, municipio.nombre,\n"
+            String sql2 = "select candidato.idcandidato, partido_politico.nombre, puesto.nombre, municipio.nombre,\n"
                     + "        IFNULL((SELECT detalle_votos.cant_votos FROM detalle_votos where candidato.idcandidato = detalle_votos.candidato_idcandidato and detalle_votos.mesa_idmesa=" + "'" + idmesa + "'),0.0) AS 'votoss'\n"
                     + "        from candidato INNER JOIN partido_politico on candidato.partido_idpartido=partido_politico.idpartido INNER JOIN puesto on candidato.puesto_idpuesto=puesto.idpuesto INNER JOIN municipio on candidato.municipio_idmunicipio=municipio.idmunicipio   where puesto.nombre = 'Diputado Listado Nacianal' order by candidato.idcandidato";
             MostrarProductos(model2, tdiputados1, sql2);
 
             //Diputados2
-            String sql3 = "select candidato.idcandidato, candidato.codigo, concat(candidato.nombres,' ',candidato.apellidos)AS nombre, partido_politico.nombre, puesto.nombre, municipio.nombre,\n"
+            String sql3 = "select candidato.idcandidato, partido_politico.nombre, puesto.nombre, municipio.nombre,\n"
                     + "        IFNULL((SELECT detalle_votos.cant_votos FROM detalle_votos where candidato.idcandidato = detalle_votos.candidato_idcandidato and detalle_votos.mesa_idmesa=" + "'" + idmesa + "'),0.0) AS 'votoss'\n"
                     + "        from candidato INNER JOIN partido_politico on candidato.partido_idpartido=partido_politico.idpartido INNER JOIN puesto on candidato.puesto_idpuesto=puesto.idpuesto INNER JOIN municipio on candidato.municipio_idmunicipio=municipio.idmunicipio   where puesto.nombre = 'Diputado Parlacen' order by candidato.idcandidato";
             MostrarProductos(model3, tdiputados2, sql3);
 
             //Diputados3
-            String sql4 = "select candidato.idcandidato, candidato.codigo, concat(candidato.nombres,' ',candidato.apellidos)AS nombre, partido_politico.nombre, puesto.nombre, municipio.nombre,\n"
+            String sql4 = "select candidato.idcandidato, partido_politico.nombre, puesto.nombre, municipio.nombre,\n"
                     + "        IFNULL((SELECT detalle_votos.cant_votos FROM detalle_votos where candidato.idcandidato = detalle_votos.candidato_idcandidato and detalle_votos.mesa_idmesa=" + "'" + idmesa + "'),0.0) AS 'votoss'\n"
                     + "        from candidato INNER JOIN partido_politico on candidato.partido_idpartido=partido_politico.idpartido INNER JOIN puesto on candidato.puesto_idpuesto=puesto.idpuesto INNER JOIN municipio on candidato.municipio_idmunicipio=municipio.idmunicipio   where puesto.nombre = 'Diputado Distrital' order by candidato.idcandidato";
             MostrarProductos(model4, tdiputados3, sql4);
 
             //Alcalde
-            String sql5 = "select candidato.idcandidato, candidato.codigo, concat(candidato.nombres,' ',candidato.apellidos)AS nombre, partido_politico.nombre, puesto.nombre, municipio.nombre,\n"
+            String sql5 = "select candidato.idcandidato, partido_politico.nombre, puesto.nombre, municipio.nombre,\n"
                     + "        IFNULL((SELECT detalle_votos.cant_votos FROM detalle_votos where candidato.idcandidato = detalle_votos.candidato_idcandidato and detalle_votos.mesa_idmesa=" + "'" + idmesa + "'),0.0) AS 'votoss'\n"
                     + "        from candidato INNER JOIN partido_politico on candidato.partido_idpartido=partido_politico.idpartido INNER JOIN puesto on candidato.puesto_idpuesto=puesto.idpuesto INNER JOIN municipio on candidato.municipio_idmunicipio=municipio.idmunicipio   where puesto.nombre = 'Alcalde' and candidato.municipio_idmunicipio="+idmunicipio.getText()+" order by candidato.idcandidato ";
             MostrarProductos(model5, talcalde, sql5);
@@ -337,17 +338,25 @@ public class Ingreso_Votos extends javax.swing.JInternalFrame {
         removejtable2(modelo, table);
 
         JCheckBox check = new JCheckBox();
-        table.getColumnModel().getColumn(7).setCellEditor(new DefaultCellEditor(check));
-        table.getColumnModel().getColumn(7).setCellRenderer(new Renderer_CheckBox());
+        table.getColumnModel().getColumn(5).setCellEditor(new DefaultCellEditor(check));
+        table.getColumnModel().getColumn(5).setCellRenderer(new Renderer_CheckBox());
         CellEditorSpinnerPago cnt = new CellEditorSpinnerPago(1);
-        table.getColumnModel().getColumn(6).setCellEditor(cnt);
-        table.getColumnModel().getColumn(6).setCellRenderer(new TableCellFormatter(null));
+        table.getColumnModel().getColumn(4).setCellEditor(cnt);
+        table.getColumnModel().getColumn(4).setCellRenderer(new TableCellFormatter(null));
 
         modelo = getRegistroPorLikell(modelo, sql);
         Utilidades.ajustarAnchoColumnas(table);
         table.getColumnModel().getColumn(0).setMaxWidth(0);
         table.getColumnModel().getColumn(0).setMinWidth(0);
         table.getColumnModel().getColumn(0).setPreferredWidth(0);
+        table.doLayout();
+        table.getColumnModel().getColumn(2).setMaxWidth(0);
+        table.getColumnModel().getColumn(2).setMinWidth(0);
+        table.getColumnModel().getColumn(2).setPreferredWidth(0);
+        table.doLayout();
+        table.getColumnModel().getColumn(3).setMaxWidth(0);
+        table.getColumnModel().getColumn(3).setMinWidth(0);
+        table.getColumnModel().getColumn(3).setPreferredWidth(0);
         table.doLayout();
 
         //removejtable2();
@@ -374,7 +383,7 @@ public class Ingreso_Votos extends javax.swing.JInternalFrame {
             ResultSet rs;
 
             rs = acceso.getRegistroProc(tabla);
-            int cantcampos = 8;
+            int cantcampos = 6;
             //if (rs != null) {
             if (rs.next()) {//verifica si esta vacio, pero desplaza el puntero al siguiente elemento
                 //int count = 0;
@@ -386,14 +395,14 @@ public class Ingreso_Votos extends javax.swing.JInternalFrame {
                     fila[1] = rs.getString(2);
                     fila[2] = rs.getString(3);
                     fila[3] = rs.getString(4);
-                    fila[4] = rs.getString(5);
-                    fila[5] = rs.getString(6);
+                    //fila[4] = rs.getString(5);
+                    //fila[5] = rs.getString(6);
                     //fila[6] = 0.0;
-                    fila[6] = Double.parseDouble(rs.getString(7));
-                    if (Double.parseDouble(rs.getString(7)) > 0) {
-                        fila[7] = true;
+                    fila[4] = Double.parseDouble(rs.getString(5));
+                    if (Double.parseDouble(rs.getString(5)) > 0) {
+                        fila[5] = true;
                     } else {
-                        fila[7] = false;
+                        fila[5] = false;
                     }
                     modelo.addRow(fila);
                 }
@@ -904,9 +913,9 @@ public class Ingreso_Votos extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        BuscarAlumno frmBuscarAlumno = new BuscarAlumno();
+        BuscarMesa frmBuscarAlumno = new BuscarMesa();
         if (frmBuscarAlumno == null) {
-            frmBuscarAlumno = new BuscarAlumno();
+            frmBuscarAlumno = new BuscarMesa();
         }
         adminInternalFrame(dp, frmBuscarAlumno);
     }//GEN-LAST:event_jButton1ActionPerformed

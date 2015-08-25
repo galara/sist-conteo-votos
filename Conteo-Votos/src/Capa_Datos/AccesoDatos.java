@@ -17,7 +17,7 @@ public class AccesoDatos {
     public Statement st;
     public String sql;
     public int numRegistros = 0;
-    public int finalPag = 50;
+    public int finalPag = 5000;
     public int inicioPag = 0;
 
     /**

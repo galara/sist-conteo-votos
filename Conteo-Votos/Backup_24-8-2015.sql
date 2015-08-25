@@ -25,13 +25,9 @@ DROP TABLE IF EXISTS `candidato`;
 CREATE TABLE `candidato` (
   `idcandidato` int(11) NOT NULL AUTO_INCREMENT,
   `codigo` varchar(45) NOT NULL,
-  `nombres` varchar(100) NOT NULL,
-  `apellidos` varchar(100) NOT NULL,
   `partido_idpartido` int(11) NOT NULL,
   `puesto_idpuesto` int(11) NOT NULL,
   `estado` tinyint(1) DEFAULT '0',
-  `fechainicio` date NOT NULL,
-  `fechafin` date NOT NULL,
   `municipio_idmunicipio` int(11) NOT NULL,
   PRIMARY KEY (`idcandidato`,`partido_idpartido`,`puesto_idpuesto`,`municipio_idmunicipio`),
   UNIQUE KEY `codigo_UNIQUE` (`codigo`),
@@ -41,7 +37,7 @@ CREATE TABLE `candidato` (
   CONSTRAINT `fk_candidato_municipio1` FOREIGN KEY (`municipio_idmunicipio`) REFERENCES `municipio` (`idmunicipio`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_candidato_partido1` FOREIGN KEY (`partido_idpartido`) REFERENCES `partido_politico` (`idpartido`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_candidato_puesto1` FOREIGN KEY (`puesto_idpuesto`) REFERENCES `puesto` (`idpuesto`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -50,6 +46,7 @@ CREATE TABLE `candidato` (
 
 LOCK TABLES `candidato` WRITE;
 /*!40000 ALTER TABLE `candidato` DISABLE KEYS */;
+INSERT INTO `candidato` VALUES (7,'C-7',2,5,1,1);
 /*!40000 ALTER TABLE `candidato` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -211,7 +208,7 @@ CREATE TABLE `municipio` (
   UNIQUE KEY `nombre_UNIQUE` (`nombre`),
   KEY `fk_municipio_departamento1_idx` (`departamento_iddepartamento`),
   CONSTRAINT `fk_municipio_departamento1` FOREIGN KEY (`departamento_iddepartamento`) REFERENCES `departamento` (`iddepartamento`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -220,7 +217,7 @@ CREATE TABLE `municipio` (
 
 LOCK TABLES `municipio` WRITE;
 /*!40000 ALTER TABLE `municipio` DISABLE KEYS */;
-INSERT INTO `municipio` VALUES (1,'RETALHULEU',14,10236,10349,1,1),(2,'SAN SEBASTIAN',4,10350,10387,1,1),(3,'SANTA CRUZ MULUA',3,10388,10408,1,1),(4,'SAN MARTIN ZAPOTITLAN',4,10409,10428,1,1),(5,'SAN FELIPE',5,10445,10460,1,1),(6,'SAN ANDRES VILLA SECA',10,10461,10517,1,1),(7,'CHAMPERICO',6,10518,10565,1,1),(8,'NUEVO SAN CARLOS',7,10566,10621,1,1),(9,'EL ASINTAL',6,10637,10671,1,1);
+INSERT INTO `municipio` VALUES (1,'RETALHULEU',14,10236,10349,1,1),(2,'SAN SEBASTIAN',4,10350,10387,1,1),(3,'SANTA CRUZ MULUA',3,10388,10408,1,1),(4,'SAN MARTIN ZAPOTITLAN',4,10409,10428,1,1),(5,'SAN FELIPE',5,10445,10460,1,1),(6,'SAN ANDRES VILLA SECA',10,10461,10517,1,1),(7,'CHAMPERICO',6,10518,10565,1,1),(8,'NUEVO SAN CARLOS',7,10566,10621,1,1),(9,'EL ASINTAL',6,10637,10671,1,1),(10,'N/A',0,0,0,1,1);
 /*!40000 ALTER TABLE `municipio` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -347,4 +344,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-08-24 15:12:46
+-- Dump completed on 2015-08-24 18:39:30

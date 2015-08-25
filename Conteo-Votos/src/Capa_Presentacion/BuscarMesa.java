@@ -30,7 +30,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author GLARA
  */
-public class BuscarAlumno extends javax.swing.JInternalFrame {
+public class BuscarMesa extends javax.swing.JInternalFrame {
 
     //private static Horario frmHorario = new Horario();
     /*El modelo se define en : Jtable-->propiedades-->model--> <User Code> */
@@ -47,7 +47,7 @@ public class BuscarAlumno extends javax.swing.JInternalFrame {
     /**
      * Creates new form Cliente
      */
-    public BuscarAlumno() {
+    public BuscarMesa() {
         initComponents();
         setFiltroTexto();
         addEscapeKey();
@@ -147,11 +147,11 @@ public class BuscarAlumno extends javax.swing.JInternalFrame {
         }
         if (this.rbNombre.isSelected()) {
             removejtable();
-            model = peticiones.getRegistroPorLike(model, "mesa", campos, "mesa.estado=1 and mesa.nombre", Dato, inner);
+            model = peticiones.getRegistroPorLike(model, "mesa", campos, "mesa.estado=1 and centro.nombre", Dato, inner);
         }
         if (this.rbApellido.isSelected()) {
             removejtable();
-            model = peticiones.getRegistroPorLike(model, "mesa", campos, "mesa.estado=1 and mesa.nombre", Dato, inner);
+            model = peticiones.getRegistroPorLike(model, "mesa", campos, "mesa.estado=1 and municipio.nombre", Dato, inner);
         }
         Utilidades.ajustarAnchoColumnas(alumnos);
         alumnos.getColumnModel().getColumn(5).setMaxWidth(0);
@@ -363,7 +363,7 @@ public class BuscarAlumno extends javax.swing.JInternalFrame {
             rbNombre.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
             rbNombre.setForeground(new java.awt.Color(0, 102, 102));
             rbNombre.setSelected(true);
-            rbNombre.setText("Nombre");
+            rbNombre.setText("Centro");
             rbNombre.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     rbNombreActionPerformed(evt);
@@ -375,14 +375,14 @@ public class BuscarAlumno extends javax.swing.JInternalFrame {
             rbApellido.setBackground(java.awt.SystemColor.inactiveCaption);
             rbApellido.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
             rbApellido.setForeground(new java.awt.Color(0, 102, 102));
-            rbApellido.setText("Apellido");
+            rbApellido.setText("Municipio");
             rbApellido.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     rbApellidoActionPerformed(evt);
                 }
             });
             JPanelBusqueda.add(rbApellido);
-            rbApellido.setBounds(490, 40, 79, 25);
+            rbApellido.setBounds(490, 40, 90, 25);
 
             panelImage.add(JPanelBusqueda);
             JPanelBusqueda.setBounds(0, 40, 880, 70);

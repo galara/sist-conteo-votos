@@ -154,7 +154,7 @@ public class Mesa extends javax.swing.JInternalFrame {
                         count++;
                         modeloComboBox.addElement(new mCentro(rs.getString(1), ""+rs.getInt(2)));
                         hashCentro.put(rs.getString(1), "" + count);
-                        System.out.print( rs.getString(1)+"" + count  +"combo \n");
+                        //System.out.print( rs.getString(1)+"" + count  +"combo \n");
                     }
                 }
             } else {
@@ -260,7 +260,7 @@ public class Mesa extends javax.swing.JInternalFrame {
                         while (rs.next()) {//mientras tenga registros que haga lo siguiente
 
                             nombre.setText(rs.getString(1));
-                            System.out.print( hashCentro.get(rs.getString(2)) +"\n");
+                            //System.out.print( hashCentro.get(rs.getString(2)) +"\n");
                             int car = Integer.parseInt((String) hashCentro.get(rs.getString(2)));
                             centro.setSelectedIndex(car);
 
@@ -475,7 +475,7 @@ public class Mesa extends javax.swing.JInternalFrame {
         pnlActionButtons.add(bntSalir, gridBagConstraints);
 
         panelImage.add(pnlActionButtons);
-        pnlActionButtons.setBounds(0, 370, 570, 50);
+        pnlActionButtons.setBounds(0, 370, 880, 50);
 
         JPanelCampos.setBackground(java.awt.SystemColor.activeCaption);
         JPanelCampos.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -522,10 +522,10 @@ public class Mesa extends javax.swing.JInternalFrame {
         nombre.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         nombre.setName("nombre"); // NOI18N
         JPanelCampos.add(nombre);
-        nombre.setBounds(190, 30, 130, 21);
+        nombre.setBounds(190, 30, 440, 21);
 
         panelImage.add(JPanelCampos);
-        JPanelCampos.setBounds(0, 40, 570, 130);
+        JPanelCampos.setBounds(0, 40, 880, 130);
 
         JPanelTable.setOpaque(false);
         JPanelTable.setPreferredSize(new java.awt.Dimension(786, 402));
@@ -566,7 +566,7 @@ public class Mesa extends javax.swing.JInternalFrame {
             JPanelTable.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
             panelImage.add(JPanelTable);
-            JPanelTable.setBounds(0, 240, 570, 130);
+            JPanelTable.setBounds(0, 240, 880, 130);
 
             JPanelBusqueda.setBackground(java.awt.SystemColor.inactiveCaption);
             JPanelBusqueda.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -601,7 +601,7 @@ public class Mesa extends javax.swing.JInternalFrame {
             rbNombres.setBounds(240, 40, 110, 25);
 
             panelImage.add(JPanelBusqueda);
-            JPanelBusqueda.setBounds(0, 170, 570, 70);
+            JPanelBusqueda.setBounds(0, 170, 880, 70);
 
             pnlPaginador.setBackground(new java.awt.Color(57, 104, 163));
             pnlPaginador.setPreferredSize(new java.awt.Dimension(786, 40));
@@ -614,11 +614,11 @@ public class Mesa extends javax.swing.JInternalFrame {
             pnlPaginador.add(jLabel8, new java.awt.GridBagConstraints());
 
             panelImage.add(pnlPaginador);
-            pnlPaginador.setBounds(0, 0, 570, 40);
+            pnlPaginador.setBounds(0, 0, 880, 40);
 
             getContentPane().add(panelImage, java.awt.BorderLayout.CENTER);
 
-            setBounds(0, 0, 580, 453);
+            setBounds(0, 0, 890, 453);
         }// </editor-fold>//GEN-END:initComponents
 
     private void bntNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntNuevoActionPerformed

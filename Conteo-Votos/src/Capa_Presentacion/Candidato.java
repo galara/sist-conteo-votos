@@ -42,7 +42,7 @@ public class Candidato extends javax.swing.JInternalFrame {
     /*El modelo se define en : Jtable-->propiedades-->model--> <User Code> */
     DefaultTableModel model;
     DefaultComboBoxModel modelCombo;
-    String[] titulos = {"Codigo", "Nombre", "Partido", "Cargo", "Fecha de", "Fecha a", "Municipio"};//Titulos para Jtabla
+    String[] titulos = {"Codigo", "Partido", "Candidatura", "Municipio"};//Titulos para Jtabla
     /*Se hace una instancia de la clase que recibira las peticiones de esta capa de aplicación*/
     Peticiones peticiones = new Peticiones();
     public Hashtable<String, String> hashProfesor = new Hashtable<>();
@@ -293,7 +293,7 @@ public class Candidato extends javax.swing.JInternalFrame {
     private void setFiltroTexto() {
 
         TipoFiltro.setFiltraEntrada(codigo.getDocument(), FiltroCampos.NUM_LETRAS, 45, false);
-        TipoFiltro.setFiltraEntrada(nombres.getDocument(), FiltroCampos.NUM_LETRAS, 60, true);
+        //TipoFiltro.setFiltraEntrada(nombres.getDocument(), FiltroCampos.NUM_LETRAS, 60, true);
         //TipoFiltro.setFiltraEntrada(dia.getDocument(), FiltroCampos.SOLO_LETRAS, 45, false);
         //TipoFiltro.setFiltraEntrada(partido_politico.getDocument(), FiltroCampos.NUM_LETRAS, 200, true);
         //TipoFiltro.setFiltraEntrada(cantalumnos.getDocument(), FiltroCampos.SOLO_NUMEROS, 5, true);
@@ -314,8 +314,9 @@ public class Candidato extends javax.swing.JInternalFrame {
      */
     private void MostrarDatos(String Dato) {
         //String[] titulos = {"Codigo", "Descripción", "Dia", "Profesor","Carrera", "Hora De", "Hora A", "Fecha Inicio","Fecha Fin", "Alumnos","Estado"};//Titulos para Jtabla
-        String conct = "concat(candidato.nombres,' ',candidato.apellidos)";
-        String[] campos = {"candidato.codigo", conct, "partido_politico.nombre", "puesto.nombre", "DATE_FORMAT(candidato.fechainicio,'%d-%m-%Y')", "DATE_FORMAT(candidato.fechafin,'%d-%m-%Y')", "municipio.nombre"};
+        //String conct = "concat(candidato.nombres,' ',candidato.apellidos)";
+        String[] campos = {"candidato.codigo", "partido_politico.nombre", "puesto.nombre", "municipio.nombre"};
+        //String[] titulos = {"Codigo", "Nombre", "Partido", "Cargo", "Municipio"};//Titulos para Jtabla
         //String[] campos = {"codigo", "descripcion", "dia", "horariode", "horarioa", "fechainicio", "estado"};
         String[] condiciones = {"candidato.codigo"};
         String[] Id = {Dato};
@@ -335,13 +336,13 @@ public class Candidato extends javax.swing.JInternalFrame {
             removejtable();
             Utilidades.setEditableTexto(this.JPanelCampos, false, null, true, "");
             Utilidades.esObligatorio(this.JPanelCampos, false);
-            model = peticiones.getRegistroPorLike(model, "candidato", campos, "candidato.nombres", Dato, inner);
+            model = peticiones.getRegistroPorLike(model, "candidato", campos, "partido_politico.nombre", Dato, inner);
         }
         if (this.rbApellidos.isSelected()) {
             removejtable();
             Utilidades.setEditableTexto(this.JPanelCampos, false, null, true, "");
             Utilidades.esObligatorio(this.JPanelCampos, false);
-            model = peticiones.getRegistroPorLike(model, "candidato", campos, "candidato.apellidos", Dato, inner);
+            model = peticiones.getRegistroPorLike(model, "candidato", campos, "municipio.nombre", Dato, inner);
         }
         Utilidades.ajustarAnchoColumnas(horarios);
     }
@@ -388,7 +389,7 @@ public class Candidato extends javax.swing.JInternalFrame {
         if (horarios.getValueAt(fila, 0) != null) {
 
             //String conct = "concat(candidato.nombres,' ',candidato.apellidos)";
-            String[] campos = {"candidato.codigo", "candidato.nombres", "candidato.apellidos", "partido_politico.nombre", "puesto.nombre", "candidato.fechainicio", "candidato.fechafin", "candidato.estado", "candidato.idcandidato", "municipio.nombre"};
+            String[] campos = {"candidato.codigo", "partido_politico.nombre", "puesto.nombre", "candidato.estado", "candidato.idcandidato", "municipio.nombre"};
 
             llenarcombopartido_politico();
             llenarcombopuesto();
@@ -407,20 +408,20 @@ public class Candidato extends javax.swing.JInternalFrame {
                         while (rs.next()) {//mientras tenga registros que haga lo siguiente
 
                             codigo.setText(rs.getString(1));
-                            nombres.setText(rs.getString(2));
-                            apellidos.setText(rs.getString(3));
+                            //nombres.setText(rs.getString(2));
+                            //apellidos.setText(rs.getString(3));
                             //dia.setSelectedItem(rs.getString(3));
-                            int pr = Integer.parseInt((String) hashProfesor.get(rs.getString(4)));
+                            int pr = Integer.parseInt((String) hashProfesor.get(rs.getString(2)));
                             partido.setSelectedIndex(pr);
-                            int car = Integer.parseInt((String) hashCarrera.get(rs.getString(5)));
+                            int car = Integer.parseInt((String) hashCarrera.get(rs.getString(3)));
                             puesto.setSelectedIndex(car);
                             //horade.setValue(rs.getTime(6));
                             //horaa.setValue(rs.getTime(7));
-                            fechainicio.setDate((rs.getDate(6)));
-                            fechafin.setDate((rs.getDate(7)));
+                            //fechainicio.setDate((rs.getDate(6)));
+                            //fechafin.setDate((rs.getDate(7)));
                             //cantalumnos.setText(rs.getString(10));
 
-                            if (rs.getObject(8).equals(true)) {
+                            if (rs.getObject(4).equals(true)) {
                                 estado.setText("Activo");
                                 estado.setSelected(true);
                                 estado.setBackground(new java.awt.Color(102, 204, 0));
@@ -431,8 +432,8 @@ public class Candidato extends javax.swing.JInternalFrame {
                             }
                             //inscripcion.setValue(rs.getFloat(12));
                             //colegiatura.setValue(rs.getFloat(13));
-                            newcodcandidato = rs.getInt(9);
-                            int munici = Integer.parseInt((String) hashMunicipio.get(rs.getString(10)));
+                            newcodcandidato = rs.getInt(5);
+                            int munici = Integer.parseInt((String) hashMunicipio.get(rs.getString(6)));
                             Cmunicipio.setSelectedIndex(munici);
                         }
                     }
@@ -506,10 +507,10 @@ public class Candidato extends javax.swing.JInternalFrame {
         } else if (partido.getSelectedIndex() != -1) {
             txtdia = partido.getSelectedItem().toString();
         }
-        String tx = txtdia + " " + nombres.getText();
+        String tx = txtdia + " ";
         if (tx.isEmpty()) {
         } else {
-            String cod = GeneraCodigo.actualizarRegistro(txtdia + " " + nombres.getText());
+            String cod = GeneraCodigo.actualizarRegistro(txtdia + " ");
             codigo.setText(cod + "-" + ultimocandidato());
         }
     }
@@ -539,22 +540,14 @@ public class Candidato extends javax.swing.JInternalFrame {
         bntCancelar = new elaprendiz.gui.button.ButtonRect();
         bntSalir = new elaprendiz.gui.button.ButtonRect();
         JPanelCampos = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         codigo = new elaprendiz.gui.textField.TextField();
-        nombres = new elaprendiz.gui.textField.TextField();
-        fechafin = new com.toedter.calendar.JDateChooser();
         estado = new javax.swing.JRadioButton();
         jLabel12 = new javax.swing.JLabel();
         partido = new javax.swing.JComboBox();
-        jLabel9 = new javax.swing.JLabel();
-        fechainicio = new com.toedter.calendar.JDateChooser();
         jLabel5 = new javax.swing.JLabel();
         puesto = new javax.swing.JComboBox();
-        apellidos = new elaprendiz.gui.textField.TextField();
-        jLabel16 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         Cmunicipio = new javax.swing.JComboBox();
         JPanelTable = new javax.swing.JPanel();
@@ -747,68 +740,23 @@ public class Candidato extends javax.swing.JInternalFrame {
         JPanelCampos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         JPanelCampos.setLayout(null);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel1.setText("Nombres:");
-        JPanelCampos.add(jLabel1);
-        jLabel1.setBounds(10, 60, 100, 20);
-
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel3.setText("Partido:");
         JPanelCampos.add(jLabel3);
-        jLabel3.setBounds(30, 120, 80, 20);
-
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel6.setText("Fecha Fin:");
-        JPanelCampos.add(jLabel6);
-        jLabel6.setBounds(420, 150, 100, 21);
+        jLabel3.setBounds(130, 50, 80, 20);
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel4.setText("Estado:");
         JPanelCampos.add(jLabel4);
-        jLabel4.setBounds(410, 90, 110, 20);
+        jLabel4.setBounds(100, 140, 110, 20);
 
         codigo.setEditable(false);
         codigo.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        codigo.setName("codigo"); // NOI18N
-        codigo.setNextFocusableComponent(nombres);
         codigo.setPreferredSize(new java.awt.Dimension(120, 21));
         JPanelCampos.add(codigo);
-        codigo.setBounds(120, 30, 250, 21);
-
-        nombres.setEditable(false);
-        nombres.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        nombres.setName("nombres"); // NOI18N
-        nombres.setNextFocusableComponent(partido);
-        nombres.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                nombresFocusLost(evt);
-            }
-        });
-        nombres.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                diaKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                diaKeyPressed(evt);
-            }
-        });
-        JPanelCampos.add(nombres);
-        nombres.setBounds(120, 60, 250, 21);
-
-        fechafin.setDate(Calendar.getInstance().getTime());
-        fechafin.setDateFormatString("dd/MM/yyyy");
-        fechafin.setEnabled(false);
-        fechafin.setFocusable(false);
-        fechafin.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        fechafin.setMaxSelectableDate(new java.util.Date(3093496470100000L));
-        fechafin.setMinSelectableDate(new java.util.Date(-62135744300000L));
-        fechafin.setPreferredSize(new java.awt.Dimension(120, 22));
-        JPanelCampos.add(fechafin);
-        fechafin.setBounds(530, 150, 150, 21);
+        codigo.setBounds(220, 20, 250, 21);
 
         estado.setBackground(new java.awt.Color(51, 153, 255));
         estado.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -816,15 +764,14 @@ public class Candidato extends javax.swing.JInternalFrame {
         estado.setText("Activo");
         estado.setEnabled(false);
         estado.setName("JRadioButton"); // NOI18N
-        estado.setNextFocusableComponent(fechainicio);
         JPanelCampos.add(estado);
-        estado.setBounds(530, 90, 150, 21);
+        estado.setBounds(220, 140, 150, 21);
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel12.setText("Codigo:");
         JPanelCampos.add(jLabel12);
-        jLabel12.setBounds(30, 30, 80, 17);
+        jLabel12.setBounds(130, 20, 80, 17);
 
         partido.setModel(modelCombo = new DefaultComboBoxModel());
         partido.setComponentPopupMenu(popupprofesor);
@@ -832,77 +779,33 @@ public class Candidato extends javax.swing.JInternalFrame {
         partido.setName("Profesor"); // NOI18N
         partido.setNextFocusableComponent(puesto);
         JPanelCampos.add(partido);
-        partido.setBounds(120, 120, 250, 21);
-
-        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel9.setText("Fecha Inicio:");
-        JPanelCampos.add(jLabel9);
-        jLabel9.setBounds(420, 120, 100, 21);
-
-        fechainicio.setDate(Calendar.getInstance().getTime());
-        fechainicio.setDateFormatString("dd/MM/yyyy");
-        fechainicio.setEnabled(false);
-        fechainicio.setFocusable(false);
-        fechainicio.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        fechainicio.setMaxSelectableDate(new java.util.Date(3093496470100000L));
-        fechainicio.setMinSelectableDate(new java.util.Date(-62135744300000L));
-        fechainicio.setNextFocusableComponent(fechafin);
-        fechainicio.setPreferredSize(new java.awt.Dimension(120, 22));
-        JPanelCampos.add(fechainicio);
-        fechainicio.setBounds(530, 120, 150, 21);
+        partido.setBounds(220, 50, 250, 21);
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel5.setText("Candidatura:");
         JPanelCampos.add(jLabel5);
-        jLabel5.setBounds(20, 150, 90, 20);
+        jLabel5.setBounds(120, 80, 90, 20);
 
         puesto.setModel(modelCombo = new DefaultComboBoxModel());
         puesto.setComponentPopupMenu(popupcarrera);
         puesto.setEnabled(false);
         puesto.setName("Profesor"); // NOI18N
         JPanelCampos.add(puesto);
-        puesto.setBounds(120, 150, 250, 21);
-
-        apellidos.setEditable(false);
-        apellidos.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        apellidos.setName("descripcion"); // NOI18N
-        apellidos.setNextFocusableComponent(partido);
-        apellidos.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                apellidosFocusLost(evt);
-            }
-        });
-        apellidos.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                apellidosdiaKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                apellidosdiaKeyPressed1(evt);
-            }
-        });
-        JPanelCampos.add(apellidos);
-        apellidos.setBounds(120, 90, 250, 21);
-
-        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel16.setText("Apellidos:");
-        JPanelCampos.add(jLabel16);
-        jLabel16.setBounds(30, 90, 80, 17);
+        puesto.setBounds(220, 80, 250, 21);
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel10.setText("Municipio:");
         JPanelCampos.add(jLabel10);
-        jLabel10.setBounds(457, 60, 70, 17);
+        jLabel10.setBounds(140, 110, 70, 17);
 
         Cmunicipio.setModel(modelCombo = new DefaultComboBoxModel());
         Cmunicipio.setComponentPopupMenu(popupcarrera);
         Cmunicipio.setEnabled(false);
         Cmunicipio.setName("Profesor"); // NOI18N
         JPanelCampos.add(Cmunicipio);
-        Cmunicipio.setBounds(530, 60, 150, 20);
+        Cmunicipio.setBounds(220, 110, 250, 20);
 
         panelImage.add(JPanelCampos);
         JPanelCampos.setBounds(0, 40, 880, 190);
@@ -983,7 +886,7 @@ public class Candidato extends javax.swing.JInternalFrame {
             rbNombres.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
             rbNombres.setForeground(new java.awt.Color(0, 102, 102));
             rbNombres.setSelected(true);
-            rbNombres.setText("Descripción");
+            rbNombres.setText("Partido");
             rbNombres.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     rbNombresActionPerformed(evt);
@@ -995,7 +898,7 @@ public class Candidato extends javax.swing.JInternalFrame {
             rbApellidos.setBackground(java.awt.SystemColor.inactiveCaption);
             rbApellidos.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
             rbApellidos.setForeground(new java.awt.Color(0, 102, 102));
-            rbApellidos.setText("Día");
+            rbApellidos.setText("Municipio");
             rbApellidos.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     rbApellidosActionPerformed(evt);
@@ -1040,7 +943,7 @@ public class Candidato extends javax.swing.JInternalFrame {
             this.bntModificar.setEnabled(false);
             this.bntEliminar.setEnabled(false);
             this.bntNuevo.setEnabled(false);
-            nombres.requestFocus();
+            //nombres.requestFocus();
             newcodcandidato = 0;
         } else {
             JOptionPane.showInternalMessageDialog(this, "No tiene Acceso para realizar esta operación ");
@@ -1055,21 +958,21 @@ public class Candidato extends javax.swing.JInternalFrame {
                 JOptionPane.showInternalMessageDialog(this, "Los campos marcados son Obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            if (fechainicio.getCalendar().after(fechafin.getCalendar())) {
-                JOptionPane.showInternalMessageDialog(this, "Las fecha de inicio debe ser menor a la fecha fin del Grupo", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
+//            if (fechainicio.getCalendar().after(fechafin.getCalendar())) {
+//                JOptionPane.showInternalMessageDialog(this, "Las fecha de inicio debe ser menor a la fecha fin del Grupo", "Error", JOptionPane.ERROR_MESSAGE);
+//                return;
+//            }
             int resp = JOptionPane.showInternalConfirmDialog(this, "¿Desea Grabar el Registro?", "Pregunta", 0);
             if (resp == 0) {
                 generacodigocandidato();
                 boolean seguardo = false;
                 String nombreTabla = "candidato";
-                String campos = "codigo, nombres, apellidos, partido_idpartido,puesto_idpuesto, municipio_idmunicipio, fechainicio, fechafin, estado";
-                String fechaini = FormatoFecha.getFormato(fechainicio.getCalendar().getTime(), FormatoFecha.A_M_D);
-                String fechafn = FormatoFecha.getFormato(fechafin.getCalendar().getTime(), FormatoFecha.A_M_D);
+                String campos = "codigo, partido_idpartido,puesto_idpuesto, municipio_idmunicipio, estado";
+                //String fechaini = FormatoFecha.getFormato(fechainicio.getCalendar().getTime(), FormatoFecha.A_M_D);
+                //String fechafn = FormatoFecha.getFormato(fechafin.getCalendar().getTime(), FormatoFecha.A_M_D);
 
-                String fechaini2 = FormatoFecha.getFormato(fechainicio.getCalendar().getTime(), FormatoFecha.D_M_A);
-                String fechafn2 = FormatoFecha.getFormato(fechafin.getCalendar().getTime(), FormatoFecha.D_M_A);
+                //String fechaini2 = FormatoFecha.getFormato(fechainicio.getCalendar().getTime(), FormatoFecha.D_M_A);
+                //String fechafn2 = FormatoFecha.getFormato(fechafin.getCalendar().getTime(), FormatoFecha.D_M_A);
                 mProfesor prof = (mProfesor) partido.getSelectedItem();
                 String idprof = prof.getID();
                 mCarrera carr = (mCarrera) puesto.getSelectedItem();
@@ -1082,8 +985,7 @@ public class Candidato extends javax.swing.JInternalFrame {
                     estad = 1;
                 }
 
-                Object[] valores = {codigo.getText(), nombres.getText(), apellidos.getText(), idprof, idpuesto, idmun,
-                    fechaini, fechafn, estad
+                Object[] valores = {codigo.getText(), idprof, idpuesto, idmun , estad
                 };
 
                 seguardo = peticiones.guardarRegistros(nombreTabla, campos, valores);
@@ -1167,10 +1069,10 @@ public class Candidato extends javax.swing.JInternalFrame {
                 JOptionPane.showInternalMessageDialog(this, "Los campos marcados son Obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            if (fechainicio.getCalendar().after(fechafin.getCalendar())) {
-                JOptionPane.showInternalMessageDialog(this, "Las fecha de inicio debe ser menor a la fecha fin del Grupo", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
+//            if (fechainicio.getCalendar().after(fechafin.getCalendar())) {
+//                JOptionPane.showInternalMessageDialog(this, "Las fecha de inicio debe ser menor a la fecha fin del Grupo", "Error", JOptionPane.ERROR_MESSAGE);
+//                return;
+//            }
             int resp = JOptionPane.showInternalConfirmDialog(this, "¿Desea Modificar el Registro?", "Pregunta", 0);
             if (resp == 0) {
                 generacodigocandidato();
@@ -1180,9 +1082,9 @@ public class Candidato extends javax.swing.JInternalFrame {
                 int fila = horarios.getSelectedRow();
                 String id = (String) "" + horarios.getValueAt(fila, 0);
 
-                String campos = "codigo, nombres, apellidos, partido_idpartido, puesto_idpuesto,municipio_idmunicipio,fechainicio, fechafin, estado ";
-                String fechaini = FormatoFecha.getFormato(fechainicio.getCalendar().getTime(), FormatoFecha.A_M_D);
-                String fechafn = FormatoFecha.getFormato(fechafin.getCalendar().getTime(), FormatoFecha.A_M_D);
+                String campos = "codigo, partido_idpartido, puesto_idpuesto,municipio_idmunicipio,estado ";
+                //String fechaini = FormatoFecha.getFormato(fechainicio.getCalendar().getTime(), FormatoFecha.A_M_D);
+                //String fechafn = FormatoFecha.getFormato(fechafin.getCalendar().getTime(), FormatoFecha.A_M_D);
                 //Para obtener el id en la base de datos
                 mProfesor prof = (mProfesor) partido.getSelectedItem();
                 String idprof = prof.getID();
@@ -1196,8 +1098,7 @@ public class Candidato extends javax.swing.JInternalFrame {
                     estad = 1;
                 }
 
-                Object[] valores = {codigo.getText(), nombres.getText(), apellidos.getText(), idprof, idpuesto, idmun,
-                    fechaini, fechafn, estad, id
+                Object[] valores = {codigo.getText(), idprof, idpuesto, idmun,estad, id
                 };
 
                 seguardo = peticiones.actualizarRegistro(nomTabla, campos, valores, columnaId, id);
@@ -1307,28 +1208,6 @@ public class Candidato extends javax.swing.JInternalFrame {
         llenarcombopuesto();
     }//GEN-LAST:event_Actualizar_CandidaturaActionPerformed
 
-    private void diaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_diaKeyPressed
-        // TODO add your handling code here:
-        generacodigocandidato();
-    }//GEN-LAST:event_diaKeyPressed
-
-    private void nombresFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_nombresFocusLost
-        // TODO add your handling code here:
-        nombres.setText(nombres.getText().toUpperCase());
-    }//GEN-LAST:event_nombresFocusLost
-
-    private void apellidosFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_apellidosFocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_apellidosFocusLost
-
-    private void apellidosdiaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_apellidosdiaKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_apellidosdiaKeyPressed
-
-    private void apellidosdiaKeyPressed1(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_apellidosdiaKeyPressed1
-        // TODO add your handling code here:
-    }//GEN-LAST:event_apellidosdiaKeyPressed1
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem Actualizar_Candidatura;
@@ -1339,7 +1218,6 @@ public class Candidato extends javax.swing.JInternalFrame {
     private javax.swing.JPanel JPanelTable;
     private javax.swing.JMenuItem Nueva_Candidatura;
     private javax.swing.JMenuItem Nuevo_Partido;
-    private elaprendiz.gui.textField.TextField apellidos;
     private elaprendiz.gui.button.ButtonRect bntCancelar;
     private elaprendiz.gui.button.ButtonRect bntEliminar;
     private elaprendiz.gui.button.ButtonRect bntGuardar;
@@ -1349,22 +1227,15 @@ public class Candidato extends javax.swing.JInternalFrame {
     private elaprendiz.gui.textField.TextField busqueda;
     private elaprendiz.gui.textField.TextField codigo;
     private javax.swing.JRadioButton estado;
-    private com.toedter.calendar.JDateChooser fechafin;
-    private com.toedter.calendar.JDateChooser fechainicio;
     private javax.swing.JTable horarios;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private elaprendiz.gui.textField.TextField nombres;
     private elaprendiz.gui.panel.PanelImage panelImage;
     private javax.swing.JComboBox partido;
     private javax.swing.JPanel pnlActionButtons;
