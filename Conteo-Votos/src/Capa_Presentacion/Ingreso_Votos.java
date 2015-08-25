@@ -43,19 +43,15 @@ public class Ingreso_Votos extends javax.swing.JInternalFrame {
     /*El modelo se define en : Jtable-->propiedades-->model--> <User Code> */
     DefaultTableModel model, model2, model3, model4, model5;
 
-    //DefaultComboBoxModel modelCombo;
-    //String[] titulos = {"Id", "Codigo", "Nombre Candidato", "Partido", "Candidatura", "Municipio", "Mora", "Subtotal", "Pagar Mora", "Pagar Mes"};//Titulos para Jtabla
     String[] titulos2 = {"Id", "Partido", "Candidatura", "Municipio", "Votos", "Ingresado"};//Titulos para Jtabla
     /*Se hace una instancia de la clase que recibira las peticiones de esta capa de aplicación*/
     Peticiones peticiones = new Peticiones();
-    //public static Hashtable<String, String> hashGrupo = new Hashtable<>();
-    //public static Hashtable<String, String> hashTipopago = new Hashtable<>();
     AccesoDatos acceso = new AccesoDatos();
     static String idmesa = "";
     java.sql.Connection conn;//getConnection intentara establecer una conexión.
 
     /**
-     * Creates new form Cliente
+     * Creates new form 
      */
     public Ingreso_Votos() {
         initComponents();
@@ -124,14 +120,6 @@ public class Ingreso_Votos extends javax.swing.JInternalFrame {
     public void balumnocodigo(String codigo) {
         if (codigo.isEmpty()) {
             limpiartodo();
-            //nombrecentro.setText("");
-            //estado.setText("");
-            //cGrupo.removeAllItems();
-            //idmesa = "";
-            //inicioalumno.setText("");
-            //beca.setText("");
-            //dia.setText("");
-
         } else if (!codigo.isEmpty()) {
 
             ResultSet rs;
@@ -141,9 +129,6 @@ public class Ingreso_Votos extends javax.swing.JInternalFrame {
             String[] id = {codigo};
             String inner = " INNER JOIN centro on mesa.centro_idcentro=centro.idcentro INNER JOIN municipio on centro.municipio_idmunicipio=municipio.idmunicipio ";
 
-//            String[] campos = {"alumno.codigo", "alumno.nombres", "alumno.apellidos", "DATE_FORMAT(alumno.fechanacimiento,'%d-%m-%Y')", "alumno.estado", "alumno.idalumno"};
-//            String[] cond = {"alumno.codigo"};
-//            String[] id = {codigo};
             if (!id.equals(0)) {
 
                 rs = ac.getRegistros("mesa", campos, condiciones, id, inner);
@@ -155,13 +140,6 @@ public class Ingreso_Votos extends javax.swing.JInternalFrame {
                             while (rs.next()) {//mientras tenga registros que haga lo siguiente
                                 codigomesa.setText(rs.getString(1));
                                 nombrecentro.setText(rs.getString(2));
-//                                if (rs.getString(3).equals("0")) {
-//                                    estado.setText("Inactivo");
-//                                    estado.setForeground(Color.red);
-//                                } else if (rs.getString(3).equals("1")) {
-//                                    estado.setText("Activo");
-//                                    estado.setForeground(Color.WHITE/*new java.awt.Color(102, 204, 0)*/);
-//                                }
                                 idmesa = (rs.getString(4));
                                 nombremunicipio.setText(rs.getString(5));
                                 idcentro.setText(rs.getString(6));
@@ -184,106 +162,6 @@ public class Ingreso_Votos extends javax.swing.JInternalFrame {
             }
         }
     }
-
-//    /* Este metodo recibe de el campo busqueda un parametro que es el que servirá para realizar la cunsulta
-//     * de los datos, este envia a la capa de negocio "peticiones.getRegistroPorPks( el modelo de la JTable,
-//     * el nombre de la tabla, los campos de la tabla a consultar, los campos de condiciones, y el dato a comparar
-//     * en la(s) condicion(es) de la busqueda) .
-//     *   
-//     * Nota: si el campo busqueda no contiene ningun dato devolvera todos los datos de la tabla o un mensage
-//     * indicando que no hay datos para la busqueda  
-//     *
-//     * @param Dato , dato a buscar
-//     * @return 
-//     */
-//    private void MostrarPagos() {
-//
-//        String sql = "SELECT proyeccionpagos.idproyeccionpagos,proyeccionpagos.mes_idmes,mes.mes,proyeccionpagos.año,proyeccionpagos.monto,\n"
-//                + "     proyeccionpagos.fechavencimiento,IFNULL((SELECT mora.mora FROM mora where proyeccionpagos.idproyeccionpagos = mora.proyeccionpagos_idproyeccionpagos and mora.exoneracion=0),0.0) AS 'Mora',proyeccionpagos.alumnosengrupo_iddetallegrupo FROM\n"
-//                + "     mes INNER JOIN proyeccionpagos ON mes.idmes = proyeccionpagos.mes_idmes  where alumnosengrupo_iddetallegrupo='" + iddetallegrupo + "' and proyeccionpagos.estado='0' and proyeccionpagos.asignado='1' order by proyeccionpagos.idproyeccionpagos asc ";
-//
-//        removejtable();
-//        model = getRegistroPorLikel(model, sql);
-//        Utilidades.ajustarAnchoColumnas(tdiputados1);
-//
-//        tdiputados1.getColumnModel().getColumn(0).setMaxWidth(0);
-//        tdiputados1.getColumnModel().getColumn(0).setMinWidth(0);
-//        tdiputados1.getColumnModel().getColumn(0).setPreferredWidth(0);
-//        tdiputados1.doLayout();
-//    }
-//
-//    /**
-//     * Para una condicion WHERE condicionid LIKE '% campocondicion' * @param
-//     * modelo ,modelo de la JTable
-//     *
-//     * @param tabla , el nombre de la tabla a consultar en la BD
-//     * @param campos , los campos de la tabla a consultar ejem: nombre, codigo
-//     * ,dirección etc
-//     * @param campocondicion , los campos de la tabla para las condiciones ejem:
-//     * id,estado etc
-//     * @param condicionid , los valores que se compararan con campocondicion
-//     * ejem: campocondicion = condicionid
-//     * @return
-//     */
-//    public DefaultTableModel getRegistroPorLikel(DefaultTableModel modelo, String tabla) {
-//        try {
-//
-//            ResultSet rs;
-//
-//            rs = acceso.getRegistroProc(tabla);
-//            int cantcampos = 9;
-//            //if (rs != null) {
-//            if (rs.next()) {//verifica si esta vacio, pero desplaza el puntero al siguiente elemento
-//                //int count = 0;
-//                rs.beforeFirst();//regresa el puntero al primer registro
-//                Object[] fila = new Object[cantcampos + 1];
-//
-//                while (rs.next()) {//mientras tenga registros que haga lo siguiente
-//                    // Se rellena cada posición del array con una de las columnas de la tabla en base de datos.
-//                    for (int i = 0; i < cantcampos - 2; i++) {
-//
-//                        fila[i] = rs.getObject(i + 1); // El primer indice en rs es el 1, no el cero, por eso se suma 1.
-//                        if (i == 4) {
-//                            float monto = (float) rs.getObject(i + 1);
-//                            //float cbeca = Float.parseFloat(beca.getText());
-//                            float resultado = (float) (Math.round((monto) * 100.0) / 100.0);
-//                            fila[i] = resultado;
-//                        }
-//                        if (i == 6) {
-//                            if (fila[i] == "0.0") {
-//                                fila[i] = "0.0";
-//                            } else {
-//                                float mora = (float) rs.getFloat(i + 1);
-//                                float resultado = (float) (Math.round(mora * 100.0) / 100.0);
-//                                fila[i] = resultado;
-//                            }
-//                        }
-//                        if (fila[i] == null) {
-//                            fila[i] = "";
-//                        } else {
-//                        }
-//                    }
-//                    fila[7] = (float) (Math.round(((float) fila[4] + ((float) fila[6])) * 100.0) / 100.0);
-//                    if (((float) fila[6] == 0.0)) {
-//                        fila[8] = false;
-//                    } else {
-//                        fila[8] = true;
-//                    }
-//                    fila[9] = false;
-//                    modelo.addRow(fila);
-//                }
-//
-//            } //} 
-//            else {
-//                // JOptionPane.showMessageDialog(null, "No se encontraron datos para la busqueda", "Mensage", JOptionPane.INFORMATION_MESSAGE);
-//            }
-//            rs.close();
-//            return modelo;
-//        } catch (SQLException ex) {
-//            JOptionPane.showMessageDialog(null, "Ocurrio un Error :" + ex, "Error", JOptionPane.ERROR_MESSAGE);
-//            return null;
-//        }
-//    }
     private void llenartablas() {
 
         if (idmesa != null || !codigomesa.getText().isEmpty()) {
@@ -330,11 +208,6 @@ public class Ingreso_Votos extends javax.swing.JInternalFrame {
 
     private void MostrarProductos(DefaultTableModel modelo, JTable table, String sql) {
 
-        //String sql = "select candidato.idcandidato, candidato.codigo, concat(candidato.nombres,' ',candidato.apellidos)AS nombre, partido_politico.nombre, puesto.nombre, municipio.nombre from candidato INNER JOIN partido_politico on candidato.partido_idpartido=partido_politico.idpartido INNER JOIN puesto on candidato.puesto_idpuesto=puesto.idpuesto INNER JOIN municipio on candidato.municipio_idmunicipio=municipio.idmunicipio   where puesto.nombre = 'Presidente' order by candidato.idcandidato";
-//        String sql = "select candidato.idcandidato, candidato.codigo, concat(candidato.nombres,' ',candidato.apellidos)AS nombre, partido_politico.nombre, puesto.nombre, municipio.nombre,\n" +
-//        "        IFNULL((SELECT detalle_votos.cant_votos FROM detalle_votos where candidato.idcandidato = detalle_votos.candidato_idcandidato and detalle_votos.mesa_idmesa="+"'"+idmesa+"'),0.0) AS 'votoss'\n" +
-//        "        from candidato INNER JOIN partido_politico on candidato.partido_idpartido=partido_politico.idpartido INNER JOIN puesto on candidato.puesto_idpuesto=puesto.idpuesto INNER JOIN municipio on candidato.municipio_idmunicipio=municipio.idmunicipio   where puesto.nombre = 'Presidente' order by candidato.idcandidato";
-//        
         removejtable2(modelo, table);
 
         JCheckBox check = new JCheckBox();
@@ -359,13 +232,6 @@ public class Ingreso_Votos extends javax.swing.JInternalFrame {
         table.getColumnModel().getColumn(3).setPreferredWidth(0);
         table.doLayout();
 
-        //removejtable2();
-        //model2 = getRegistroPorLikell(model2, sql);
-        //Utilidades.ajustarAnchoColumnas(tpresidentes);
-        //tpresidentes.getColumnModel().getColumn(0).setMaxWidth(0);
-        //tpresidentes.getColumnModel().getColumn(0).setMinWidth(0);
-        //tpresidentes.getColumnModel().getColumn(0).setPreferredWidth(0);
-        //tpresidentes.doLayout();
     }
 
     /**
@@ -433,34 +299,7 @@ public class Ingreso_Votos extends javax.swing.JInternalFrame {
         //TipoFiltro.setFiltraEntrada(busqueda.getDocument(), FiltroCampos.NUM_LETRAS, 100, true);
     }
 
-//    public void idalumnosengrupo(String idalumno, String idgrupo) {
-//
-//        String[] id = {idalumno, idgrupo};
-//        ResultSet rs;
-//        AccesoDatos ac = new AccesoDatos();
-//        String[] cond = {"alumnosengrupo.alumno_idalumno", "alumnosengrupo.grupo_idgrupo"};
-//        String[] campos = {"alumnosengrupo.iddetallegrupo", "alumnosengrupo.fechainicio", "alumnosengrupo.beca"};
-//        rs = ac.getRegistros("alumnosengrupo", campos, cond, id, "");
-//
-//        if (rs != null) {
-//            try {
-//                if (rs.next()) {//verifica si esta vacio, pero desplaza el puntero al siguiente elemento
-//                    rs.beforeFirst();//regresa el puntero al primer registro
-//                    while (rs.next()) {//mientras tenga registros que haga lo siguiente
-//                        iddetallegrupo = (rs.getString(1));
-//                        String fechainicio = FormatoFecha.getFormato(rs.getDate(2), FormatoFecha.D_M_A);
-//                        //inicioalumno.setText(fechainicio);
-//                        float becac = Float.parseFloat(rs.getString(3));
-//                        // beca.setText("" + becac);
-//                    }
-//                }
-//            } catch (SQLException e) {
-//                iddetallegrupo = "";
-//                JOptionPane.showInternalMessageDialog(this, e);
-//            }
-//        }
-//    }
-    /**
+   /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
      * regenerated by the Form Editor.
@@ -948,14 +787,9 @@ public class Ingreso_Votos extends javax.swing.JInternalFrame {
                 return;
             }
 
-//            if (tdiputados1.getRowCount() == 0 /*&& colegiaturas.getSelectedRow() == -1*/ && tpresidentes.getRowCount() == 0) {
-//                JOptionPane.showMessageDialog(null, "La tabla no contiene datos");
-//            } else { //Inicio de Guardar datos
             int resp = JOptionPane.showInternalConfirmDialog(this, "¿Desea Grabar el Registro?", "Pregunta", 0);
             if (resp == 0) {
 
-                //idcentro.getText();
-                //idmunicipio.getText();
                 int n = 0;
                 PreparedStatement ps = null;
                 conn = BdConexion.getConexion();
