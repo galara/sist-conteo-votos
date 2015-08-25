@@ -120,7 +120,7 @@ public class Mesa extends javax.swing.JInternalFrame {
         String[] campos = {"nombre", "idcentro"};
         String[] condiciones = {"estado"};
         String[] Id = {Dato};
-        centro.removeAllItems();
+        ccentro.removeAllItems();
         //Component cmps = centro;
         getRegistroCombocentro("centro", campos, condiciones, Id);
 
@@ -143,7 +143,7 @@ public class Mesa extends javax.swing.JInternalFrame {
 
                 DefaultComboBoxModel modeloComboBox;
                 modeloComboBox = new DefaultComboBoxModel();
-                centro.setModel(modeloComboBox);
+                ccentro.setModel(modeloComboBox);
 
                 modeloComboBox.addElement(new mCentro("", "0"));
                 if (rs.next()) {//verifica si esta vacio, pero desplaza el puntero al siguiente elemento
@@ -262,7 +262,7 @@ public class Mesa extends javax.swing.JInternalFrame {
                             nombre.setText(rs.getString(1));
                             //System.out.print( hashCentro.get(rs.getString(2)) +"\n");
                             int car = Integer.parseInt((String) hashCentro.get(rs.getString(2)));
-                            centro.setSelectedIndex(car);
+                            ccentro.setSelectedIndex(car);
 
                             if (rs.getObject(3).equals(true)) {
                                 estado.setText("Activo");
@@ -297,9 +297,9 @@ public class Mesa extends javax.swing.JInternalFrame {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        popupcarrera = new javax.swing.JPopupMenu();
-        Nueva_Carrera = new javax.swing.JMenuItem();
-        Actualizar_Carrera = new javax.swing.JMenuItem();
+        popupcentro = new javax.swing.JPopupMenu();
+        Nueva_Centro = new javax.swing.JMenuItem();
+        Actualizar_Centro = new javax.swing.JMenuItem();
         panelImage = new elaprendiz.gui.panel.PanelImage();
         pnlActionButtons = new javax.swing.JPanel();
         bntNuevo = new elaprendiz.gui.button.ButtonRect();
@@ -312,7 +312,7 @@ public class Mesa extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         estado = new javax.swing.JRadioButton();
-        centro = new javax.swing.JComboBox();
+        ccentro = new javax.swing.JComboBox();
         jLabel5 = new javax.swing.JLabel();
         nombre = new elaprendiz.gui.textField.TextField();
         JPanelTable = new javax.swing.JPanel();
@@ -325,24 +325,23 @@ public class Mesa extends javax.swing.JInternalFrame {
         pnlPaginador = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
 
-        Nueva_Carrera.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/carrera.png"))); // NOI18N
-        Nueva_Carrera.setText("Nueva Carrera");
-        Nueva_Carrera.setName("Carrera Principal"); // NOI18N
-        Nueva_Carrera.addActionListener(new java.awt.event.ActionListener() {
+        Nueva_Centro.setText("Nuevo Centro");
+        Nueva_Centro.setName("Carrera Principal"); // NOI18N
+        Nueva_Centro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Nueva_CarreraActionPerformed(evt);
+                Nueva_CentroActionPerformed(evt);
             }
         });
-        popupcarrera.add(Nueva_Carrera);
+        popupcentro.add(Nueva_Centro);
 
-        Actualizar_Carrera.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/update.png"))); // NOI18N
-        Actualizar_Carrera.setText("Actualizar Combo");
-        Actualizar_Carrera.addActionListener(new java.awt.event.ActionListener() {
+        Actualizar_Centro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/update.png"))); // NOI18N
+        Actualizar_Centro.setText("Actualizar Combo");
+        Actualizar_Centro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Actualizar_CarreraActionPerformed(evt);
+                Actualizar_CentroActionPerformed(evt);
             }
         });
-        popupcarrera.add(Actualizar_Carrera);
+        popupcentro.add(Actualizar_Centro);
 
         setBackground(new java.awt.Color(0, 0, 0));
         setClosable(true);
@@ -351,7 +350,7 @@ public class Mesa extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setTitle("Mesa Votación");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setName("Pensum"); // NOI18N
+        setName("Mesa"); // NOI18N
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
             }
@@ -505,12 +504,12 @@ public class Mesa extends javax.swing.JInternalFrame {
         JPanelCampos.add(estado);
         estado.setBounds(190, 90, 160, 21);
 
-        centro.setModel(modelCombo = new DefaultComboBoxModel());
-        centro.setComponentPopupMenu(popupcarrera);
-        centro.setEnabled(false);
-        centro.setName("Pensum"); // NOI18N
-        JPanelCampos.add(centro);
-        centro.setBounds(190, 60, 250, 21);
+        ccentro.setModel(modelCombo = new DefaultComboBoxModel());
+        ccentro.setComponentPopupMenu(popupcentro);
+        ccentro.setEnabled(false);
+        ccentro.setName("Pensum"); // NOI18N
+        JPanelCampos.add(ccentro);
+        ccentro.setBounds(190, 60, 440, 21);
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
@@ -609,7 +608,6 @@ public class Mesa extends javax.swing.JInternalFrame {
 
             jLabel8.setFont(new java.awt.Font("Script MT Bold", 1, 32)); // NOI18N
             jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-            jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/carrera.png"))); // NOI18N
             jLabel8.setText("<--Mesa Votación-->");
             pnlPaginador.add(jLabel8, new java.awt.GridBagConstraints());
 
@@ -652,7 +650,7 @@ public class Mesa extends javax.swing.JInternalFrame {
                 boolean seguardo = false;
                 String nombreTabla = "mesa";
                 String campos = "nombre, estado, centro_idcentro";
-                mCentro carr = (mCentro) centro.getSelectedItem();
+                mCentro carr = (mCentro) ccentro.getSelectedItem();
                 String idcentro = carr.getID();
 
                 int estad = 0;
@@ -737,7 +735,7 @@ public class Mesa extends javax.swing.JInternalFrame {
                 int fila = mesa.getSelectedRow();
                 String id = (String) "" + mesa.getValueAt(fila, 0);
                 String campos = "nombre, estado, centro_idcentro";
-                mCentro carr = (mCentro) centro.getSelectedItem();
+                mCentro carr = (mCentro) ccentro.getSelectedItem();
                 String idcentro = carr.getID();
 
                 int estad = 0;
@@ -801,9 +799,9 @@ public class Mesa extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_mesaKeyPressed
 
-    private void Nueva_CarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Nueva_CarreraActionPerformed
+    private void Nueva_CentroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Nueva_CentroActionPerformed
         // TODO add your handling code here:
-        if (AccesoUsuario.AccesosUsuario(Nueva_Carrera.getName()) == true) {
+        if (AccesoUsuario.AccesosUsuario(Nueva_Centro.getName()) == true) {
             Centro frmCarrera = new Centro();
             if (frmCarrera == null) {
                 frmCarrera = new Centro();
@@ -812,20 +810,20 @@ public class Mesa extends javax.swing.JInternalFrame {
         } else {
             JOptionPane.showMessageDialog(this, "No tiene Acceso para realizar esta operación ");
         }
-    }//GEN-LAST:event_Nueva_CarreraActionPerformed
+    }//GEN-LAST:event_Nueva_CentroActionPerformed
 
-    private void Actualizar_CarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Actualizar_CarreraActionPerformed
+    private void Actualizar_CentroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Actualizar_CentroActionPerformed
         // TODO add your handling code here:
         llenarcombocentro();
-    }//GEN-LAST:event_Actualizar_CarreraActionPerformed
+    }//GEN-LAST:event_Actualizar_CentroActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem Actualizar_Carrera;
+    private javax.swing.JMenuItem Actualizar_Centro;
     private javax.swing.JPanel JPanelBusqueda;
     private javax.swing.JPanel JPanelCampos;
     private javax.swing.JPanel JPanelTable;
-    private javax.swing.JMenuItem Nueva_Carrera;
+    private javax.swing.JMenuItem Nueva_Centro;
     private elaprendiz.gui.button.ButtonRect bntCancelar;
     private elaprendiz.gui.button.ButtonRect bntEliminar;
     private elaprendiz.gui.button.ButtonRect bntGuardar;
@@ -833,7 +831,7 @@ public class Mesa extends javax.swing.JInternalFrame {
     private elaprendiz.gui.button.ButtonRect bntNuevo;
     private elaprendiz.gui.button.ButtonRect bntSalir;
     private elaprendiz.gui.textField.TextField busqueda;
-    private javax.swing.JComboBox centro;
+    private javax.swing.JComboBox ccentro;
     private javax.swing.JRadioButton estado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
@@ -846,7 +844,7 @@ public class Mesa extends javax.swing.JInternalFrame {
     private elaprendiz.gui.panel.PanelImage panelImage;
     private javax.swing.JPanel pnlActionButtons;
     private javax.swing.JPanel pnlPaginador;
-    private javax.swing.JPopupMenu popupcarrera;
+    private javax.swing.JPopupMenu popupcentro;
     private javax.swing.JRadioButton rbNombres;
     // End of variables declaration//GEN-END:variables
 }

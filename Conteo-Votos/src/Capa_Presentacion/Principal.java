@@ -4,7 +4,6 @@ import BackupMySQL.Backup;
 import BackupMySQL.RestaurarBackup;
 import Capa_Negocio.AccesoUsuario;
 import Capa_Negocio.AddForms;
-import Capa_Negocio.CalcularMoras;
 import javax.swing.ImageIcon;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
@@ -96,6 +95,7 @@ public class Principal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Principal SYSTEMA DE CONTEO DE VOTOS 2015");
+        setName("Principal"); // NOI18N
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);

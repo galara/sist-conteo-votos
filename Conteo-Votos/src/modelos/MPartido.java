@@ -8,13 +8,13 @@ package modelos;
  * @author GLARA
  */
 
-public class mHorario {
+public class MPartido {
 
     private final String nombre;
     private final String id;
     
 
-    public mHorario(String nombre,String id) {
+    public MPartido(String nombre,String id) {
         this.nombre = nombre;
         this.id = id;
     }

@@ -15,7 +15,7 @@
     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
       <Color id="Cursor Por defecto"/>
     </Property>
-    <Property name="name" type="java.lang.String" value="Puesto Politico" noResource="true"/>
+    <Property name="name" type="java.lang.String" value="Candidatura" noResource="true"/>
   </Properties>
   <AccessibilityProperties>
     <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Profesores"/>
@@ -479,9 +479,6 @@
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                </Property>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Recursos/ciclo.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="&lt;--Candidatura--&gt;"/>
               </Properties>

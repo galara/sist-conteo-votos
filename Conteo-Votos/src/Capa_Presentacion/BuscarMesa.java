@@ -236,7 +236,7 @@ public class BuscarMesa extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setTitle("Mesas");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setName("buscaralumnos"); // NOI18N
+        setName("buscarmesa"); // NOI18N
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
             }
@@ -393,7 +393,6 @@ public class BuscarMesa extends javax.swing.JInternalFrame {
 
             jLabel8.setFont(new java.awt.Font("Script MT Bold", 1, 32)); // NOI18N
             jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-            jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/alumno.png"))); // NOI18N
             jLabel8.setText("<--Buscar Mesa-->");
             pnlPaginador.add(jLabel8, new java.awt.GridBagConstraints());
 

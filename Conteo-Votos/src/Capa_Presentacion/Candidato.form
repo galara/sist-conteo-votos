@@ -2,7 +2,7 @@
 
 <Form version="1.5" maxVersion="1.8" type="org.netbeans.modules.form.forminfo.JInternalFrameFormInfo">
   <NonVisualComponents>
-    <Container class="javax.swing.JPopupMenu" name="popupprofesor">
+    <Container class="javax.swing.JPopupMenu" name="popuppartido">
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
         <Property name="useNullLayout" type="boolean" value="true"/>
@@ -10,10 +10,7 @@
       <SubComponents>
         <MenuItem class="javax.swing.JMenuItem" name="Nuevo_Partido">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Recursos/profesor.png"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Nuevo Profesor"/>
+            <Property name="text" type="java.lang.String" value="Nuevo Partido"/>
             <Property name="name" type="java.lang.String" value="Profesor Principal" noResource="true"/>
           </Properties>
           <Events>
@@ -33,7 +30,7 @@
         </MenuItem>
       </SubComponents>
     </Container>
-    <Container class="javax.swing.JPopupMenu" name="popupcarrera">
+    <Container class="javax.swing.JPopupMenu" name="popupcandidatura">
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
         <Property name="useNullLayout" type="boolean" value="true"/>
@@ -41,10 +38,7 @@
       <SubComponents>
         <MenuItem class="javax.swing.JMenuItem" name="Nueva_Candidatura">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Recursos/carrera.png"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Nueva Carrera"/>
+            <Property name="text" type="java.lang.String" value="Nueva Candidatura"/>
             <Property name="name" type="java.lang.String" value="Carrera Principal" noResource="true"/>
           </Properties>
           <Events>
@@ -371,18 +365,18 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="javax.swing.JComboBox" name="partido">
+            <Component class="javax.swing.JComboBox" name="cpartido">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="modelCombo = new DefaultComboBoxModel()" type="code"/>
                 </Property>
                 <Property name="componentPopupMenu" type="javax.swing.JPopupMenu" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="popupprofesor"/>
+                  <ComponentRef name="popuppartido"/>
                 </Property>
                 <Property name="enabled" type="boolean" value="false"/>
                 <Property name="name" type="java.lang.String" value="Profesor" noResource="true"/>
                 <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="puesto"/>
+                  <ComponentRef name="ccandidatura"/>
                 </Property>
               </Properties>
               <Constraints>
@@ -405,13 +399,13 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="javax.swing.JComboBox" name="puesto">
+            <Component class="javax.swing.JComboBox" name="ccandidatura">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="modelCombo = new DefaultComboBoxModel()" type="code"/>
                 </Property>
                 <Property name="componentPopupMenu" type="javax.swing.JPopupMenu" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="popupcarrera"/>
+                  <ComponentRef name="popupcandidatura"/>
                 </Property>
                 <Property name="enabled" type="boolean" value="false"/>
                 <Property name="name" type="java.lang.String" value="Profesor" noResource="true"/>
@@ -436,13 +430,10 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="javax.swing.JComboBox" name="Cmunicipio">
+            <Component class="javax.swing.JComboBox" name="cmunicipio">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="modelCombo = new DefaultComboBoxModel()" type="code"/>
-                </Property>
-                <Property name="componentPopupMenu" type="javax.swing.JPopupMenu" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="popupcarrera"/>
                 </Property>
                 <Property name="enabled" type="boolean" value="false"/>
                 <Property name="name" type="java.lang.String" value="Profesor" noResource="true"/>
@@ -670,9 +661,6 @@
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                </Property>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Recursos/horario3.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="&lt;--Candidato--&gt;"/>
               </Properties>

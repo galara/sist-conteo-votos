@@ -8,13 +8,13 @@ package modelos;
  * @author GLARA
  */
 
-public class mTipopago {
+public class MMunicipio {
 
     private final String nombre;
     private final String id;
     
 
-    public mTipopago(String nombre,String id) {
+    public MMunicipio(String nombre,String id) {
         this.nombre = nombre;
         this.id = id;
     }

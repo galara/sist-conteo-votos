@@ -354,7 +354,7 @@ public class Ingreso_Votos extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setTitle("Registro de Votos");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setName("Pagos"); // NOI18N
+        setName("IngresoVotos"); // NOI18N
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
             }
@@ -517,7 +517,6 @@ public class Ingreso_Votos extends javax.swing.JInternalFrame {
 
         jLabel11.setFont(new java.awt.Font("Script MT Bold", 1, 32)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/update.png"))); // NOI18N
         jLabel11.setText("<--Registro de Votos-->");
         pnlPaginador1.add(jLabel11, new java.awt.GridBagConstraints());
 

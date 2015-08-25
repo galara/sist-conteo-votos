@@ -272,6 +272,7 @@
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="0"/>
     <Property name="title" type="java.lang.String" value="Principal SYSTEMA DE CONTEO DE VOTOS 2015"/>
+    <Property name="name" type="java.lang.String" value="Principal" noResource="true"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="menuBar" type="java.lang.String" value="jMenuBar1"/>

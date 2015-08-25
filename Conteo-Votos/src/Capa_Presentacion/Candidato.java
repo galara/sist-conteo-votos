@@ -30,8 +30,9 @@ import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableModel;
 import modelos.MCandidatura;
+import modelos.MMunicipio;
 //import modelos.MMunicipio;
-import modelos.mProfesor;
+import modelos.MPartido;
 
 /**
  *
@@ -128,7 +129,7 @@ public class Candidato extends javax.swing.JInternalFrame {
         String[] campos = {"nombre", "idpartido"};
         String[] condiciones = {"estado"};
         String[] Id = {Dato};
-        partido.removeAllItems();
+        cpartido.removeAllItems();
         //Component cmps = partido_politico;
         getRegistroCombo("partido_politico", campos, condiciones, Id);
 
@@ -151,16 +152,16 @@ public class Candidato extends javax.swing.JInternalFrame {
 
                 DefaultComboBoxModel modeloComboBox;
                 modeloComboBox = new DefaultComboBoxModel();
-                partido.setModel(modeloComboBox);
+                cpartido.setModel(modeloComboBox);
 
-                modeloComboBox.addElement(new mProfesor("", "0"));
+                modeloComboBox.addElement(new MPartido("", "0"));
                 if (rs.next()) {//verifica si esta vacio, pero desplaza el puntero al siguiente elemento
                     int count = 0;
                     rs.beforeFirst();//regresa el puntero al primer registro
                     Object[] fila = new Object[cantcampos];
                     while (rs.next()) {//mientras tenga registros que haga lo siguiente
                         count++;
-                        modeloComboBox.addElement(new mProfesor(rs.getString(1), "" + rs.getInt(2)));
+                        modeloComboBox.addElement(new MPartido(rs.getString(1), "" + rs.getInt(2)));
                         hashPartido.put(rs.getString(1), "" + count);
                     }
                 }
@@ -184,8 +185,8 @@ public class Candidato extends javax.swing.JInternalFrame {
         String[] campos = {"nombre", "idpuesto"};
         String[] condiciones = {"estado"};
         String[] Id = {Dato};
-        puesto.removeAllItems();
-        Component cmps = puesto;
+        ccandidatura.removeAllItems();
+        Component cmps = ccandidatura;
         getRegistroCombopuesto("puesto", campos, condiciones, Id);
 
     }
@@ -207,7 +208,7 @@ public class Candidato extends javax.swing.JInternalFrame {
 
                 DefaultComboBoxModel modeloComboBox;
                 modeloComboBox = new DefaultComboBoxModel();
-                puesto.setModel(modeloComboBox);
+                ccandidatura.setModel(modeloComboBox);
 
                 modeloComboBox.addElement(new MCandidatura("", "0"));
                 if (rs.next()) {//verifica si esta vacio, pero desplaza el puntero al siguiente elemento
@@ -240,7 +241,7 @@ public class Candidato extends javax.swing.JInternalFrame {
         String[] campos = {"nombre", "idmunicipio"};
         String[] condiciones = {"estado"};
         String[] Id = {Dato};
-        Cmunicipio.removeAllItems();
+        cmunicipio.removeAllItems();
         //Component cmps = municipio;
         getRegistromunicipio("municipio", campos, condiciones, Id);
 
@@ -263,16 +264,16 @@ public class Candidato extends javax.swing.JInternalFrame {
 
                 DefaultComboBoxModel modeloComboBox;
                 modeloComboBox = new DefaultComboBoxModel();
-                Cmunicipio.setModel(modeloComboBox);
+                cmunicipio.setModel(modeloComboBox);
 
-                modeloComboBox.addElement(new mProfesor("", "0"));
+                modeloComboBox.addElement(new MMunicipio("", "0"));
                 if (rs.next()) {//verifica si esta vacio, pero desplaza el puntero al siguiente elemento
                     int count = 0;
                     rs.beforeFirst();//regresa el puntero al primer registro
                     Object[] fila = new Object[cantcampos];
                     while (rs.next()) {//mientras tenga registros que haga lo siguiente
                         count++;
-                        modeloComboBox.addElement(new mProfesor(rs.getString(1), "" + rs.getInt(2)));
+                        modeloComboBox.addElement(new MMunicipio(rs.getString(1), "" + rs.getInt(2)));
                         hashMunicipio.put(rs.getString(1), "" + count);
                     }
                 }
@@ -412,9 +413,9 @@ public class Candidato extends javax.swing.JInternalFrame {
                             //apellidos.setText(rs.getString(3));
                             //dia.setSelectedItem(rs.getString(3));
                             int pr = Integer.parseInt((String) hashPartido.get(rs.getString(2)));
-                            partido.setSelectedIndex(pr);
+                            cpartido.setSelectedIndex(pr);
                             int car = Integer.parseInt((String) hashCandidatura.get(rs.getString(3)));
-                            puesto.setSelectedIndex(car);
+                            ccandidatura.setSelectedIndex(car);
                             //horade.setValue(rs.getTime(6));
                             //horaa.setValue(rs.getTime(7));
                             //fechainicio.setDate((rs.getDate(6)));
@@ -434,7 +435,7 @@ public class Candidato extends javax.swing.JInternalFrame {
                             //colegiatura.setValue(rs.getFloat(13));
                             newcodcandidato = rs.getInt(5);
                             int munici = Integer.parseInt((String) hashMunicipio.get(rs.getString(6)));
-                            Cmunicipio.setSelectedIndex(munici);
+                            cmunicipio.setSelectedIndex(munici);
                         }
                     }
                 } catch (SQLException e) {
@@ -503,9 +504,9 @@ public class Candidato extends javax.swing.JInternalFrame {
 
     private void generacodigocandidato() {
         String txtdia = "";
-        if (partido.getSelectedIndex() == 0) {
-        } else if (partido.getSelectedIndex() != -1) {
-            txtdia = partido.getSelectedItem().toString();
+        if (cpartido.getSelectedIndex() == 0) {
+        } else if (cpartido.getSelectedIndex() != -1) {
+            txtdia = cpartido.getSelectedItem().toString();
         }
         String tx = txtdia + " ";
         if (tx.isEmpty()) {
@@ -525,10 +526,10 @@ public class Candidato extends javax.swing.JInternalFrame {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        popupprofesor = new javax.swing.JPopupMenu();
+        popuppartido = new javax.swing.JPopupMenu();
         Nuevo_Partido = new javax.swing.JMenuItem();
         Actualizar_Partido = new javax.swing.JMenuItem();
-        popupcarrera = new javax.swing.JPopupMenu();
+        popupcandidatura = new javax.swing.JPopupMenu();
         Nueva_Candidatura = new javax.swing.JMenuItem();
         Actualizar_Candidatura = new javax.swing.JMenuItem();
         panelImage = new elaprendiz.gui.panel.PanelImage();
@@ -545,11 +546,11 @@ public class Candidato extends javax.swing.JInternalFrame {
         codigo = new elaprendiz.gui.textField.TextField();
         estado = new javax.swing.JRadioButton();
         jLabel12 = new javax.swing.JLabel();
-        partido = new javax.swing.JComboBox();
+        cpartido = new javax.swing.JComboBox();
         jLabel5 = new javax.swing.JLabel();
-        puesto = new javax.swing.JComboBox();
+        ccandidatura = new javax.swing.JComboBox();
         jLabel10 = new javax.swing.JLabel();
-        Cmunicipio = new javax.swing.JComboBox();
+        cmunicipio = new javax.swing.JComboBox();
         JPanelTable = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         horarios = new javax.swing.JTable();
@@ -562,15 +563,14 @@ public class Candidato extends javax.swing.JInternalFrame {
         pnlPaginador = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
 
-        Nuevo_Partido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/profesor.png"))); // NOI18N
-        Nuevo_Partido.setText("Nuevo Profesor");
+        Nuevo_Partido.setText("Nuevo Partido");
         Nuevo_Partido.setName("Profesor Principal"); // NOI18N
         Nuevo_Partido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Nuevo_PartidoActionPerformed(evt);
             }
         });
-        popupprofesor.add(Nuevo_Partido);
+        popuppartido.add(Nuevo_Partido);
 
         Actualizar_Partido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/update.png"))); // NOI18N
         Actualizar_Partido.setText("Actualizar Combo");
@@ -579,17 +579,16 @@ public class Candidato extends javax.swing.JInternalFrame {
                 Actualizar_PartidoActionPerformed(evt);
             }
         });
-        popupprofesor.add(Actualizar_Partido);
+        popuppartido.add(Actualizar_Partido);
 
-        Nueva_Candidatura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/carrera.png"))); // NOI18N
-        Nueva_Candidatura.setText("Nueva Carrera");
+        Nueva_Candidatura.setText("Nueva Candidatura");
         Nueva_Candidatura.setName("Carrera Principal"); // NOI18N
         Nueva_Candidatura.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Nueva_CandidaturaActionPerformed(evt);
             }
         });
-        popupcarrera.add(Nueva_Candidatura);
+        popupcandidatura.add(Nueva_Candidatura);
 
         Actualizar_Candidatura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/update.png"))); // NOI18N
         Actualizar_Candidatura.setText("Actualizar Combo");
@@ -598,7 +597,7 @@ public class Candidato extends javax.swing.JInternalFrame {
                 Actualizar_CandidaturaActionPerformed(evt);
             }
         });
-        popupcarrera.add(Actualizar_Candidatura);
+        popupcandidatura.add(Actualizar_Candidatura);
 
         setBackground(new java.awt.Color(0, 0, 0));
         setClosable(true);
@@ -773,13 +772,13 @@ public class Candidato extends javax.swing.JInternalFrame {
         JPanelCampos.add(jLabel12);
         jLabel12.setBounds(130, 20, 80, 17);
 
-        partido.setModel(modelCombo = new DefaultComboBoxModel());
-        partido.setComponentPopupMenu(popupprofesor);
-        partido.setEnabled(false);
-        partido.setName("Profesor"); // NOI18N
-        partido.setNextFocusableComponent(puesto);
-        JPanelCampos.add(partido);
-        partido.setBounds(220, 50, 250, 21);
+        cpartido.setModel(modelCombo = new DefaultComboBoxModel());
+        cpartido.setComponentPopupMenu(popuppartido);
+        cpartido.setEnabled(false);
+        cpartido.setName("Profesor"); // NOI18N
+        cpartido.setNextFocusableComponent(ccandidatura);
+        JPanelCampos.add(cpartido);
+        cpartido.setBounds(220, 50, 250, 21);
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
@@ -787,12 +786,12 @@ public class Candidato extends javax.swing.JInternalFrame {
         JPanelCampos.add(jLabel5);
         jLabel5.setBounds(120, 80, 90, 20);
 
-        puesto.setModel(modelCombo = new DefaultComboBoxModel());
-        puesto.setComponentPopupMenu(popupcarrera);
-        puesto.setEnabled(false);
-        puesto.setName("Profesor"); // NOI18N
-        JPanelCampos.add(puesto);
-        puesto.setBounds(220, 80, 250, 21);
+        ccandidatura.setModel(modelCombo = new DefaultComboBoxModel());
+        ccandidatura.setComponentPopupMenu(popupcandidatura);
+        ccandidatura.setEnabled(false);
+        ccandidatura.setName("Profesor"); // NOI18N
+        JPanelCampos.add(ccandidatura);
+        ccandidatura.setBounds(220, 80, 250, 21);
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
@@ -800,12 +799,11 @@ public class Candidato extends javax.swing.JInternalFrame {
         JPanelCampos.add(jLabel10);
         jLabel10.setBounds(140, 110, 70, 17);
 
-        Cmunicipio.setModel(modelCombo = new DefaultComboBoxModel());
-        Cmunicipio.setComponentPopupMenu(popupcarrera);
-        Cmunicipio.setEnabled(false);
-        Cmunicipio.setName("Profesor"); // NOI18N
-        JPanelCampos.add(Cmunicipio);
-        Cmunicipio.setBounds(220, 110, 250, 20);
+        cmunicipio.setModel(modelCombo = new DefaultComboBoxModel());
+        cmunicipio.setEnabled(false);
+        cmunicipio.setName("Profesor"); // NOI18N
+        JPanelCampos.add(cmunicipio);
+        cmunicipio.setBounds(220, 110, 250, 20);
 
         panelImage.add(JPanelCampos);
         JPanelCampos.setBounds(0, 40, 880, 190);
@@ -916,7 +914,6 @@ public class Candidato extends javax.swing.JInternalFrame {
 
             jLabel8.setFont(new java.awt.Font("Script MT Bold", 1, 32)); // NOI18N
             jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-            jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/horario3.png"))); // NOI18N
             jLabel8.setText("<--Candidato-->");
             pnlPaginador.add(jLabel8, new java.awt.GridBagConstraints());
 
@@ -973,11 +970,11 @@ public class Candidato extends javax.swing.JInternalFrame {
 
                 //String fechaini2 = FormatoFecha.getFormato(fechainicio.getCalendar().getTime(), FormatoFecha.D_M_A);
                 //String fechafn2 = FormatoFecha.getFormato(fechafin.getCalendar().getTime(), FormatoFecha.D_M_A);
-                mProfesor prof = (mProfesor) partido.getSelectedItem();
+                MPartido prof = (MPartido) cpartido.getSelectedItem();
                 String idprof = prof.getID();
-                MCandidatura carr = (MCandidatura) puesto.getSelectedItem();
+                MCandidatura carr = (MCandidatura) ccandidatura.getSelectedItem();
                 String idpuesto = carr.getID();
-                mProfesor mun = (mProfesor) Cmunicipio.getSelectedItem();
+                MMunicipio mun = (MMunicipio) cmunicipio.getSelectedItem();
                 String idmun = mun.getID();
 
                 int estad = 0;
@@ -1086,11 +1083,21 @@ public class Candidato extends javax.swing.JInternalFrame {
                 //String fechaini = FormatoFecha.getFormato(fechainicio.getCalendar().getTime(), FormatoFecha.A_M_D);
                 //String fechafn = FormatoFecha.getFormato(fechafin.getCalendar().getTime(), FormatoFecha.A_M_D);
                 //Para obtener el id en la base de datos
-                mProfesor prof = (mProfesor) partido.getSelectedItem();
+                
+                
+//                MPartido prof = (MPartido) partido.getSelectedItem();
+//                String idprof = prof.getID();
+//                MCandidatura carr = (MCandidatura) puesto.getSelectedItem();
+//                String idpuesto = carr.getID();
+//                MPartido mun = (MPartido) Cmunicipio.getSelectedItem();
+//                String idmun = mun.getID();
+                
+                MPartido prof = (MPartido) cpartido.getSelectedItem();
                 String idprof = prof.getID();
-                MCandidatura carr = (MCandidatura) puesto.getSelectedItem();
+                MCandidatura carr = (MCandidatura) ccandidatura.getSelectedItem();
                 String idpuesto = carr.getID();
-                mProfesor mun = (mProfesor) Cmunicipio.getSelectedItem();
+                //String idpuesto = carr.getID();
+                MMunicipio mun = (MMunicipio) cmunicipio.getSelectedItem();
                 String idmun = mun.getID();
 
                 int estad = 0;
@@ -1180,9 +1187,9 @@ public class Candidato extends javax.swing.JInternalFrame {
     private void Nuevo_PartidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Nuevo_PartidoActionPerformed
         // TODO add your handling code here:
         if (AccesoUsuario.AccesosUsuario(Nuevo_Partido.getName()) == true) {
-            Cargo_politico frmProfesor = new Cargo_politico();
+            Partido_politico frmProfesor = new Partido_politico();
             if (frmProfesor == null) {
-                frmProfesor = new Cargo_politico();
+                frmProfesor = new Partido_politico();
             }
             adminInternalFrame(dp, frmProfesor);
         } else {
@@ -1193,9 +1200,9 @@ public class Candidato extends javax.swing.JInternalFrame {
     private void Nueva_CandidaturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Nueva_CandidaturaActionPerformed
         // TODO add your handling code here:
         if (AccesoUsuario.AccesosUsuario(Nueva_Candidatura.getName()) == true) {
-            Partido_politico frmCarrera = new Partido_politico();
+            Cargo_politico frmCarrera = new Cargo_politico();
             if (frmCarrera == null) {
-                frmCarrera = new Partido_politico();
+                frmCarrera = new Cargo_politico();
             }
             adminInternalFrame(dp, frmCarrera);
         } else {
@@ -1212,7 +1219,6 @@ public class Candidato extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem Actualizar_Candidatura;
     private javax.swing.JMenuItem Actualizar_Partido;
-    private javax.swing.JComboBox Cmunicipio;
     private javax.swing.JPanel JPanelBusqueda;
     private javax.swing.JPanel JPanelCampos;
     private javax.swing.JPanel JPanelTable;
@@ -1225,7 +1231,10 @@ public class Candidato extends javax.swing.JInternalFrame {
     private elaprendiz.gui.button.ButtonRect bntNuevo;
     private elaprendiz.gui.button.ButtonRect bntSalir;
     private elaprendiz.gui.textField.TextField busqueda;
+    private javax.swing.JComboBox ccandidatura;
+    private javax.swing.JComboBox cmunicipio;
     private elaprendiz.gui.textField.TextField codigo;
+    private javax.swing.JComboBox cpartido;
     private javax.swing.JRadioButton estado;
     private javax.swing.JTable horarios;
     private javax.swing.JLabel jLabel10;
@@ -1237,12 +1246,10 @@ public class Candidato extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private elaprendiz.gui.panel.PanelImage panelImage;
-    private javax.swing.JComboBox partido;
     private javax.swing.JPanel pnlActionButtons;
     private javax.swing.JPanel pnlPaginador;
-    private javax.swing.JPopupMenu popupcarrera;
-    private javax.swing.JPopupMenu popupprofesor;
-    private javax.swing.JComboBox puesto;
+    private javax.swing.JPopupMenu popupcandidatura;
+    private javax.swing.JPopupMenu popuppartido;
     private javax.swing.JRadioButton rbApellidos;
     private javax.swing.JRadioButton rbCodigo;
     private javax.swing.JRadioButton rbNombres;

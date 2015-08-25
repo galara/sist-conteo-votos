@@ -36,9 +36,8 @@ import javax.swing.JTable;
 import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableModel;
 import modelos.MCandidatura;
-import modelos.mProfesor;
+import modelos.MPartido;
 //import modelos.MMunicipio;
-
 /**
  *
  * @author GLARA
@@ -286,14 +285,14 @@ public class Conteo_Votos extends javax.swing.JInternalFrame {
                 modeloComboBox = new DefaultComboBoxModel();
                 Cmunicipio.setModel(modeloComboBox);
 
-                modeloComboBox.addElement(new mProfesor("", "0"));
+                modeloComboBox.addElement(new MPartido("", "0"));
                 if (rs.next()) {//verifica si esta vacio, pero desplaza el puntero al siguiente elemento
                     int count = 0;
                     rs.beforeFirst();//regresa el puntero al primer registro
                     Object[] fila = new Object[cantcampos];
                     while (rs.next()) {//mientras tenga registros que haga lo siguiente
                         count++;
-                        modeloComboBox.addElement(new mProfesor(rs.getString(1), "" + rs.getInt(2)));
+                        modeloComboBox.addElement(new MPartido(rs.getString(1), "" + rs.getInt(2)));
                         hashMunicipio.put(rs.getString(1), "" + count);
                     }
                 }
@@ -641,7 +640,7 @@ public class Conteo_Votos extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setTitle("Registro de Votos");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setName("Pagos"); // NOI18N
+        setName("ConteoVotos"); // NOI18N
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
             }
@@ -830,7 +829,6 @@ public class Conteo_Votos extends javax.swing.JInternalFrame {
 
         jLabel11.setFont(new java.awt.Font("Script MT Bold", 1, 32)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/update.png"))); // NOI18N
         jLabel11.setText("<--Registro de Votos-->");
         pnlPaginador1.add(jLabel11, new java.awt.GridBagConstraints());
 
@@ -1231,7 +1229,7 @@ public class Conteo_Votos extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         MCandidatura carr = (MCandidatura) puesto.getSelectedItem();
                 String idpuesto = carr.getID();
-                mProfesor mun = (mProfesor) Cmunicipio.getSelectedItem();
+                MPartido mun = (MPartido) Cmunicipio.getSelectedItem();
                 String idmun = mun.getID();
         balumnocodigo(codigomesa.getText());
     }//GEN-LAST:event_jButton2ActionPerformed

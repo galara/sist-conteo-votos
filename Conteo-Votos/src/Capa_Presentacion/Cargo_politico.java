@@ -211,7 +211,7 @@ public class Cargo_politico extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setTitle("Puesto Politico");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setName("Puesto Politico"); // NOI18N
+        setName("Candidatura"); // NOI18N
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
             }
@@ -467,7 +467,6 @@ public class Cargo_politico extends javax.swing.JInternalFrame {
 
             jLabel8.setFont(new java.awt.Font("Script MT Bold", 1, 32)); // NOI18N
             jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-            jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/ciclo.png"))); // NOI18N
             jLabel8.setText("<--Candidatura-->");
             pnlPaginador.add(jLabel8, new java.awt.GridBagConstraints());
 

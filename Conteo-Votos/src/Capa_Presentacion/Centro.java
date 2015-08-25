@@ -26,7 +26,8 @@ import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableModel;
-import modelos.MCandidatura;
+//import modelos.MCandidatura;
+import modelos.MMunicipio;
 
 /**
  *
@@ -120,8 +121,8 @@ public class Centro extends javax.swing.JInternalFrame {
         String[] campos = {"nombre", "idmunicipio"};
         String[] condiciones = {"estado"};
         String[] Id = {Dato};
-        centro.removeAllItems();
-        Component cmps = centro;
+        cmunicipio.removeAllItems();
+        //Component cmps = cmunicipio;
         getRegistroCombocentro("municipio", campos, condiciones, Id);
 
     }
@@ -143,16 +144,16 @@ public class Centro extends javax.swing.JInternalFrame {
 
                 DefaultComboBoxModel modeloComboBox;
                 modeloComboBox = new DefaultComboBoxModel();
-                centro.setModel(modeloComboBox);
+                cmunicipio.setModel(modeloComboBox);
 
-                modeloComboBox.addElement(new MCandidatura("", "0"));
+                modeloComboBox.addElement(new MMunicipio("", "0"));
                 if (rs.next()) {//verifica si esta vacio, pero desplaza el puntero al siguiente elemento
                     int count = 0;
                     rs.beforeFirst();//regresa el puntero al primer registro
                     Object[] fila = new Object[cantcampos];
                     while (rs.next()) {//mientras tenga registros que haga lo siguiente
                         count++;
-                        modeloComboBox.addElement(new MCandidatura(rs.getString(1), "" + rs.getInt(2)));
+                        modeloComboBox.addElement(new MMunicipio(rs.getString(1), "" + rs.getInt(2)));
                         hashCarrera.put(rs.getString(1), "" + count);
                     }
                 }
@@ -260,7 +261,7 @@ public class Centro extends javax.swing.JInternalFrame {
 
                             nombre.setText(rs.getString(1));
                             int car = Integer.parseInt((String) hashCarrera.get(rs.getString(2)));
-                            centro.setSelectedIndex(car);
+                            cmunicipio.setSelectedIndex(car);
 
                             if (rs.getObject(3).equals(true)) {
                                 estado.setText("Activo");
@@ -307,7 +308,7 @@ public class Centro extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         estado = new javax.swing.JRadioButton();
-        centro = new javax.swing.JComboBox();
+        cmunicipio = new javax.swing.JComboBox();
         jLabel5 = new javax.swing.JLabel();
         nombre = new elaprendiz.gui.textField.TextField();
         JPanelTable = new javax.swing.JPanel();
@@ -327,7 +328,7 @@ public class Centro extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setTitle("Centro Votación");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setName("Pensum"); // NOI18N
+        setName("Centro"); // NOI18N
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
             }
@@ -481,11 +482,11 @@ public class Centro extends javax.swing.JInternalFrame {
         JPanelCampos.add(estado);
         estado.setBounds(190, 90, 160, 21);
 
-        centro.setModel(modelCombo = new DefaultComboBoxModel());
-        centro.setEnabled(false);
-        centro.setName("Pensum"); // NOI18N
-        JPanelCampos.add(centro);
-        centro.setBounds(190, 60, 250, 21);
+        cmunicipio.setModel(modelCombo = new DefaultComboBoxModel());
+        cmunicipio.setEnabled(false);
+        cmunicipio.setName("Pensum"); // NOI18N
+        JPanelCampos.add(cmunicipio);
+        cmunicipio.setBounds(190, 60, 250, 21);
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
@@ -584,7 +585,6 @@ public class Centro extends javax.swing.JInternalFrame {
 
             jLabel8.setFont(new java.awt.Font("Script MT Bold", 1, 32)); // NOI18N
             jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-            jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/carrera.png"))); // NOI18N
             jLabel8.setText("<--Centro Votación-->");
             pnlPaginador.add(jLabel8, new java.awt.GridBagConstraints());
 
@@ -627,7 +627,7 @@ public class Centro extends javax.swing.JInternalFrame {
                 boolean seguardo = false;
                 String nombreTabla = "centro";
                 String campos = "nombre, estado,  municipio_idmunicipio";
-                MCandidatura carr = (MCandidatura) centro.getSelectedItem();
+                MMunicipio carr = (MMunicipio) cmunicipio.getSelectedItem();
                 String idcentro = carr.getID();
 
                 int estad = 0;
@@ -712,7 +712,7 @@ public class Centro extends javax.swing.JInternalFrame {
                 int fila = tcentro.getSelectedRow();
                 String id = (String) "" + tcentro.getValueAt(fila, 0);
                 String campos = "nombre, estado, municipio_idmunicipio";
-                MCandidatura carr = (MCandidatura) centro.getSelectedItem();
+                MMunicipio carr = (MMunicipio) cmunicipio.getSelectedItem();
                 String idcentro = carr.getID();
 
                 int estad = 0;
@@ -788,7 +788,7 @@ public class Centro extends javax.swing.JInternalFrame {
     private elaprendiz.gui.button.ButtonRect bntNuevo;
     private elaprendiz.gui.button.ButtonRect bntSalir;
     private elaprendiz.gui.textField.TextField busqueda;
-    private javax.swing.JComboBox centro;
+    private javax.swing.JComboBox cmunicipio;
     private javax.swing.JRadioButton estado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
