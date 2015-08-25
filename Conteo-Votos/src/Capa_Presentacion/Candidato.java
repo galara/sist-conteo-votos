@@ -30,7 +30,7 @@ import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableModel;
 import modelos.MCandidatura;
-import modelos.MMunicipio;
+//import modelos.MMunicipio;
 import modelos.mProfesor;
 
 /**
@@ -265,14 +265,14 @@ public class Candidato extends javax.swing.JInternalFrame {
                 modeloComboBox = new DefaultComboBoxModel();
                 Cmunicipio.setModel(modeloComboBox);
 
-                modeloComboBox.addElement(new MMunicipio("", "0"));
+                modeloComboBox.addElement(new mProfesor("", "0"));
                 if (rs.next()) {//verifica si esta vacio, pero desplaza el puntero al siguiente elemento
                     int count = 0;
                     rs.beforeFirst();//regresa el puntero al primer registro
                     Object[] fila = new Object[cantcampos];
                     while (rs.next()) {//mientras tenga registros que haga lo siguiente
                         count++;
-                        modeloComboBox.addElement(new MMunicipio(rs.getString(1), "" + rs.getInt(2)));
+                        modeloComboBox.addElement(new mProfesor(rs.getString(1), "" + rs.getInt(2)));
                         hashMunicipio.put(rs.getString(1), "" + count);
                     }
                 }
@@ -977,7 +977,7 @@ public class Candidato extends javax.swing.JInternalFrame {
                 String idprof = prof.getID();
                 MCandidatura carr = (MCandidatura) puesto.getSelectedItem();
                 String idpuesto = carr.getID();
-                MMunicipio mun = (MMunicipio) Cmunicipio.getSelectedItem();
+                mProfesor mun = (mProfesor) Cmunicipio.getSelectedItem();
                 String idmun = mun.getID();
 
                 int estad = 0;
@@ -1090,7 +1090,7 @@ public class Candidato extends javax.swing.JInternalFrame {
                 String idprof = prof.getID();
                 MCandidatura carr = (MCandidatura) puesto.getSelectedItem();
                 String idpuesto = carr.getID();
-                MMunicipio mun = (MMunicipio) Cmunicipio.getSelectedItem();
+                mProfesor mun = (mProfesor) Cmunicipio.getSelectedItem();
                 String idmun = mun.getID();
 
                 int estad = 0;
