@@ -5,10 +5,19 @@ import Capa_Datos.OpSql;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.io.IOException;
+import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.Hashtable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
@@ -116,6 +125,17 @@ public class Peticiones extends AccesoDatos {
                         if (fila[i].equals(false)) {
                             fila[i] = "Inactivo";
                         }
+//                        if (campos[i].equals("partido_politico.imagen")) {
+//                            //fila[i] = rs.getObject(i + 1);
+//                            Image data = null;
+//                            byte[] b = rs.getBytes(i + 1);
+//                            data = ConvertirImagen(b);
+//                            ImageIcon ico = new ImageIcon((data));
+//                            JLabel lb = new JLabel();
+//                            lb.setIcon(ico);
+//                            fila[i] = (JLabel) (lb);
+//
+//                        }
 //                        if (campos[i].equals("horario.horariode") || campos[i].equals("horario.horarioa") || campos[i].equals("horariode") || campos[i].equals("horarioa")) {
 //                            fila[i] = FormatoFecha.getTimedoce(rs.getTime(i + 1));
 //                        }
@@ -132,6 +152,11 @@ public class Peticiones extends AccesoDatos {
             JOptionPane.showMessageDialog(null, "Ocurrio un Error :" + ex, "Error", JOptionPane.ERROR_MESSAGE);
             return null;
         }
+    }
+
+    public Image ConvertirImagen(byte[] bytes) throws IOException {
+        Image img = Toolkit.getDefaultToolkit().createImage(bytes);
+        return img;
     }
 
     /**

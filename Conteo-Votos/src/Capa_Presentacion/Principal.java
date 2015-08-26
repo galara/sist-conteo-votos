@@ -401,9 +401,9 @@ public class Principal extends javax.swing.JFrame {
     private void mpartidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mpartidoActionPerformed
         // TODO add your handling code here:
         if (AccesoUsuario.AccesosUsuario(mcandidatura.getName()) == true) {
-            Partido_politico2 form = new Partido_politico2();
+            Partido_politico form = new Partido_politico();
             if (form == null) {
-                form = new Partido_politico2();
+                form = new Partido_politico();
             }
             AddForms.adminInternalFrame(dp, form);
         } else {

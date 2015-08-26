@@ -5,6 +5,7 @@
 package Capa_Presentacion;
 
 import Capa_Negocio.AccesoUsuario;
+//import Capa_Negocio.CeldaConJLabel;
 import Capa_Negocio.FiltroCampos;
 import Capa_Negocio.FormatoFecha;
 import Capa_Negocio.IconCellRenderer;
@@ -13,15 +14,19 @@ import Capa_Negocio.TipoFiltro;
 import Capa_Negocio.Utilidades;
 import static groovy.ui.GroovyFileFilter.getExtension;
 import java.awt.Component;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Calendar;
+import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -29,6 +34,7 @@ import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 /**
  *
@@ -39,7 +45,7 @@ public class Partido_politico2 extends javax.swing.JInternalFrame {
     /*El modelo se define en : Jtable-->propiedades-->model--> <User Code> */
     DefaultTableModel model;
     DefaultComboBoxModel modelCombo;
-    String[] titulos = {"Id", "Descripción", "Imagen","Estado"};//Titulos para Jtabla
+    String[] titulos = {"Id", "Descripción", "Imagen", "Estado"};//Titulos para Jtabla
     /*Se hace una instancia de la clase que recibira las peticiones de esta capa de aplicación*/
     Peticiones peticiones = new Peticiones();
     String tabla = "partido_politico";
@@ -47,6 +53,11 @@ public class Partido_politico2 extends javax.swing.JInternalFrame {
     private FileInputStream fis = null;
     private int longitudBytes;
     byte[] archivo = null;
+//    public int fila = 0;
+//    public int col = 0;
+//    public JLabel lseleccionada;
+//    CeldaConJLabel editor;
+
     /**
      * Creates new form Cliente
      */
@@ -55,12 +66,14 @@ public class Partido_politico2 extends javax.swing.JInternalFrame {
         setFiltroTexto();
         addEscapeKey();
         JLabel label = new JLabel();
-        curso.setDefaultRenderer(Object.class,new IconCellRenderer());
-        //curso.getColumnModel().getColumn(2).setDefaultRenderer(Object.class,new IconCellRenderer());
+        //curso.setDefaultRenderer(Object.class,new IconCellRenderer());
+       // curso.getColumnModel().getColumn(2).setDefaultRenderer(Object.class,new IconCellRenderer());
         //curso.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(check));
         //JCheckBox check = new JCheckBox();
         //table.getColumnModel().getColumn(5).setCellEditor(new DefaultCellEditor(check));
         //table.getColumnModel().getColumn(5).setCellRenderer(new Renderer_CheckBox());
+//        editor = new CeldaConJLabel(this);
+        //curso.getColumnModel().getColumn(2).setCellRenderer((TableCellRenderer) (label));
 
     }
 
@@ -159,7 +172,7 @@ public class Partido_politico2 extends javax.swing.JInternalFrame {
             Utilidades.esObligatorio(this.JPanelCampos, false);
             model = peticiones.getRegistroPorLike(model, tabla, campos, "partido_politico.nombre", Dato, "");
         }
-        Utilidades.ajustarAnchoColumnas(curso);
+        //Utilidades.ajustarAnchoColumnas(curso);
     }
 
     /* Este metodo  consulta en la BD el codigo de la fila seleccionada y llena los componentes
@@ -398,7 +411,7 @@ public class Partido_politico2 extends javax.swing.JInternalFrame {
             }
         });
         JPanelCampos.add(lbarchivo);
-        lbarchivo.setBounds(600, 20, 32, 32);
+        lbarchivo.setBounds(600, 20, 80, 70);
 
         panelImage.add(JPanelCampos);
         JPanelCampos.setBounds(0, 40, 880, 190);
@@ -420,7 +433,7 @@ public class Partido_politico2 extends javax.swing.JInternalFrame {
             curso.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
             curso.setFocusCycleRoot(true);
             curso.setGridColor(new java.awt.Color(51, 51, 255));
-            curso.setRowHeight(22);
+            curso.setRowHeight(40);
             curso.setSelectionBackground(java.awt.SystemColor.activeCaption);
             curso.setSurrendersFocusOnKeystroke(true);
             curso.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -632,7 +645,7 @@ public class Partido_politico2 extends javax.swing.JInternalFrame {
                 if (this.estado.isSelected()) {
                     estad = 1;
                 }
-                Object[] valores = {descripcion.getText(), estad,fis, id};
+                Object[] valores = {descripcion.getText(), estad, fis, id};
                 seguardo = peticiones.actualizarRegistro(tabla, campos, valores, columnaId, id);
                 if (seguardo == 1) {
                     Utilidades.setEditableTexto(this.JPanelCampos, false, null, true, "");
@@ -695,25 +708,45 @@ public class Partido_politico2 extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cursoKeyPressed
 
     private void lbarchivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbarchivoMouseClicked
+//        JFileChooser se = new JFileChooser();
+//        se.setFileSelectionMode(JFileChooser.FILES_ONLY);
+//        se.setFileFilter(new FileNameExtensionFilter("PNG Documents", "png"));
+//
+//        int estado = se.showOpenDialog(null);
+//        if (estado == JFileChooser.APPROVE_OPTION) {
+//            try {
+//                fis = new FileInputStream(se.getSelectedFile());
+//                this.longitudBytes = (int) se.getSelectedFile().length();
+//                File f = se.getSelectedFile();
+//                String extension = getExtension(f);
+//                System.out.printf(extension);
+//                if (!extension.equals("*.png")) {
+//                    JOptionPane.showInternalMessageDialog(this, "Error extension no valida\n Seleccione un archivo con extension .pdf", "Error ", JOptionPane.ERROR_MESSAGE);
+//                    fis = null;
+//                }
+//            } catch (FileNotFoundException ex) {
+//                JOptionPane.showMessageDialog(null, ex);
+//                //Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
+
         JFileChooser se = new JFileChooser();
         se.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        se.setFileFilter(new FileNameExtensionFilter("PNG Documents", "png"));
-
         int estado = se.showOpenDialog(null);
         if (estado == JFileChooser.APPROVE_OPTION) {
             try {
+
                 fis = new FileInputStream(se.getSelectedFile());
                 this.longitudBytes = (int) se.getSelectedFile().length();
-                File f = se.getSelectedFile();
-                String extension = getExtension(f);
-                System.out.printf(extension);
-                if (!extension.equals("*.png")) {
-                    JOptionPane.showInternalMessageDialog(this, "Error extension no valida\n Seleccione un archivo con extension .pdf", "Error ", JOptionPane.ERROR_MESSAGE);
-                    fis = null;
-                }
+
+                Image icono = ImageIO.read(se.getSelectedFile()).getScaledInstance(lbarchivo.getWidth(), lbarchivo.getHeight(), Image.SCALE_DEFAULT);
+                lbarchivo.setIcon(new ImageIcon(icono));
+                lbarchivo.updateUI();
+
             } catch (FileNotFoundException ex) {
-                JOptionPane.showMessageDialog(null, ex);
-                //Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+                ex.printStackTrace();
+            } catch (IOException ex) {
+                ex.printStackTrace();
             }
         }
     }//GEN-LAST:event_lbarchivoMouseClicked
