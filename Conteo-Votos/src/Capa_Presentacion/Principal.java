@@ -73,11 +73,11 @@ public class Principal extends javax.swing.JFrame {
         mvotos = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         musuario = new javax.swing.JMenuItem();
-        jMenu7 = new javax.swing.JMenu();
-        jMenuItem14 = new javax.swing.JMenuItem();
-        jMenuItem16 = new javax.swing.JMenuItem();
+        GestionarBD = new javax.swing.JMenu();
+        mbackup = new javax.swing.JMenuItem();
+        mrestaurarbackup = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        mresultados = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
 
@@ -179,7 +179,7 @@ public class Principal extends javax.swing.JFrame {
 
         mcandidatura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/group.png"))); // NOI18N
         mcandidatura.setText("Candidatura");
-        mcandidatura.setName("mcandidatura"); // NOI18N
+        mcandidatura.setName("Candidatura"); // NOI18N
         mcandidatura.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mcandidaturaActionPerformed(evt);
@@ -189,7 +189,7 @@ public class Principal extends javax.swing.JFrame {
 
         mpartido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/book_addresses.png"))); // NOI18N
         mpartido.setText("Pardido Politico");
-        mpartido.setName("Pardido Politico"); // NOI18N
+        mpartido.setName("Partido Politico"); // NOI18N
         mpartido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mpartidoActionPerformed(evt);
@@ -199,6 +199,7 @@ public class Principal extends javax.swing.JFrame {
 
         mcandidato.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/status_online.png"))); // NOI18N
         mcandidato.setText("Candidato");
+        mcandidato.setName("Candidato"); // NOI18N
         mcandidato.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mcandidatoActionPerformed(evt);
@@ -208,6 +209,7 @@ public class Principal extends javax.swing.JFrame {
 
         mmesa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/accept.png"))); // NOI18N
         mmesa.setText("Mesa de votación");
+        mmesa.setName("Mesa Votacion"); // NOI18N
         mmesa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mmesaActionPerformed(evt);
@@ -217,6 +219,7 @@ public class Principal extends javax.swing.JFrame {
 
         mcentro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/carrera.png"))); // NOI18N
         mcentro.setText("Centro Votación");
+        mcentro.setName("Centro Votacion"); // NOI18N
         mcentro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mcentroActionPerformed(evt);
@@ -226,6 +229,7 @@ public class Principal extends javax.swing.JFrame {
 
         mvotos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/application_form.png"))); // NOI18N
         mvotos.setText("Ingreso Votos");
+        mvotos.setName("Ingreso Votos"); // NOI18N
         mvotos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mvotosActionPerformed(evt);
@@ -243,7 +247,7 @@ public class Principal extends javax.swing.JFrame {
         musuario.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         musuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/login.png"))); // NOI18N
         musuario.setText("Usuario");
-        musuario.setName("Usuario Principal"); // NOI18N
+        musuario.setName("Usuario"); // NOI18N
         musuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 musuarioActionPerformed(evt);
@@ -251,35 +255,35 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu2.add(musuario);
 
-        jMenu7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/iconobackup.jpg"))); // NOI18N
-        jMenu7.setText("Gestionar Base de Datos");
-        jMenu7.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        jMenu7.setName("Gestionar BD Principal"); // NOI18N
+        GestionarBD.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/iconobackup.jpg"))); // NOI18N
+        GestionarBD.setText("Gestionar Base de Datos");
+        GestionarBD.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        GestionarBD.setName("Gestionar BD"); // NOI18N
 
-        jMenuItem14.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        jMenuItem14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/generarBK.png"))); // NOI18N
-        jMenuItem14.setText("Generar Backup");
-        jMenuItem14.setName("Generar Backup Principal"); // NOI18N
-        jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
+        mbackup.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        mbackup.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/generarBK.png"))); // NOI18N
+        mbackup.setText("Generar Backup");
+        mbackup.setName("Backup BD"); // NOI18N
+        mbackup.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem14ActionPerformed(evt);
+                mbackupActionPerformed(evt);
             }
         });
-        jMenu7.add(jMenuItem14);
+        GestionarBD.add(mbackup);
 
-        jMenuItem16.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        jMenuItem16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/restaurarBD.png"))); // NOI18N
-        jMenuItem16.setText("Restaurar Backup");
-        jMenuItem16.setName("Restaurar Backup Principal"); // NOI18N
-        jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
+        mrestaurarbackup.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        mrestaurarbackup.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/restaurarBD.png"))); // NOI18N
+        mrestaurarbackup.setText("Restaurar Backup");
+        mrestaurarbackup.setName("Backup Restaurar"); // NOI18N
+        mrestaurarbackup.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem16ActionPerformed(evt);
+                mrestaurarbackupActionPerformed(evt);
             }
         });
-        jMenuItem16.setVisible(false);
-        jMenu7.add(jMenuItem16);
+        mrestaurarbackup.setVisible(false);
+        GestionarBD.add(mrestaurarbackup);
 
-        jMenu2.add(jMenu7);
+        jMenu2.add(GestionarBD);
 
         jMenuBar1.add(jMenu2);
 
@@ -288,19 +292,19 @@ public class Principal extends javax.swing.JFrame {
         jMenu5.setText("Informes");
         jMenu5.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
 
-        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/calculator.png"))); // NOI18N
-        jMenuItem3.setText("Resultados Preliminares");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        mresultados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/calculator.png"))); // NOI18N
+        mresultados.setText("Resultados Preliminares");
+        mresultados.setName("Resultados Preliminares"); // NOI18N
+        mresultados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                mresultadosActionPerformed(evt);
             }
         });
-        jMenu5.add(jMenuItem3);
+        jMenu5.add(mresultados);
 
         jMenuBar1.add(jMenu5);
 
         jMenu4.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/help.png"))); // NOI18N
         jMenu4.setText("Ayuda");
         jMenu4.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
 
@@ -359,9 +363,9 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
+    private void mbackupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mbackupActionPerformed
         // TODO add your handling code here:
-        if (AccesoUsuario.AccesosUsuario(jMenuItem14.getName()) == true) {
+        if (AccesoUsuario.AccesosUsuario(mbackup.getName()) == true) {
             Backup frmBackup = new Backup();
             if (frmBackup == null) {
                 frmBackup = new Backup();
@@ -370,11 +374,11 @@ public class Principal extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "No tiene Acceso para realizar esta operación ");
         }
-    }//GEN-LAST:event_jMenuItem14ActionPerformed
+    }//GEN-LAST:event_mbackupActionPerformed
 
-    private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
+    private void mrestaurarbackupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mrestaurarbackupActionPerformed
         // TODO add your handling code here:
-        if (AccesoUsuario.AccesosUsuario(jMenuItem16.getName()) == true) {
+        if (AccesoUsuario.AccesosUsuario(mrestaurarbackup.getName()) == true) {
             RestaurarBackup frmRestaurarBackup = new RestaurarBackup();
             if (frmRestaurarBackup == null) {
                 frmRestaurarBackup = new RestaurarBackup();
@@ -383,7 +387,7 @@ public class Principal extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "No tiene Acceso para realizar esta operación ");
         }
-    }//GEN-LAST:event_jMenuItem16ActionPerformed
+    }//GEN-LAST:event_mrestaurarbackupActionPerformed
 
     private void mcandidaturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mcandidaturaActionPerformed
         // TODO add your handling code here:
@@ -400,7 +404,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void mpartidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mpartidoActionPerformed
         // TODO add your handling code here:
-        if (AccesoUsuario.AccesosUsuario(mcandidatura.getName()) == true) {
+        if (AccesoUsuario.AccesosUsuario(mpartido.getName()) == true) {
             Partido_politico form = new Partido_politico();
             if (form == null) {
                 form = new Partido_politico();
@@ -413,7 +417,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void mcandidatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mcandidatoActionPerformed
         // TODO add your handling code here:
-        if (AccesoUsuario.AccesosUsuario(mcandidatura.getName()) == true) {
+        if (AccesoUsuario.AccesosUsuario(mcandidato.getName()) == true) {
             Candidato form = new Candidato();
             if (form == null) {
                 form = new Candidato();
@@ -426,7 +430,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void mmesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mmesaActionPerformed
         // TODO add your handling code here:
-        if (AccesoUsuario.AccesosUsuario(mcandidatura.getName()) == true) {
+        if (AccesoUsuario.AccesosUsuario(mmesa.getName()) == true) {
             Mesa form = new Mesa();
             if (form == null) {
                 form = new Mesa();
@@ -439,7 +443,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void mcentroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mcentroActionPerformed
         // TODO add your handling code here:
-        if (AccesoUsuario.AccesosUsuario(mcandidatura.getName()) == true) {
+        if (AccesoUsuario.AccesosUsuario(mcentro.getName()) == true) {
             Centro form = new Centro();
             if (form == null) {
                 form = new Centro();
@@ -452,7 +456,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void mvotosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mvotosActionPerformed
         // TODO add your handling code here:
-        if (AccesoUsuario.AccesosUsuario(mcandidatura.getName()) == true) {
+        if (AccesoUsuario.AccesosUsuario(mvotos.getName()) == true) {
             Ingreso_Votos form = new Ingreso_Votos();
             if (form == null) {
                 form = new Ingreso_Votos();
@@ -463,9 +467,9 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_mvotosActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    private void mresultadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mresultadosActionPerformed
         // TODO add your handling code here:
-        if (AccesoUsuario.AccesosUsuario(jMenuItem3.getName()) == true) {
+        if (AccesoUsuario.AccesosUsuario(mresultados.getName()) == true) {
             Conteo_Votos form = new Conteo_Votos();
             if (form == null) {
                 form = new Conteo_Votos();
@@ -474,7 +478,7 @@ public class Principal extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "No tiene Acceso para realizar esta operación ");
         }
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    }//GEN-LAST:event_mresultadosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -494,30 +498,30 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu GestionarBD;
     public static javax.swing.JDesktopPane dp;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
-    private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
-    private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JMenuItem mbackup;
     private javax.swing.JMenuItem mcandidato;
     private javax.swing.JMenuItem mcandidatura;
     private javax.swing.JMenuItem mcentro;
     private javax.swing.JMenuItem mmesa;
     private javax.swing.JMenuItem mpartido;
+    private javax.swing.JMenuItem mrestaurarbackup;
+    private javax.swing.JMenuItem mresultados;
     private javax.swing.JMenuItem msalir;
     private javax.swing.JMenuItem musuario;
     private javax.swing.JMenuItem mvotos;

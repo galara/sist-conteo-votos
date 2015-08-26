@@ -37,7 +37,7 @@ CREATE TABLE `candidato` (
   CONSTRAINT `fk_candidato_municipio1` FOREIGN KEY (`municipio_idmunicipio`) REFERENCES `municipio` (`idmunicipio`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_candidato_partido1` FOREIGN KEY (`partido_idpartido`) REFERENCES `partido_politico` (`idpartido`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_candidato_puesto1` FOREIGN KEY (`puesto_idpuesto`) REFERENCES `puesto` (`idpuesto`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -46,7 +46,7 @@ CREATE TABLE `candidato` (
 
 LOCK TABLES `candidato` WRITE;
 /*!40000 ALTER TABLE `candidato` DISABLE KEYS */;
-INSERT INTO `candidato` VALUES (7,'C-7',2,5,1,1);
+INSERT INTO `candidato` VALUES (9,'VN-1',22,1,1,10),(10,'VN-10',22,2,1,10),(11,'VN-11',22,3,1,10),(12,'VN-12',22,4,1,10),(13,'VN-13',22,5,1,1),(14,'VN-14',22,5,1,2),(15,'VN-15',22,5,1,3),(16,'VN-16',22,5,1,4),(17,'VN-17',22,5,1,5),(18,'VN-18',22,5,1,6),(19,'VN-19',22,5,1,7),(20,'VN-20',22,5,1,8),(21,'VN-21',22,5,1,9),(22,'CCEO-22',1,1,1,10),(23,'C-23',2,1,1,10),(24,'C-24',3,5,1,1),(25,'EPG-25',4,5,1,1),(26,'C-26',2,5,1,2);
 /*!40000 ALTER TABLE `candidato` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -148,7 +148,7 @@ CREATE TABLE `menu` (
   `principal` varchar(45) DEFAULT NULL,
   `estado` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`idmenu`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -157,6 +157,7 @@ CREATE TABLE `menu` (
 
 LOCK TABLES `menu` WRITE;
 /*!40000 ALTER TABLE `menu` DISABLE KEYS */;
+INSERT INTO `menu` VALUES (1,'Candidatura','Menu Principal',1),(2,'Partido Politico','Menu Principal',1),(3,'Candidato','Menu Principal',1),(4,'Mesa Votacion','Menu Principal',1),(5,'Centro Votacion','Menu Principal',1),(6,'Ingreso Votos','Menu Principal',1),(7,'Resultados Preliminares','Menu Principal',1),(8,'Usuario','Menu Principal',1),(9,'Backup BD','Menu Principal',1),(10,'Backup Restaurar','Menu Principal',1),(11,'RETALHULEU','Ingreso Votos',1),(12,'SAN SEBASTIAN','Ingreso Votos',1),(13,'SANTA CRUZ MULUA','Ingreso Votos',1),(14,'SAN MARTÍN ZAPOTITLAN','Ingreso Votos',1),(15,'SAN FELIPE','Ingreso Votos',1),(16,'SAN ANDRES VILLA SECA','Ingreso Votos',1),(17,'CHAMPERICO','Ingreso Votos',1),(18,'NUEVO SAN CARLOS','Ingreso Votos',1),(19,'EL ASINTAL','Ingreso Votos',1);
 /*!40000 ALTER TABLE `menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -217,7 +218,7 @@ CREATE TABLE `municipio` (
 
 LOCK TABLES `municipio` WRITE;
 /*!40000 ALTER TABLE `municipio` DISABLE KEYS */;
-INSERT INTO `municipio` VALUES (1,'RETALHULEU',14,10236,10349,1,1),(2,'SAN SEBASTIAN',4,10350,10387,1,1),(3,'SANTA CRUZ MULUA',3,10388,10408,1,1),(4,'SAN MARTIN ZAPOTITLAN',4,10409,10428,1,1),(5,'SAN FELIPE',5,10445,10460,1,1),(6,'SAN ANDRES VILLA SECA',10,10461,10517,1,1),(7,'CHAMPERICO',6,10518,10565,1,1),(8,'NUEVO SAN CARLOS',7,10566,10621,1,1),(9,'EL ASINTAL',6,10637,10671,1,1),(10,'N/A',0,0,0,1,1);
+INSERT INTO `municipio` VALUES (1,'RETALHULEU',14,10236,10349,1,1),(2,'SAN SEBASTIAN',4,10350,10387,1,1),(3,'SANTA CRUZ MULUA',3,10388,10408,1,1),(4,'SAN MARTIN ZAPOTITLAN',4,10409,10428,1,1),(5,'SAN FELIPE',5,10445,10460,1,1),(6,'SAN ANDRES VILLA SECA',10,10461,10517,1,1),(7,'CHAMPERICO',6,10518,10565,1,1),(8,'NUEVO SAN CARLOS',7,10566,10621,1,1),(9,'EL ASINTAL',6,10637,10671,1,1),(10,'NACIONAL',0,0,0,1,1);
 /*!40000 ALTER TABLE `municipio` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -232,10 +233,9 @@ CREATE TABLE `partido_politico` (
   `idpartido` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(100) NOT NULL,
   `estado` tinyint(1) DEFAULT '0',
-  `fecharegistro` date DEFAULT NULL,
   PRIMARY KEY (`idpartido`),
   UNIQUE KEY `nombre_UNIQUE` (`nombre`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -244,7 +244,7 @@ CREATE TABLE `partido_politico` (
 
 LOCK TABLES `partido_politico` WRITE;
 /*!40000 ALTER TABLE `partido_politico` DISABLE KEYS */;
-INSERT INTO `partido_politico` VALUES (1,'COMITÉ CIVICO EL OJO',1,'2015-08-24'),(2,'CONVERGENCIA',1,'2015-08-24'),(3,'CREO',1,'2015-08-24'),(4,'ENCUNETRO POR GUATEMALA',1,'2015-08-24'),(5,'FCN',1,'2015-08-24'),(6,'FUERZA',1,'2015-08-24'),(7,'LIDER',1,'2015-08-24'),(8,'MILPA',1,'2015-08-24'),(9,'MNR',1,'2015-08-24'),(10,'MOVIMIENTO REFORMADOR',1,'2015-08-24'),(11,'NUEVA NACION',1,'2015-08-24'),(12,'PAN',1,'2015-08-24'),(13,'PARTICIPATIVO CIUDADANO',1,'2015-08-24'),(14,'PATRIOTA',1,'2015-08-24'),(15,'PRI',1,'2015-08-24'),(16,'PROYECTO PROGRESISTA',1,'2015-08-24'),(17,'TODOS',1,'2015-08-24'),(18,'UCN',1,'2015-08-24'),(19,'UNE',1,'2015-08-24'),(20,'VIVA',1,'2015-08-24'),(21,'WINAQ URNG',1,'2015-08-24');
+INSERT INTO `partido_politico` VALUES (1,'COMITÉ CIVICO EL OJO',1),(2,'CONVERGENCIA',1),(3,'CREO',1),(4,'ENCUNETRO POR GUATEMALA',1),(5,'FCN',1),(6,'FUERZA',1),(7,'LIDER',1),(8,'MILPA',1),(9,'MNR',1),(10,'MOVIMIENTO REFORMADOR',1),(11,'NUEVA NACION',1),(12,'PAN',1),(13,'PARTICIPATIVO CIUDADANO',1),(14,'PATRIOTA',1),(15,'PRI',1),(16,'PROYECTO PROGRESISTA',1),(17,'TODOS',1),(18,'UCN',1),(19,'UNE',1),(20,'VIVA',1),(21,'WINAQ URNG',1),(22,'VOTO NULO',1),(23,'VOTO BLANCO',1);
 /*!40000 ALTER TABLE `partido_politico` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -265,7 +265,7 @@ CREATE TABLE `perfilusuario` (
   KEY `fk_perfilusuario_usuario1_idx` (`usuario_idusuario`),
   CONSTRAINT `fk_perfilusuario_menu1` FOREIGN KEY (`menu_idmenu`) REFERENCES `menu` (`idmenu`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_perfilusuario_usuario1` FOREIGN KEY (`usuario_idusuario`) REFERENCES `usuario` (`idusuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=172 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -274,6 +274,7 @@ CREATE TABLE `perfilusuario` (
 
 LOCK TABLES `perfilusuario` WRITE;
 /*!40000 ALTER TABLE `perfilusuario` DISABLE KEYS */;
+INSERT INTO `perfilusuario` VALUES (1,1,4,0),(2,2,4,0),(3,3,4,0),(4,4,4,0),(5,5,4,0),(6,6,4,1),(7,7,4,0),(8,8,4,0),(9,9,4,0),(10,10,4,0),(11,11,4,1),(12,12,4,0),(13,13,4,0),(14,14,4,0),(15,15,4,0),(16,16,4,0),(17,17,4,0),(18,18,4,0),(19,19,4,0),(20,1,5,0),(21,2,5,0),(22,3,5,0),(23,4,5,0),(24,5,5,0),(25,6,5,1),(26,7,5,0),(27,8,5,0),(28,9,5,0),(29,10,5,0),(30,11,5,0),(31,12,5,1),(32,13,5,0),(33,14,5,0),(34,15,5,0),(35,16,5,0),(36,17,5,0),(37,18,5,0),(38,19,5,0),(39,1,6,0),(40,2,6,0),(41,3,6,0),(42,4,6,0),(43,5,6,0),(44,6,6,1),(45,7,6,0),(46,8,6,0),(47,9,6,0),(48,10,6,0),(49,11,6,0),(50,12,6,0),(51,13,6,1),(52,14,6,0),(53,15,6,0),(54,16,6,0),(55,17,6,0),(56,18,6,0),(57,19,6,0),(58,1,7,0),(59,2,7,0),(60,3,7,0),(61,4,7,0),(62,5,7,0),(63,6,7,1),(64,7,7,0),(65,8,7,0),(66,9,7,0),(67,10,7,0),(68,11,7,0),(69,12,7,0),(70,13,7,0),(71,14,7,1),(72,15,7,0),(73,16,7,0),(74,17,7,0),(75,18,7,0),(76,19,7,0),(77,1,8,0),(78,2,8,0),(79,3,8,0),(80,4,8,0),(81,5,8,0),(82,6,8,1),(83,7,8,0),(84,8,8,0),(85,9,8,0),(86,10,8,0),(87,11,8,0),(88,12,8,0),(89,13,8,0),(90,14,8,0),(91,15,8,1),(92,16,8,0),(93,17,8,0),(94,18,8,0),(95,19,8,0),(96,1,9,0),(97,2,9,0),(98,3,9,0),(99,4,9,0),(100,5,9,0),(101,6,9,1),(102,7,9,0),(103,8,9,0),(104,9,9,0),(105,10,9,0),(106,11,9,0),(107,12,9,0),(108,13,9,0),(109,14,9,0),(110,15,9,0),(111,16,9,1),(112,17,9,0),(113,18,9,0),(114,19,9,0),(115,1,10,0),(116,2,10,0),(117,3,10,0),(118,4,10,0),(119,5,10,0),(120,6,10,1),(121,7,10,0),(122,8,10,0),(123,9,10,0),(124,10,10,0),(125,11,10,0),(126,12,10,0),(127,13,10,0),(128,14,10,0),(129,15,10,0),(130,16,10,0),(131,17,10,1),(132,18,10,0),(133,19,10,0),(134,1,11,0),(135,2,11,0),(136,3,11,0),(137,4,11,0),(138,5,11,0),(139,6,11,1),(140,7,11,0),(141,8,11,0),(142,9,11,0),(143,10,11,0),(144,11,11,0),(145,12,11,0),(146,13,11,0),(147,14,11,0),(148,15,11,0),(149,16,11,0),(150,17,11,0),(151,18,11,1),(152,19,11,0),(153,1,12,0),(154,2,12,0),(155,3,12,0),(156,4,12,0),(157,5,12,0),(158,6,12,1),(159,7,12,0),(160,8,12,0),(161,9,12,0),(162,10,12,0),(163,11,12,0),(164,12,12,0),(165,13,12,0),(166,14,12,0),(167,15,12,0),(168,16,12,0),(169,17,12,0),(170,18,12,0),(171,19,12,1);
 /*!40000 ALTER TABLE `perfilusuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -291,7 +292,7 @@ CREATE TABLE `puesto` (
   `fecharegistro` date DEFAULT NULL,
   PRIMARY KEY (`idpuesto`),
   UNIQUE KEY `nombre_UNIQUE` (`nombre`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -300,7 +301,7 @@ CREATE TABLE `puesto` (
 
 LOCK TABLES `puesto` WRITE;
 /*!40000 ALTER TABLE `puesto` DISABLE KEYS */;
-INSERT INTO `puesto` VALUES (1,'Presidente',1,'2015-08-21'),(2,'Diputado Listado Nacianal',1,'2015-08-21'),(3,'Diputado Parlacen',1,'2015-08-21'),(4,'Diputado Distrital',1,'2015-08-21'),(5,'Alcalde',1,'2015-08-21'),(7,'Voto Nulo',1,'2015-08-21'),(8,'Voto Blanco',1,'2015-08-21');
+INSERT INTO `puesto` VALUES (1,'Presidente',1,'2015-08-21'),(2,'Diputado Listado Nacianal',1,'2015-08-21'),(3,'Diputado Parlacen',1,'2015-08-21'),(4,'Diputado Distrital',1,'2015-08-21'),(5,'Alcalde',1,'2015-08-21');
 /*!40000 ALTER TABLE `puesto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -322,7 +323,7 @@ CREATE TABLE `usuario` (
   PRIMARY KEY (`idusuario`),
   UNIQUE KEY `nombre_UNIQUE` (`nombre`),
   UNIQUE KEY `usuario_UNIQUE` (`usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -331,7 +332,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (4,'Administrador','12345678','Admin','admin2015',1,'2015-08-24');
+INSERT INTO `usuario` VALUES (1,'Administrador','123456','Admin1','admin12015',1,'2015-08-26'),(2,'Administrador2','123456','Admin2','admin22015',1,'2015-08-26'),(3,'Soporte Tecnico','123456','Admin3','admin32015',1,'2015-08-26'),(4,'RETALHULEU','123456','RETALHULEU','RETALHULEU',1,'2015-08-26'),(5,'SAN SEBASTIAN','123456','SANSEBASTIAN','SANSEBASTIAN',1,'2015-08-26'),(6,'SANTA CRUZ MULUA','123456','SANTACRUZ','SANTACRUZ',1,'2015-08-26'),(7,'SAN MARTÍN ZAPOTITLAN','123456','SANMARTIN','SANMARTIN',1,'2015-08-26'),(8,'SAN FELIPE','123456','SANFELIPE','SANFELIPE',1,'2015-08-26'),(9,'SAN ANDRES VILLA SECA','123456','SANANDRES','SANANDRES',1,'2015-08-26'),(10,'CHAMPERICO','123456','CHAMPERICO','CHAMPERICO',1,'2015-08-26'),(11,'NUEVO SAN CARLOS','123456','SANCARLOS','SANCARLOS',1,'2015-08-26'),(12,'EL ASINTAL','123456','ASINTAL','ASINTAL',1,'2015-08-26');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -344,4 +345,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-08-25  8:00:49
+-- Dump completed on 2015-08-26  9:03:32
