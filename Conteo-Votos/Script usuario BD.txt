@@ -1,0 +1,1 @@
+GRANT all ON votos.* TO pucho IDENTIFIED BY 'pucho';
