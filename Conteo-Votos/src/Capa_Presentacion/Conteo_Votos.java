@@ -428,16 +428,32 @@ public class Conteo_Votos extends javax.swing.JInternalFrame {
         if (cmunicipio.getSelectedIndex() == 0 || cmunicipio.getSelectedIndex() == -1) {
             //titulos2=titulos3;
             talcalde.setModel(model5 = new DefaultTableModel(null, titulos3));
-            String sql = "SELECT partido_politico.nombre, sum(detalle_votos.cant_votos) FROM candidato INNER JOIN detalle_votos ON candidato.idcandidato = detalle_votos.candidato_idcandidato INNER JOIN partido_politico ON candidato.partido_idpartido = partido_politico.idpartido INNER JOIN puesto ON candidato.puesto_idpuesto = puesto.idpuesto where puesto.nombre = 'Presidente' group by partido_politico.nombre order by candidato.idcandidato";
+            String sql = "SELECT partido_politico.nombre, sum(detalle_votos.cant_votos), (SELECT sum(detalle_votos.cant_votos) FROM candidato \n" +
+            "INNER JOIN detalle_votos ON candidato.idcandidato = detalle_votos.candidato_idcandidato \n" +
+            "INNER JOIN partido_politico ON candidato.partido_idpartido = partido_politico.idpartido \n" +
+            "INNER JOIN puesto ON candidato.puesto_idpuesto = puesto.idpuesto \n" +
+            "where puesto.nombre = 'Presidente' and partido_politico.nombre!='VOTO NULO' and partido_politico.nombre<>'VOTO BLANCO') as total FROM candidato INNER JOIN detalle_votos ON candidato.idcandidato = detalle_votos.candidato_idcandidato INNER JOIN partido_politico ON candidato.partido_idpartido = partido_politico.idpartido INNER JOIN puesto ON candidato.puesto_idpuesto = puesto.idpuesto where puesto.nombre = 'Presidente' group by partido_politico.nombre order by candidato.idcandidato";
             MostrarProductos(model, tpresidentes, sql);
             //Diputados1
-            String sql2 = "SELECT partido_politico.nombre, sum(detalle_votos.cant_votos) FROM candidato INNER JOIN detalle_votos ON candidato.idcandidato = detalle_votos.candidato_idcandidato INNER JOIN partido_politico ON candidato.partido_idpartido = partido_politico.idpartido INNER JOIN puesto ON candidato.puesto_idpuesto = puesto.idpuesto where puesto.nombre = 'Diputado Listado Nacianal' group by partido_politico.nombre order by candidato.idcandidato";
+            String sql2 = "SELECT partido_politico.nombre, sum(detalle_votos.cant_votos),(SELECT sum(detalle_votos.cant_votos) FROM candidato \n" +
+"INNER JOIN detalle_votos ON candidato.idcandidato = detalle_votos.candidato_idcandidato \n" +
+"INNER JOIN partido_politico ON candidato.partido_idpartido = partido_politico.idpartido \n" +
+"INNER JOIN puesto ON candidato.puesto_idpuesto = puesto.idpuesto \n" +
+"where puesto.nombre = 'Presidente' and partido_politico.nombre!='VOTO NULO' and partido_politico.nombre<>'VOTO BLANCO')as total FROM candidato INNER JOIN detalle_votos ON candidato.idcandidato = detalle_votos.candidato_idcandidato INNER JOIN partido_politico ON candidato.partido_idpartido = partido_politico.idpartido INNER JOIN puesto ON candidato.puesto_idpuesto = puesto.idpuesto where puesto.nombre = 'Diputado Listado Nacianal' group by partido_politico.nombre order by candidato.idcandidato";
             MostrarProductos(model2, tdiputados1, sql2);
             //Diputados2
-            String sql3 = "SELECT partido_politico.nombre, sum(detalle_votos.cant_votos) FROM candidato INNER JOIN detalle_votos ON candidato.idcandidato = detalle_votos.candidato_idcandidato INNER JOIN partido_politico ON candidato.partido_idpartido = partido_politico.idpartido INNER JOIN puesto ON candidato.puesto_idpuesto = puesto.idpuesto where puesto.nombre = 'Diputado Parlacen' group by partido_politico.nombre order by candidato.idcandidato";
+            String sql3 = "SELECT partido_politico.nombre, sum(detalle_votos.cant_votos),(SELECT sum(detalle_votos.cant_votos) FROM candidato \n" +
+"INNER JOIN detalle_votos ON candidato.idcandidato = detalle_votos.candidato_idcandidato \n" +
+"INNER JOIN partido_politico ON candidato.partido_idpartido = partido_politico.idpartido \n" +
+"INNER JOIN puesto ON candidato.puesto_idpuesto = puesto.idpuesto \n" +
+"where puesto.nombre = 'Presidente' and partido_politico.nombre!='VOTO NULO' and partido_politico.nombre<>'VOTO BLANCO')as total FROM candidato INNER JOIN detalle_votos ON candidato.idcandidato = detalle_votos.candidato_idcandidato INNER JOIN partido_politico ON candidato.partido_idpartido = partido_politico.idpartido INNER JOIN puesto ON candidato.puesto_idpuesto = puesto.idpuesto where puesto.nombre = 'Diputado Parlacen' group by partido_politico.nombre order by candidato.idcandidato";
             MostrarProductos(model3, tdiputados2, sql3);
             //Diputados3
-            String sql4 = "SELECT partido_politico.nombre, sum(detalle_votos.cant_votos) FROM candidato INNER JOIN detalle_votos ON candidato.idcandidato = detalle_votos.candidato_idcandidato INNER JOIN partido_politico ON candidato.partido_idpartido = partido_politico.idpartido INNER JOIN puesto ON candidato.puesto_idpuesto = puesto.idpuesto where puesto.nombre = 'Diputado Distrital' group by partido_politico.nombre order by candidato.idcandidato";
+            String sql4 = "SELECT partido_politico.nombre, sum(detalle_votos.cant_votos),(SELECT sum(detalle_votos.cant_votos) FROM candidato \n" +
+"INNER JOIN detalle_votos ON candidato.idcandidato = detalle_votos.candidato_idcandidato \n" +
+"INNER JOIN partido_politico ON candidato.partido_idpartido = partido_politico.idpartido \n" +
+"INNER JOIN puesto ON candidato.puesto_idpuesto = puesto.idpuesto \n" +
+"where puesto.nombre = 'Presidente' and partido_politico.nombre!='VOTO NULO' and partido_politico.nombre<>'VOTO BLANCO')as total FROM candidato INNER JOIN detalle_votos ON candidato.idcandidato = detalle_votos.candidato_idcandidato INNER JOIN partido_politico ON candidato.partido_idpartido = partido_politico.idpartido INNER JOIN puesto ON candidato.puesto_idpuesto = puesto.idpuesto where puesto.nombre = 'Diputado Distrital' group by partido_politico.nombre order by candidato.idcandidato";
             MostrarProductos(model4, tdiputados3, sql4);
 
 //                if (cmunicipio.getSelectedIndex() == 0 || cmunicipio.getSelectedIndex() == -1) {
@@ -529,9 +545,17 @@ public class Conteo_Votos extends javax.swing.JInternalFrame {
 
                 while (rs.next()) {//mientras tenga registros que haga lo siguiente
                     fila[0] = rs.getString(1);
-                    fila[1] = rs.getString(2);
-                    fila[2] = "0.0";//rs.getString(3);
-
+                    fila[1] = rs.getInt(2);
+                    if(rs.getString(1).equals("VOTO NULO") || rs.getString(1).equals("VOTO BLANCO")){
+                        fila[2]=null;
+                    }else{
+                    float i=Float.parseFloat(rs.getString(2));
+                    float j=Integer.parseInt(rs.getString(3));
+                    float o= ((i/j)*100);
+                    o=(float) (Math.round(o * 100.0) / 100.0);
+                    fila[2] = o;//((i/j)*100);/*"0.0";//*///rs.getInt(3);
+                    }
+                    
 //                    fila[3] = rs.getString(4);
 //                    //fila[4] = rs.getString(5);
 //                    //fila[5] = rs.getString(6);

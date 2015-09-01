@@ -152,11 +152,11 @@ public class Ingreso_Votos extends javax.swing.JInternalFrame {
 //                                    if (form == null) {
 //                                        form = new Cargo_politico();
 //                                    }
-                                   // AddForms.adminInternalFrame(dp, form);
+                                    // AddForms.adminInternalFrame(dp, form);
                                 } else {
                                     JOptionPane.showMessageDialog(this, "No tiene Acceso al Municipio Seleccionado");
                                 }
-                                
+
                                 //llenartablas();
                             }
                         } else {
@@ -227,9 +227,9 @@ public class Ingreso_Votos extends javax.swing.JInternalFrame {
         JCheckBox check = new JCheckBox();
         table.getColumnModel().getColumn(5).setCellEditor(new DefaultCellEditor(check));
         table.getColumnModel().getColumn(5).setCellRenderer(new Renderer_CheckBox());
-        CellEditorSpinnerPago cnt = new CellEditorSpinnerPago(1);
-        table.getColumnModel().getColumn(4).setCellEditor(cnt);
-        table.getColumnModel().getColumn(4).setCellRenderer(new TableCellFormatter(null));
+//        CellEditorSpinnerPago cnt = new CellEditorSpinnerPago(1);
+//        table.getColumnModel().getColumn(4).setCellEditor(cnt);
+//        table.getColumnModel().getColumn(4).setCellRenderer(new TableCellFormatter(null));
 
         modelo = getRegistroPorLikell(modelo, sql);
         Utilidades.ajustarAnchoColumnas(table);
@@ -278,8 +278,13 @@ public class Ingreso_Votos extends javax.swing.JInternalFrame {
                     //fila[4] = rs.getString(5);
                     //fila[5] = rs.getString(6);
                     //fila[6] = 0.0;
-                    fila[4] = Double.parseDouble(rs.getString(5));
-                    if (Double.parseDouble(rs.getString(5)) > 0) {
+                    if (rs.getString(5).equals("0.0")) {
+                        fila[4] = null;
+                    } else {
+                        fila[4] = (rs.getInt(5));
+                    }
+                    //fila[4] = Double.parseDouble(rs.getString(5));
+                    if (rs.getInt(5) > 0) {
                         fila[5] = true;
                     } else {
                         fila[5] = false;
@@ -835,21 +840,21 @@ public class Ingreso_Votos extends javax.swing.JInternalFrame {
                         if (modelo.getRowCount() != -1 || modelo.getRowCount() > 0) {
 
                             for (int i = 0; i < modelo.getRowCount(); i++) { //for pago de meses
-                                if (tabla.getValueAt(i, 5).toString().equals("false") && Float.parseFloat("" + tabla.getValueAt(i, 4)) > 0) {
+                                if (tabla.getValueAt(i, 5).toString().equals("false") && /*Float.parseFloat("" + tabla.getValueAt(i, 4)) > 0*/ tabla.getValueAt(i, 4) != null && !tabla.getValueAt(i, 4).toString().isEmpty()) {
                                     // String idcandidato = (String) "" + tabla.getValueAt(i, 0);
                                     String sql = "INSERT INTO detalle_votos (cant_votos, candidato_idcandidato, mesa_idmesa, usuario_idusuario) VALUES (?, ?, ?, ?)";
                                     ps = conn.prepareStatement(sql);
-                                    ps.setString(1, "" + tabla.getValueAt(i, 4));
+                                    ps.setInt(1, Integer.parseInt("" + tabla.getValueAt(i, 4)));
                                     ps.setInt(2, Integer.parseInt("" + tabla.getValueAt(i, 0)));
                                     ps.setInt(3, Integer.parseInt(idmesa));
                                     ps.setFloat(4, AccesoUsuario.getIdusuario());
                                     n = ps.executeUpdate();
 
-                                } else if (tabla.getValueAt(i, 5).toString().equals("true") && Float.parseFloat("" + tabla.getValueAt(i, 4)) > 0) {
+                                } else if (tabla.getValueAt(i, 5).toString().equals("true") && /*Float.parseFloat("" + tabla.getValueAt(i, 4)) > 0*/ tabla.getValueAt(i, 4) != null && !tabla.getValueAt(i, 4).toString().isEmpty()) {
                                     String idcandidato = (String) "" + tabla.getValueAt(i, 0);
                                     String sql2 = "update detalle_votos set  cant_votos=? where mesa_idmesa=" + idmesa + " and  candidato_idcandidato=" + idcandidato;
                                     ps = conn.prepareStatement(sql2);
-                                    ps.setString(1, "" + tabla.getValueAt(i, 4));
+                                    ps.setInt(1, Integer.parseInt("" + tabla.getValueAt(i, 4)));
                                     n = ps.executeUpdate();
                                 }
                             }//fin for pago de meses
