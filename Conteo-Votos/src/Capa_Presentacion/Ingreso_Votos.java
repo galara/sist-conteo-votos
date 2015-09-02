@@ -7,22 +7,16 @@ package Capa_Presentacion;
 import Capa_Datos.AccesoDatos;
 import Capa_Datos.BdConexion;
 import Capa_Negocio.AccesoUsuario;
-import Capa_Negocio.AddForms;
 import static Capa_Negocio.AddForms.adminInternalFrame;
-import Capa_Negocio.CellEditorSpinnerPago;
 import Capa_Negocio.Peticiones;
 import Capa_Negocio.Renderer_CheckBox;
-import Capa_Negocio.TableCellFormatter;
 import Capa_Negocio.Utilidades;
 import static Capa_Presentacion.Principal.dp;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Calendar;
-import java.util.Hashtable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
@@ -318,6 +312,21 @@ public class Ingreso_Votos extends javax.swing.JInternalFrame {
         //TipoFiltro.setFiltraEntrada(busqueda.getDocument(), FiltroCampos.NUM_LETRAS, 100, true);
     }
 
+//    /**
+//     * verifica si un Objetc es de tipo numerico
+//     *
+//     * @param valor
+//     * @return
+//     */
+//    public boolean esNumerico(Object valor) {
+//        if (valor instanceof Number) {
+//            JOptionPane.showMessageDialog(null, "true");
+//            return true;
+//        } else {
+//            JOptionPane.showMessageDialog(null, "false");
+//            return false;
+//        }
+//    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -842,20 +851,41 @@ public class Ingreso_Votos extends javax.swing.JInternalFrame {
                             for (int i = 0; i < modelo.getRowCount(); i++) { //for pago de meses
                                 if (tabla.getValueAt(i, 5).toString().equals("false") && /*Float.parseFloat("" + tabla.getValueAt(i, 4)) > 0*/ tabla.getValueAt(i, 4) != null && !tabla.getValueAt(i, 4).toString().isEmpty()) {
                                     // String idcandidato = (String) "" + tabla.getValueAt(i, 0);
-                                    String sql = "INSERT INTO detalle_votos (cant_votos, candidato_idcandidato, mesa_idmesa, usuario_idusuario) VALUES (?, ?, ?, ?)";
-                                    ps = conn.prepareStatement(sql);
-                                    ps.setInt(1, Integer.parseInt("" + tabla.getValueAt(i, 4)));
-                                    ps.setInt(2, Integer.parseInt("" + tabla.getValueAt(i, 0)));
-                                    ps.setInt(3, Integer.parseInt(idmesa));
-                                    ps.setFloat(4, AccesoUsuario.getIdusuario());
-                                    n = ps.executeUpdate();
+                                    //if (esNumerico(tabla.getValueAt(i, 4)) == true) {
+                                    try {
+                                        String sql = "INSERT INTO detalle_votos (cant_votos, candidato_idcandidato, mesa_idmesa, usuario_idusuario) VALUES (?, ?, ?, ?)";
+                                        ps = conn.prepareStatement(sql);
+                                        ps.setInt(1, Integer.parseInt("" + tabla.getValueAt(i, 4)));
+                                        ps.setInt(2, Integer.parseInt("" + tabla.getValueAt(i, 0)));
+                                        ps.setInt(3, Integer.parseInt(idmesa));
+                                        ps.setFloat(4, AccesoUsuario.getIdusuario());
+                                        n = ps.executeUpdate();
+                                    } catch (SQLException | NumberFormatException e) {
+                                        //JOptionPane.showMessageDialog(null, e.toString());
+                                        JOptionPane.showMessageDialog(null, "Verifique los datos ingreso un valor que no es un Número");
+                                    }
+                                   // } 
+                                    //else {
+                                    //        JOptionPane.showMessageDialog(null, "Verifique los datos ingreso un valor que no es un Número");
+                                    //    }
 
                                 } else if (tabla.getValueAt(i, 5).toString().equals("true") && /*Float.parseFloat("" + tabla.getValueAt(i, 4)) > 0*/ tabla.getValueAt(i, 4) != null && !tabla.getValueAt(i, 4).toString().isEmpty()) {
-                                    String idcandidato = (String) "" + tabla.getValueAt(i, 0);
-                                    String sql2 = "update detalle_votos set  cant_votos=? where mesa_idmesa=" + idmesa + " and  candidato_idcandidato=" + idcandidato;
-                                    ps = conn.prepareStatement(sql2);
-                                    ps.setInt(1, Integer.parseInt("" + tabla.getValueAt(i, 4)));
-                                    n = ps.executeUpdate();
+                                    //if (esNumerico(tabla.getValueAt(i, 4)) == true) {
+                                    try {
+                                        String idcandidato = (String) "" + tabla.getValueAt(i, 0);
+                                        String sql2 = "update detalle_votos set  cant_votos=? where mesa_idmesa=" + idmesa + " and  candidato_idcandidato=" + idcandidato;
+                                        ps = conn.prepareStatement(sql2);
+                                        ps.setInt(1, Integer.parseInt("" + tabla.getValueAt(i, 4)));
+                                        n = ps.executeUpdate();
+                                    } catch (SQLException | NumberFormatException e) {
+                                        //JOptionPane.showMessageDialog(null, e.toString());
+                                        JOptionPane.showMessageDialog(null, "Verifique los datos ingreso un valor que no es un Número");
+                                    }
+                                  //  } 
+                                    //else {
+                                    // JOptionPane.showMessageDialog(null, "Verifique los datos ingreso un valor que no es un Número");
+                                    // }
+
                                 }
                             }//fin for pago de meses
                         }
@@ -880,7 +910,8 @@ public class Ingreso_Votos extends javax.swing.JInternalFrame {
                             conn.setAutoCommit(true);
                         }
                     } catch (SQLException ex1) {
-                        Logger.getLogger(Ingreso_Votos.class.getName()).log(Level.SEVERE, null, ex1);
+                        //Logger.getLogger(Ingreso_Votos.class.getName()).log(Level.SEVERE, null, ex1);
+                        JOptionPane.showMessageDialog(null, ex1);
                     }
                     JOptionPane.showMessageDialog(null, ex);
                 }
