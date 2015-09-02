@@ -367,7 +367,7 @@ public class Conteo_Votos extends javax.swing.JInternalFrame {
                     + "INNER JOIN puesto ON candidato.puesto_idpuesto = puesto.idpuesto \n"
                     + "INNER JOIN municipio ON centro.municipio_idmunicipio = municipio.idmunicipio \n"
                     + "where puesto.nombre = 'Alcalde' and municipio.nombre='" + tabla + "' and partido_politico.nombre!='VOTO NULO' and partido_politico.nombre<>'VOTO BLANCO' group by municipio.nombre order by candidato.idcandidato";
-            System.out.print(sqll + "\n\n");
+            //System.out.print(sqll + "\n\n");
             ResultSet rs;
 
             rs = acceso.getRegistroProc(sqll);
