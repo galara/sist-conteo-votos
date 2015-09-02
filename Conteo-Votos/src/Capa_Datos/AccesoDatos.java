@@ -485,6 +485,7 @@ public class AccesoDatos {
      */
     public ResultSet getRegistroProc(String table) {
         sql = table;
+        //System.out.print(table+"\n\n\n");
         try {
             rs = BdConexion.getResultSet(sql);
         } catch (Exception ex) {

@@ -356,65 +356,82 @@ public class Conteo_Votos extends javax.swing.JInternalFrame {
 //     * ejem: campocondicion = condicionid
 //     * @return
 //     */
-//    public DefaultTableModel getRegistroPorLikel(DefaultTableModel modelo, String tabla) {
-//        try {
-//
-//            ResultSet rs;
-//
-//            rs = acceso.getRegistroProc(tabla);
-//            int cantcampos = 9;
-//            //if (rs != null) {
-//            if (rs.next()) {//verifica si esta vacio, pero desplaza el puntero al siguiente elemento
-//                //int count = 0;
-//                rs.beforeFirst();//regresa el puntero al primer registro
-//                Object[] fila = new Object[cantcampos + 1];
-//
-//                while (rs.next()) {//mientras tenga registros que haga lo siguiente
-//                    // Se rellena cada posición del array con una de las columnas de la tabla en base de datos.
-//                    for (int i = 0; i < cantcampos - 2; i++) {
-//
-//                        fila[i] = rs.getObject(i + 1); // El primer indice en rs es el 1, no el cero, por eso se suma 1.
-//                        if (i == 4) {
-//                            float monto = (float) rs.getObject(i + 1);
-//                            //float cbeca = Float.parseFloat(beca.getText());
-//                            float resultado = (float) (Math.round((monto) * 100.0) / 100.0);
-//                            fila[i] = resultado;
-//                        }
-//                        if (i == 6) {
-//                            if (fila[i] == "0.0") {
-//                                fila[i] = "0.0";
-//                            } else {
-//                                float mora = (float) rs.getFloat(i + 1);
-//                                float resultado = (float) (Math.round(mora * 100.0) / 100.0);
-//                                fila[i] = resultado;
-//                            }
-//                        }
-//                        if (fila[i] == null) {
-//                            fila[i] = "";
-//                        } else {
-//                        }
-//                    }
-//                    fila[7] = (float) (Math.round(((float) fila[4] + ((float) fila[6])) * 100.0) / 100.0);
-//                    if (((float) fila[6] == 0.0)) {
-//                        fila[8] = false;
-//                    } else {
-//                        fila[8] = true;
-//                    }
-//                    fila[9] = false;
-//                    modelo.addRow(fila);
-//                }
-//
-//            } //} 
-//            else {
-//                // JOptionPane.showMessageDialog(null, "No se encontraron datos para la busqueda", "Mensage", JOptionPane.INFORMATION_MESSAGE);
-//            }
-//            rs.close();
-//            return modelo;
-//        } catch (SQLException ex) {
-//            JOptionPane.showMessageDialog(null, "Ocurrio un Error :" + ex, "Error", JOptionPane.ERROR_MESSAGE);
-//            return null;
-//        }
-//    }
+    public float getAlcalde(String tabla) {
+        float cantvotos = 0;
+        try {
+            String sqll = "SELECT municipio.nombre,SUM(detalle_votos.cant_votos) AS votos\n"
+                    + "FROM mesa INNER JOIN detalle_votos ON mesa.idmesa = detalle_votos.mesa_idmesa \n"
+                    + "INNER JOIN centro ON mesa.centro_idcentro = centro.idcentro\n"
+                    + "INNER JOIN candidato candidato ON detalle_votos.candidato_idcandidato = candidato.idcandidato \n"
+                    + "INNER JOIN partido_politico ON candidato.partido_idpartido = partido_politico.idpartido \n"
+                    + "INNER JOIN puesto ON candidato.puesto_idpuesto = puesto.idpuesto \n"
+                    + "INNER JOIN municipio ON centro.municipio_idmunicipio = municipio.idmunicipio \n"
+                    + "where puesto.nombre = 'Alcalde' and municipio.nombre='" + tabla + "' and partido_politico.nombre!='VOTO NULO' and partido_politico.nombre<>'VOTO BLANCO' group by municipio.nombre order by candidato.idcandidato";
+            System.out.print(sqll + "\n\n");
+            ResultSet rs;
+
+            rs = acceso.getRegistroProc(sqll);
+            //int cantcampos = 2;
+
+            if (rs != null) {
+                if (rs.next()) {//verifica si esta vacio, pero desplaza el puntero al siguiente elemento
+                    //int count = 0;
+                    rs.beforeFirst();//regresa el puntero al primer registro
+                    //Object[] fila = new Object[cantcampos];
+                    while (rs.next()) {//mientras tenga registros que haga lo siguiente
+                        //rs.getString(1);
+                        cantvotos = Float.parseFloat((rs.getString(2)));
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontraron datos para la busqueda", "Error", JOptionPane.INFORMATION_MESSAGE);
+            }
+
+            rs.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Ocurrio un Error :" + ex, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return cantvotos;
+    }
+
+    public float getGeneral(String puesto, String municipio) {
+        float cantvotos = 0;
+        try {
+            String sqll = "SELECT municipio.nombre,SUM(detalle_votos.cant_votos) AS votos\n"
+                    + "FROM mesa INNER JOIN detalle_votos ON mesa.idmesa = detalle_votos.mesa_idmesa \n"
+                    + "INNER JOIN centro ON mesa.centro_idcentro = centro.idcentro\n"
+                    + "INNER JOIN candidato candidato ON detalle_votos.candidato_idcandidato = candidato.idcandidato \n"
+                    + "INNER JOIN partido_politico ON candidato.partido_idpartido = partido_politico.idpartido \n"
+                    + "INNER JOIN puesto ON candidato.puesto_idpuesto = puesto.idpuesto \n"
+                    + "INNER JOIN municipio ON centro.municipio_idmunicipio = municipio.idmunicipio \n"
+                    + "where puesto.nombre = '" + puesto + "' and municipio.nombre='" + municipio + "' and partido_politico.nombre!='VOTO NULO' and partido_politico.nombre<>'VOTO BLANCO' group by municipio.nombre order by candidato.idcandidato";
+            System.out.print(sqll + "\n\n");
+            ResultSet rs;
+
+            rs = acceso.getRegistroProc(sqll);
+            //int cantcampos = 2;
+
+            if (rs != null) {
+                if (rs.next()) {//verifica si esta vacio, pero desplaza el puntero al siguiente elemento
+                    //int count = 0;
+                    rs.beforeFirst();//regresa el puntero al primer registro
+                    //Object[] fila = new Object[cantcampos];
+                    while (rs.next()) {//mientras tenga registros que haga lo siguiente
+                        //rs.getString(1);
+                        cantvotos = Float.parseFloat((rs.getString(2)));
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontraron datos para la busqueda", "Error", JOptionPane.INFORMATION_MESSAGE);
+            }
+
+            rs.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Ocurrio un Error :" + ex, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return cantvotos;
+    }
+
     private void llenartablas() {
 
         removejtable2(model, tpresidentes);
@@ -464,7 +481,7 @@ public class Conteo_Votos extends javax.swing.JInternalFrame {
             MMunicipio municip = (MMunicipio) cmunicipio.getSelectedItem();
             String idmun = municip.getID();
             //String sql5 = "SELECT partido_politico.nombre, sum(detalle_votos.cant_votos) FROM candidato INNER JOIN detalle_votos ON candidato.idcandidato = detalle_votos.candidato_idcandidato INNER JOIN partido_politico ON candidato.partido_idpartido = partido_politico.idpartido INNER JOIN puesto ON candidato.puesto_idpuesto = puesto.idpuesto where puesto.nombre = 'Alcalde' and candidato.municipio_idmunicipio=" + idmun + " group by partido_politico.nombre";
-            String sql5 = "SELECT municipio.nombre,partido_politico.nombre,SUM(detalle_votos.cant_votos) AS votos  FROM mesa INNER JOIN detalle_votos ON mesa.idmesa = detalle_votos.mesa_idmesa INNER JOIN centro ON mesa.centro_idcentro = centro.idcentro\n"
+            String sql5 = "SELECT municipio.nombre,partido_politico.nombre,SUM(detalle_votos.cant_votos) AS votos FROM mesa INNER JOIN detalle_votos ON mesa.idmesa = detalle_votos.mesa_idmesa INNER JOIN centro ON mesa.centro_idcentro = centro.idcentro\n"
                     + "INNER JOIN candidato candidato ON detalle_votos.candidato_idcandidato = candidato.idcandidato INNER JOIN partido_politico ON candidato.partido_idpartido = partido_politico.idpartido INNER JOIN puesto ON candidato.puesto_idpuesto = puesto.idpuesto INNER JOIN municipio ON centro.municipio_idmunicipio = municipio.idmunicipio where puesto.nombre = 'Alcalde' group by partido_politico.nombre order by candidato.idcandidato";
             MostrarProductos2(model5, talcalde, sql5);
 
@@ -474,24 +491,24 @@ public class Conteo_Votos extends javax.swing.JInternalFrame {
             String idmun = municip.getID();
             talcalde.setModel(model5 = new DefaultTableModel(null, titulos2));
             //String sql = "SELECT partido_politico.nombre, sum(detalle_votos.cant_votos) FROM candidato INNER JOIN detalle_votos ON candidato.idcandidato = detalle_votos.candidato_idcandidato INNER JOIN partido_politico ON candidato.partido_idpartido = partido_politico.idpartido INNER JOIN puesto ON candidato.puesto_idpuesto = puesto.idpuesto where puesto.nombre = 'Presidente' group by partido_politico.nombre";
-            String sql = "SELECT partido_politico.nombre,SUM(detalle_votos.cant_votos) AS votos FROM mesa INNER JOIN detalle_votos ON mesa.idmesa = detalle_votos.mesa_idmesa INNER JOIN centro ON mesa.centro_idcentro = centro.idcentro\n"
+            String sql = "SELECT partido_politico.nombre,SUM(detalle_votos.cant_votos) AS votos,puesto.nombre FROM mesa INNER JOIN detalle_votos ON mesa.idmesa = detalle_votos.mesa_idmesa INNER JOIN centro ON mesa.centro_idcentro = centro.idcentro\n"
                     + "INNER JOIN candidato candidato ON detalle_votos.candidato_idcandidato = candidato.idcandidato INNER JOIN partido_politico ON candidato.partido_idpartido = partido_politico.idpartido INNER JOIN puesto ON candidato.puesto_idpuesto = puesto.idpuesto INNER JOIN municipio ON centro.municipio_idmunicipio = municipio.idmunicipio where puesto.nombre = 'Presidente' and centro.municipio_idmunicipio=" + idmun + " group by partido_politico.nombre order by candidato.idcandidato";
-            MostrarProductos(model, tpresidentes, sql);
+            MostrarProductos3(model, tpresidentes, sql);
             //Diputados1
             //String sql2 = "SELECT partido_politico.nombre, sum(detalle_votos.cant_votos) FROM candidato INNER JOIN detalle_votos ON candidato.idcandidato = detalle_votos.candidato_idcandidato INNER JOIN partido_politico ON candidato.partido_idpartido = partido_politico.idpartido INNER JOIN puesto ON candidato.puesto_idpuesto = puesto.idpuesto where puesto.nombre = 'Diputado Listado Nacianal' group by partido_politico.nombre";
-            String sql2 = "SELECT partido_politico.nombre,SUM(detalle_votos.cant_votos) AS votos FROM mesa INNER JOIN detalle_votos ON mesa.idmesa = detalle_votos.mesa_idmesa INNER JOIN centro ON mesa.centro_idcentro = centro.idcentro\n"
+            String sql2 = "SELECT partido_politico.nombre,SUM(detalle_votos.cant_votos) AS votos,puesto.nombre FROM mesa INNER JOIN detalle_votos ON mesa.idmesa = detalle_votos.mesa_idmesa INNER JOIN centro ON mesa.centro_idcentro = centro.idcentro\n"
                     + "INNER JOIN candidato candidato ON detalle_votos.candidato_idcandidato = candidato.idcandidato INNER JOIN partido_politico ON candidato.partido_idpartido = partido_politico.idpartido INNER JOIN puesto ON candidato.puesto_idpuesto = puesto.idpuesto INNER JOIN municipio ON centro.municipio_idmunicipio = municipio.idmunicipio where puesto.nombre = 'Diputado Listado Nacianal' and centro.municipio_idmunicipio=" + idmun + " group by partido_politico.nombre order by candidato.idcandidato";
-            MostrarProductos(model2, tdiputados1, sql2);
+            MostrarProductos3(model2, tdiputados1, sql2);
             //Diputados2
             //String sql3 = "SELECT partido_politico.nombre, sum(detalle_votos.cant_votos) FROM candidato INNER JOIN detalle_votos ON candidato.idcandidato = detalle_votos.candidato_idcandidato INNER JOIN partido_politico ON candidato.partido_idpartido = partido_politico.idpartido INNER JOIN puesto ON candidato.puesto_idpuesto = puesto.idpuesto where puesto.nombre = 'Diputado Parlacen' group by partido_politico.nombre";
-            String sql3 = "SELECT partido_politico.nombre,SUM(detalle_votos.cant_votos) AS votos FROM mesa INNER JOIN detalle_votos ON mesa.idmesa = detalle_votos.mesa_idmesa INNER JOIN centro ON mesa.centro_idcentro = centro.idcentro\n"
+            String sql3 = "SELECT partido_politico.nombre,SUM(detalle_votos.cant_votos) AS votos,puesto.nombre FROM mesa INNER JOIN detalle_votos ON mesa.idmesa = detalle_votos.mesa_idmesa INNER JOIN centro ON mesa.centro_idcentro = centro.idcentro\n"
                     + "INNER JOIN candidato candidato ON detalle_votos.candidato_idcandidato = candidato.idcandidato INNER JOIN partido_politico ON candidato.partido_idpartido = partido_politico.idpartido INNER JOIN puesto ON candidato.puesto_idpuesto = puesto.idpuesto INNER JOIN municipio ON centro.municipio_idmunicipio = municipio.idmunicipio where puesto.nombre = 'Diputado Parlacen' and centro.municipio_idmunicipio=" + idmun + " group by partido_politico.nombre order by candidato.idcandidato";
-            MostrarProductos(model3, tdiputados2, sql3);
+            MostrarProductos3(model3, tdiputados2, sql3);
             //Diputados3
             //String sql4 = "SELECT partido_politico.nombre, sum(detalle_votos.cant_votos) FROM candidato INNER JOIN detalle_votos ON candidato.idcandidato = detalle_votos.candidato_idcandidato INNER JOIN partido_politico ON candidato.partido_idpartido = partido_politico.idpartido INNER JOIN puesto ON candidato.puesto_idpuesto = puesto.idpuesto where puesto.nombre = 'Diputado Distrital' group by partido_politico.nombre";
-            String sql4 = "SELECT partido_politico.nombre,SUM(detalle_votos.cant_votos) AS votos FROM mesa INNER JOIN detalle_votos ON mesa.idmesa = detalle_votos.mesa_idmesa INNER JOIN centro ON mesa.centro_idcentro = centro.idcentro\n"
+            String sql4 = "SELECT partido_politico.nombre,SUM(detalle_votos.cant_votos) AS votos,puesto.nombre FROM mesa INNER JOIN detalle_votos ON mesa.idmesa = detalle_votos.mesa_idmesa INNER JOIN centro ON mesa.centro_idcentro = centro.idcentro\n"
                     + "INNER JOIN candidato candidato ON detalle_votos.candidato_idcandidato = candidato.idcandidato INNER JOIN partido_politico ON candidato.partido_idpartido = partido_politico.idpartido INNER JOIN puesto ON candidato.puesto_idpuesto = puesto.idpuesto INNER JOIN municipio ON centro.municipio_idmunicipio = municipio.idmunicipio where puesto.nombre = 'Diputado Distrital' and centro.municipio_idmunicipio=" + idmun + " group by partido_politico.nombre order by candidato.idcandidato";
-            MostrarProductos(model4, tdiputados3, sql4);
+            MostrarProductos3(model4, tdiputados3, sql4);
 
 //                if (cmunicipio.getSelectedIndex() == 0 || cmunicipio.getSelectedIndex() == -1) {
 //                    JOptionPane.showMessageDialog(null, "Debe seleccionar un Municipio para ver resultado de Alcalde");
@@ -500,8 +517,8 @@ public class Conteo_Votos extends javax.swing.JInternalFrame {
             //Alcalde
 //                    MMunicipio municip = (MMunicipio) cmunicipio.getSelectedItem();
 //                    String idmun = municip.getID();
-            String sql5 = "SELECT partido_politico.nombre, sum(detalle_votos.cant_votos) FROM candidato INNER JOIN detalle_votos ON candidato.idcandidato = detalle_votos.candidato_idcandidato INNER JOIN partido_politico ON candidato.partido_idpartido = partido_politico.idpartido INNER JOIN puesto ON candidato.puesto_idpuesto = puesto.idpuesto where puesto.nombre = 'Alcalde' and candidato.municipio_idmunicipio=" + idmun + " group by partido_politico.nombre order by candidato.idcandidato";
-            MostrarProductos(model5, talcalde, sql5);
+            String sql5 = "SELECT partido_politico.nombre, sum(detalle_votos.cant_votos),puesto.nombre FROM candidato INNER JOIN detalle_votos ON candidato.idcandidato = detalle_votos.candidato_idcandidato INNER JOIN partido_politico ON candidato.partido_idpartido = partido_politico.idpartido INNER JOIN puesto ON candidato.puesto_idpuesto = puesto.idpuesto where puesto.nombre = 'Alcalde' and candidato.municipio_idmunicipio=" + idmun + " group by partido_politico.nombre order by candidato.idcandidato";
+            MostrarProductos3(model5, talcalde, sql5);
             //}
         }
 //        } else {
@@ -581,6 +598,74 @@ public class Conteo_Votos extends javax.swing.JInternalFrame {
         }
     }
 
+    private void MostrarProductos3(DefaultTableModel modelo, JTable table, String sql) {
+        removejtable2(modelo, table);
+        modelo = getRegistroPorLikell3(modelo, sql);
+        Utilidades.ajustarAnchoColumnas(table);
+    }
+
+    /**
+     * Para una condicion WHERE condicionid LIKE '% campocondicion' * @param
+     * modelo ,modelo de la JTable
+     *
+     * @param tabla , el nombre de la tabla a consultar en la BD
+     * @param campocondicion , los campos de la tabla para las condiciones ejem:
+     * id,estado etc
+     * @return
+     */
+    public DefaultTableModel getRegistroPorLikell3(DefaultTableModel modelo, String tabla) {
+        try {
+
+            ResultSet rs;
+
+            rs = acceso.getRegistroProc(tabla);
+            int cantcampos = 6;
+            //if (rs != null) {
+            if (rs.next()) {//verifica si esta vacio, pero desplaza el puntero al siguiente elemento
+                //int count = 0;
+                rs.beforeFirst();//regresa el puntero al primer registro
+                Object[] fila = new Object[cantcampos];
+
+                while (rs.next()) {//mientras tenga registros que haga lo siguiente
+                    fila[0] = rs.getString(1);
+                    fila[1] = rs.getInt(2);
+                    if (rs.getString(1).equals("VOTO NULO") || rs.getString(1).equals("VOTO BLANCO")) {
+                        fila[2] = "0";
+                    } else {
+                        float i = Float.parseFloat(rs.getString(2));
+                        MMunicipio municip = (MMunicipio) cmunicipio.getSelectedItem();
+                        String idmun = municip.toString();
+                        float j = getGeneral(rs.getString(3), idmun);//Integer.parseInt(rs.getString(3));
+                        float o = ((i / j) * 100);
+                        o = (float) (Math.round(o * 100.0) / 100.0);
+                        fila[2] = o;//((i/j)*100);/*"0.0";//*///rs.getInt(3);
+                    }
+
+//                    fila[3] = rs.getString(4);
+//                    //fila[4] = rs.getString(5);
+//                    //fila[5] = rs.getString(6);
+//                    //fila[6] = 0.0;
+//                    fila[4] = Double.parseDouble(rs.getString(5));
+//                    if (Double.parseDouble(rs.getString(5)) > 0) {
+//                        fila[5] = true;
+//                    } else {
+//                        fila[5] = false;
+//                    }
+                    modelo.addRow(fila);
+                }
+
+            } //} 
+            else {
+                // JOptionPane.showMessageDialog(null, "No se encontraron datos para la busqueda", "Mensage", JOptionPane.INFORMATION_MESSAGE);
+            }
+            rs.close();
+            return modelo;
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Ocurrio un Error :" + ex, "Error", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+    }
+
     private void MostrarProductos2(DefaultTableModel modelo, JTable table, String sql) {
         removejtable2(modelo, table);
         modelo = getRegistroPorLikell2(modelo, sql);
@@ -614,12 +699,13 @@ public class Conteo_Votos extends javax.swing.JInternalFrame {
                     fila[1] = rs.getString(2);
                     fila[2] = rs.getString(3);
                     //fila[3] = "0.0";//rs.getString(3);
-                    
+
                     if (rs.getString(2).equals("VOTO NULO") || rs.getString(2).equals("VOTO BLANCO")) {
                         fila[3] = "0";
                     } else {
                         float i = Float.parseFloat(rs.getString(3));
-                        float j = Integer.parseInt(rs.getString(3));//modificar por el total
+                        float j = getAlcalde(rs.getString(1));
+                        //float j = Integer.parseInt(rs.getString(4));//modificar por el total
                         float o = ((i / j) * 100);
                         o = (float) (Math.round(o * 100.0) / 100.0);
                         fila[3] = o;//((i/j)*100);/*"0.0";//*///rs.getInt(3);
