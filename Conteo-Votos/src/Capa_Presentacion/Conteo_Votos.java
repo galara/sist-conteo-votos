@@ -10,15 +10,20 @@ import Capa_Negocio.Utilidades;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.KeyEvent;
+import java.awt.print.PrinterException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.MessageFormat;
 import java.util.Hashtable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.JTable.PrintMode;
 import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableModel;
 import modelos.MMunicipio;
@@ -55,6 +60,7 @@ public class Conteo_Votos extends javax.swing.JInternalFrame {
         initComponents();
         setFiltroTexto();
         addEscapeKey();
+        
         //llenarcombopuesto();
         llenarcombomunicipio();
 
@@ -105,12 +111,14 @@ public class Conteo_Votos extends javax.swing.JInternalFrame {
             jLabel10.setVisible(false);
             cmunicipio.setEnabled(false);
             cmunicipio.setEditable(false);
+            llenartablas();
         } else {
             cmunicipio.setSelectedIndex(0);
             cmunicipio.setVisible(true);
             jLabel10.setVisible(true);
             cmunicipio.setEnabled(true);
             cmunicipio.setEditable(true);
+            llenartablas();
         }
 
     }
@@ -136,6 +144,7 @@ public class Conteo_Votos extends javax.swing.JInternalFrame {
         removejtable2(model4, tdiputados3);
         removejtable2(model4, tdiputados3);
         removejtable2(model5, talcalde);
+        jButton1.setEnabled(false);
     }
 
 //    /*
@@ -405,7 +414,7 @@ public class Conteo_Votos extends javax.swing.JInternalFrame {
                     + "INNER JOIN puesto ON candidato.puesto_idpuesto = puesto.idpuesto \n"
                     + "INNER JOIN municipio ON centro.municipio_idmunicipio = municipio.idmunicipio \n"
                     + "where puesto.nombre = '" + puesto + "' and municipio.nombre='" + municipio + "' and partido_politico.nombre!='VOTO NULO' and partido_politico.nombre<>'VOTO BLANCO' group by municipio.nombre order by candidato.idcandidato";
-            System.out.print(sqll + "\n\n");
+            //System.out.print(sqll + "\n\n");
             ResultSet rs;
 
             rs = acceso.getRegistroProc(sqll);
@@ -440,6 +449,7 @@ public class Conteo_Votos extends javax.swing.JInternalFrame {
         removejtable2(model4, tdiputados3);
         removejtable2(model4, tdiputados3);
         removejtable2(model5, talcalde);
+        jButton1.setEnabled(false);
 
         //if (cmunicipio.getSelectedIndex() == 0 || cmunicipio.getSelectedIndex() == -1/*idmesa != null || !codigomesa.getText().isEmpty()*/) {
         if (cmunicipio.getSelectedIndex() == 0 || cmunicipio.getSelectedIndex() == -1) {
@@ -484,7 +494,7 @@ public class Conteo_Votos extends javax.swing.JInternalFrame {
             String sql5 = "SELECT municipio.nombre,partido_politico.nombre,SUM(detalle_votos.cant_votos) AS votos FROM mesa INNER JOIN detalle_votos ON mesa.idmesa = detalle_votos.mesa_idmesa INNER JOIN centro ON mesa.centro_idcentro = centro.idcentro\n"
                     + "INNER JOIN candidato candidato ON detalle_votos.candidato_idcandidato = candidato.idcandidato INNER JOIN partido_politico ON candidato.partido_idpartido = partido_politico.idpartido INNER JOIN puesto ON candidato.puesto_idpuesto = puesto.idpuesto INNER JOIN municipio ON centro.municipio_idmunicipio = municipio.idmunicipio where puesto.nombre = 'Alcalde' group by partido_politico.nombre order by candidato.idcandidato";
             MostrarProductos2(model5, talcalde, sql5);
-
+            jButton1.setEnabled(true);
             //}
         } else {
             MMunicipio municip = (MMunicipio) cmunicipio.getSelectedItem();
@@ -519,6 +529,7 @@ public class Conteo_Votos extends javax.swing.JInternalFrame {
 //                    String idmun = municip.getID();
             String sql5 = "SELECT partido_politico.nombre, sum(detalle_votos.cant_votos),puesto.nombre FROM candidato INNER JOIN detalle_votos ON candidato.idcandidato = detalle_votos.candidato_idcandidato INNER JOIN partido_politico ON candidato.partido_idpartido = partido_politico.idpartido INNER JOIN puesto ON candidato.puesto_idpuesto = puesto.idpuesto where puesto.nombre = 'Alcalde' and candidato.municipio_idmunicipio=" + idmun + " group by partido_politico.nombre order by candidato.idcandidato";
             MostrarProductos3(model5, talcalde, sql5);
+            jButton1.setEnabled(true);
             //}
         }
 //        } else {
@@ -740,6 +751,7 @@ public class Conteo_Votos extends javax.swing.JInternalFrame {
      * tambien podemos validar si se aseptaran espacios en blanco en la cadena ingresada , para mas detalle visualizar
      * la clase TipoFiltro()  */
     private void setFiltroTexto() {
+        //llenartablas();
         //TipoFiltro.setFiltraEntrada(codigo.getDocument(), FiltroCampos.NUM_LETRAS, 45, false);
         //TipoFiltro.setFiltraEntrada(descripcion.getDocument(), FiltroCampos.NUM_LETRAS, 60, true);
         //TipoFiltro.setFiltraEntrada(dia.getDocument(), FiltroCampos.SOLO_LETRAS, 45, false);
@@ -792,6 +804,7 @@ public class Conteo_Votos extends javax.swing.JInternalFrame {
         bntSalir = new elaprendiz.gui.button.ButtonRect();
         JPanelGrupo = new javax.swing.JPanel();
         bntGuardar = new elaprendiz.gui.button.ButtonRect();
+        jButton1 = new javax.swing.JButton();
         JPanelBusqueda = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         cmunicipio = new javax.swing.JComboBox();
@@ -901,6 +914,16 @@ public class Conteo_Votos extends javax.swing.JInternalFrame {
         });
         JPanelGrupo.add(bntGuardar);
         bntGuardar.setBounds(50, 10, 100, 30);
+
+        jButton1.setText("Imprimir Reportes");
+        jButton1.setEnabled(false);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        JPanelGrupo.add(jButton1);
+        jButton1.setBounds(190, 10, 130, 30);
 
         panelImage.add(JPanelGrupo);
         JPanelGrupo.setBounds(0, 90, 880, 50);
@@ -1228,6 +1251,28 @@ public class Conteo_Votos extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_talcaldeKeyPressed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        MessageFormat headerFormat = new MessageFormat("Resultados preliminares Presidente");
+        MessageFormat headerFormat2 = new MessageFormat("Resultados preliminares Diputado Listado Nacional");
+        MessageFormat headerFormat3 = new MessageFormat("Resultados preliminares Diputado Parlacen");
+        MessageFormat headerFormat4 = new MessageFormat("Resultados preliminares Diputado Distrital");
+        MessageFormat headerFormat5 = new MessageFormat("Resultados preliminares Alcalde");
+
+        //MessageFormat footerFormat = new MessageFormat("- Página {0} -");
+        try {
+            tpresidentes.print(PrintMode.FIT_WIDTH , headerFormat, null/*footerFormat*/);
+            tdiputados1.print(PrintMode.FIT_WIDTH, headerFormat2, null/*footerFormat*/);
+            tdiputados2.print(PrintMode.FIT_WIDTH, headerFormat3, null/*footerFormat*/);
+            tdiputados3.print(PrintMode.FIT_WIDTH, headerFormat4, null/*footerFormat*/);
+            talcalde.print(PrintMode.FIT_WIDTH, headerFormat5, null/*footerFormat*/);
+            
+        } catch (PrinterException ex) {
+            JOptionPane.showMessageDialog(this, ex);
+            //Logger.getLogger(Conteo_Votos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel JPanelBusqueda;
@@ -1237,6 +1282,7 @@ public class Conteo_Votos extends javax.swing.JInternalFrame {
     private elaprendiz.gui.button.ButtonRect bntSalir;
     private elaprendiz.gui.varios.ClockDigital clockDigital2;
     private javax.swing.JComboBox cmunicipio;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
