@@ -19,7 +19,7 @@ public class TableCellFormatter implements TableCellRenderer{
        ftfcampo.setHorizontalAlignment(JTextField.RIGHT);
        //ftfcampo.setFont(new Font("Tahoma", 1, 14));
        ftfcampo.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));       
-       ftfcampo.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new FormatoDecimal("#####0.00",true))));
+       ftfcampo.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new FormatoDecimal("#############",true))));
        
     }
     
@@ -31,7 +31,8 @@ public class TableCellFormatter implements TableCellRenderer{
        ftfcampo.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));   
        if(formato == null || formato.isEmpty())
        {
-            formato = "#####0.00";
+            //formato = "#####0.00";
+           formato = "#############";
        }
        ftfcampo.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat(formato))));
        }
