@@ -492,7 +492,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
-        if (AccesoUsuario.AccesosUsuario(mresultados.getName()) == true) {
+        if (AccesoUsuario.getIdusuario()==1 || AccesoUsuario.getIdusuario()==2 || AccesoUsuario.getIdusuario()==3) {
             EliminarDatosrMesa form = new EliminarDatosrMesa();
             if (form == null) {
                 form = new EliminarDatosrMesa();
