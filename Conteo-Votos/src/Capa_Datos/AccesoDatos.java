@@ -89,7 +89,42 @@ public class AccesoDatos {
 
         return opcion;
     }
+    
+    
+    /**
+     * Si el dato no esta en otras tablas se borrara totalmente de la BD
+     *
+     * @param nombreTabla nombre de la Tabla
+     * @param nomColumnaId nombre de la columnas con las claves primarias
+     * @param id clave primaria
+     *
+     * Si el dato esta en otras tablas no se borrara totalmente de la BD solo se
+     * le cambiara el estado
+     * @param nomColumnaCambiar nombre de la columan de la cual se cambiara el
+     * valor si no es posible eliminarlo totalmetne de la bd
+     * @return
+     */
+    public int eliminacionMesa(String sql) {
+        //sql = "delete from " + nombreTabla + " where " + nomColumnaId + OpSql.IGUAL + "'" + id + "'";
+        
+        int opcion = 0;
+        try {
+            opcion = BdConexion.getStatement().executeUpdate(sql);
+            BdConexion.cerrarEnlacesConexion(BdConexion.SOLO_STATEMENT);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+//            if (ex.getErrorCode() == 1451) {
+//                Object nuevoValor = "0";
+//                opcion = eliminacionTemporal(nombreTabla, nomColumnaCambiar, nomColumnaId, id, nuevoValor);
+//            } else {
+//                JOptionPane.showMessageDialog(null, ex);
+//            }
+        }
 
+        return opcion;
+    }
+    
+    
     public int getNumeroRegistros(String nomTabla, String columnaContar, String columaCod, Object valor) {
         Number vl = null;
         int numReg = 0;

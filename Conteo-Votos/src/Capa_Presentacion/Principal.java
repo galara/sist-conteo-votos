@@ -76,6 +76,7 @@ public class Principal extends javax.swing.JFrame {
         GestionarBD = new javax.swing.JMenu();
         mbackup = new javax.swing.JMenuItem();
         mrestaurarbackup = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         mresultados = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
@@ -285,6 +286,15 @@ public class Principal extends javax.swing.JFrame {
 
         jMenu2.add(GestionarBD);
 
+        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/update.png"))); // NOI18N
+        jMenuItem3.setText("Borrar datos de Mesa");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem3);
+
         jMenuBar1.add(jMenu2);
 
         jMenu5.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -480,6 +490,19 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_mresultadosActionPerformed
 
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+        if (AccesoUsuario.AccesosUsuario(mresultados.getName()) == true) {
+            EliminarDatosrMesa form = new EliminarDatosrMesa();
+            if (form == null) {
+                form = new EliminarDatosrMesa();
+            }
+            AddForms.adminInternalFrame(dp, form);
+        } else {
+            JOptionPane.showMessageDialog(this, "No tiene Acceso para realizar esta operación ");
+        }
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -509,6 +532,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
